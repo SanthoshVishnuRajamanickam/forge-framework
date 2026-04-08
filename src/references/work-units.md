@@ -110,7 +110,7 @@ Plan 03: Visualization components
 - 3 medium tasks: ~75% (risky)
 </estimating_context>
 
-<paul_integration>
+<forge_integration>
 **How this fits FORGE's loop:**
 
 ```
@@ -128,7 +128,7 @@ CARL context brackets automate these checks:
 - DEPLETED (<40%): Handoff or fresh agent
 
 FORGE provides the framework. CARL provides operational automation.
-</paul_integration>
+</forge_integration>
 
 <anti_patterns>
 

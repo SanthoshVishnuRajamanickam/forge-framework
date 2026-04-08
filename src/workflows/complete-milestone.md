@@ -382,7 +382,7 @@ Git tag created: {version}
 **Note:** Do not push automatically — user controls when to push.
 </step>
 
-<step name="sync_paul_json">
+<step name="sync_forge_json">
 **Sync satellite manifest (forge.json):**
 
 1. Check if `.forge/forge.json` exists:

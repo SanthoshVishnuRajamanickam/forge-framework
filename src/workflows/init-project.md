@@ -410,7 +410,7 @@ Resume file: .forge/PROJECT.md
 ```
 </step>
 
-<step name="create_paul_json">
+<step name="create_forge_json">
 **Create satellite manifest for external system discovery.**
 
 Reference: @src/templates/forge-json.md

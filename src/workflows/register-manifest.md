@@ -50,7 +50,7 @@ Extract from STATE.md (best-effort — use defaults if not found):
 - loop: plan null, position "IDLE"
 </step>
 
-<step name="create_paul_json">
+<step name="create_forge_json">
 Generate `.forge/forge.json` using extracted values:
 
 ```json

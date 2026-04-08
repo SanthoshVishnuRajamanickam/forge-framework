@@ -30,6 +30,7 @@ PATTERNS = [
     (re.compile(r"\bpaul:"), "forge:"),
     (re.compile(r"\.paul/"), ".forge/"),
     (re.compile(r"paul-framework"), "forge-framework"),
+    (re.compile(r"paul_"), "forge_"),
     (re.compile(r"PAUL"), "FORGE"),
     (re.compile(r"Paul"), "Forge"),
     (re.compile(r"\bpaul\b"), "forge"),
@@ -59,6 +60,7 @@ def rewrite_text(text: str) -> str:
 
 FILE_PATTERNS = [
     (re.compile(r"paul-framework"), "forge-framework"),
+    (re.compile(r"paul_"), "forge_"),
     (re.compile(r"PAUL"), "FORGE"),
     (re.compile(r"Paul"), "Forge"),
     (re.compile(r"\bpaul\b"), "forge"),

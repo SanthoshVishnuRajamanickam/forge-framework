@@ -166,7 +166,7 @@ Update STATE.md:
    ```
 </step>
 
-<step name="sync_paul_json">
+<step name="sync_forge_json">
 **Sync satellite manifest (forge.json):**
 
 1. Check if `.forge/forge.json` exists:

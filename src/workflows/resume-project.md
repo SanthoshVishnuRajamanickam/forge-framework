@@ -32,7 +32,7 @@ No multiple options. Prevents decision fatigue. User can redirect if needed.
 
 <process>
 
-<step name="verify_paul_exists" priority="first">
+<step name="verify_forge_exists" priority="first">
 1. Check for .forge/ directory:
    ```bash
    ls .forge/STATE.md 2>/dev/null
