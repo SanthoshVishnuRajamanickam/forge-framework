@@ -134,7 +134,7 @@ When executing a plan encounters `type="checkpoint:*"`:
 
 ## Diagnostic Failure Routing
 
-When a checkpoint:human-verify receives failure reports OR when `/paul:verify` finds issues, classify the root cause BEFORE attempting fixes — instead of patching immediately, because wrong-layer fixes produce fragile patches that break again.
+When a checkpoint:human-verify receives failure reports OR when `/forge:verify` finds issues, classify the root cause BEFORE attempting fixes — instead of patching immediately, because wrong-layer fixes produce fragile patches that break again.
 
 **Classification:**
 
@@ -146,7 +146,7 @@ When a checkpoint:human-verify receives failure reports OR when `/paul:verify` f
 
 **Where this applies:**
 - **During APPLY:** checkpoint:human-verify failures (see apply-phase.md)
-- **After APPLY:** /paul:verify UAT failures (see verify-work.md)
+- **After APPLY:** /forge:verify UAT failures (see verify-work.md)
 
 **Why classification matters:**
 - Intent wrong + code patch = fix that contradicts what the user actually wants

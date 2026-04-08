@@ -19,7 +19,7 @@ Research informs planning but doesn't gate it.
 </loop_context>
 
 <required_reading>
-@~/.claude/paul-framework/references/subagent-criteria.md
+@~/.claude/forge-framework/references/subagent-criteria.md
 </required_reading>
 
 <references>
@@ -35,11 +35,11 @@ Research informs planning but doesn't gate it.
 ```
 Error: Topic required.
 
-Usage: /paul:research <topic> [--codebase | --web]
+Usage: /forge:research <topic> [--codebase | --web]
 Examples:
-  /paul:research "nextjs app router patterns"
-  /paul:research "auth patterns in this codebase" --codebase
-  /paul:research "prisma vs drizzle comparison" --web
+  /forge:research "nextjs app router patterns"
+  /forge:research "auth patterns in this codebase" --codebase
+  /forge:research "prisma vs drizzle comparison" --web
 ```
 Exit workflow.
 
@@ -151,11 +151,11 @@ Use Task tool:
 </step>
 
 <step name="save_findings">
-Create `.paul/research/{topic-slug}.md`:
+Create `.forge/research/{topic-slug}.md`:
 
 1. Create research directory if needed:
    ```bash
-   mkdir -p .paul/research
+   mkdir -p .forge/research
    ```
 
 2. Generate topic slug (lowercase, hyphens):
@@ -172,7 +172,7 @@ RESEARCH COMPLETE
 
 Topic: {topic}
 Agent: {agent_type}
-Output: .paul/research/{topic-slug}.md
+Output: .forge/research/{topic-slug}.md
 
 Summary:
 {key findings in 3-5 bullets}
@@ -190,7 +190,7 @@ What's next?
 </process>
 
 <output>
-- .paul/research/{topic-slug}.md created with findings
+- .forge/research/{topic-slug}.md created with findings
 - Summary presented for review
 - Main session can use findings for planning
 </output>

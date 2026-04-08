@@ -16,12 +16,12 @@ Review all open issues with current codebase context. Categorize as resolved, ur
 
 1. Check for global issues:
    ```bash
-   ls .paul/ISSUES.md 2>/dev/null
+   ls .forge/ISSUES.md 2>/dev/null
    ```
 
 2. Check for phase-scoped UAT files:
    ```bash
-   find .paul/phases -name "*-UAT.md" -type f 2>/dev/null
+   find .forge/phases -name "*-UAT.md" -type f 2>/dev/null
    ```
 
 3. If no issue files found:
@@ -29,8 +29,8 @@ Review all open issues with current codebase context. Categorize as resolved, ur
    No issues to review.
 
    Issue files are created by:
-   - Deferred enhancements during development → .paul/ISSUES.md
-   - UAT testing findings → .paul/phases/XX-name/{plan}-UAT.md
+   - Deferred enhancements during development → .forge/ISSUES.md
+   - UAT testing findings → .forge/phases/XX-name/{plan}-UAT.md
 
    All clear - continue with current work.
    ```
@@ -154,7 +154,7 @@ Use AskUserQuestion with relevant options:
 3. Update STATE.md deferred issues count
 
 **Inserting urgent phase:**
-- Suggest command: `/paul:plan 10.3 Address urgent issues [list]`
+- Suggest command: `/forge:plan 10.3 Address urgent issues [list]`
 
 **Noting for phase:**
 - Update issue entry with "Suggested: Phase [X]"

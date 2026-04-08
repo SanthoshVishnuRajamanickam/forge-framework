@@ -1,6 +1,6 @@
 # Testing Patterns Template
 
-Template for `.paul/codebase/TESTING.md` - captures test framework and patterns.
+Template for `.forge/codebase/TESTING.md` - captures test framework and patterns.
 
 **Purpose:** Document how tests are written and run. Guide for adding tests that match existing patterns.
 

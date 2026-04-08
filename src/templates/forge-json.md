@@ -1,8 +1,8 @@
-# paul.json Template
+# forge.json Template
 
-Template for `.paul/paul.json` - machine-readable satellite manifest for external system discovery.
+Template for `.forge/forge.json` - machine-readable satellite manifest for external system discovery.
 
-**Purpose:** Provides a standardized signal file that workspace management systems (BASE) can scan for, detect, and register PAUL-managed projects.
+**Purpose:** Provides a standardized signal file that workspace management systems (BASE) can scan for, detect, and register FORGE-managed projects.
 
 ---
 
@@ -52,7 +52,7 @@ Template for `.paul/paul.json` - machine-readable satellite manifest for externa
 | `phase.status` | enum | `not_started`, `planning`, `in_progress`, `complete` |
 | `loop.plan` | string\|null | Current plan ID (e.g., "12-01") or null if idle |
 | `loop.position` | enum | `IDLE`, `PLAN`, `APPLY`, `UNIFY` |
-| `timestamps.created_at` | string | ISO 8601 timestamp of paul.json creation |
+| `timestamps.created_at` | string | ISO 8601 timestamp of forge.json creation |
 | `timestamps.updated_at` | string | ISO 8601 timestamp of last update |
 | `satellite.groom` | boolean | Whether BASE groom should health-check this project (default: true) |
 
@@ -137,9 +137,9 @@ Template for `.paul/paul.json` - machine-readable satellite manifest for externa
 
 ## Design Notes
 
-- **Machine-readable only.** paul.json is for external systems, not humans. Humans read STATE.md.
+- **Machine-readable only.** forge.json is for external systems, not humans. Humans read STATE.md.
 - **Always tooling-generated.** Created by init, synced by workflows. Never hand-edited.
-- **Backward compatible.** Workflows check for paul.json existence before syncing. Pre-v1.1 projects without paul.json are silently skipped.
+- **Backward compatible.** Workflows check for forge.json existence before syncing. Pre-v1.1 projects without forge.json are silently skipped.
 - **Satellite config.** The `satellite` object is for consumer-side settings. BASE reads `satellite.groom` to decide whether to include this project in health checks.
 
 ---

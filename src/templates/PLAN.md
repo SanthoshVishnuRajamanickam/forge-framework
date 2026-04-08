@@ -1,6 +1,6 @@
 # PLAN.md Template
 
-Template for `.paul/phases/{phase-number}-{name}/{phase}-{plan}-PLAN.md` - executable phase plans.
+Template for `.forge/phases/{phase-number}-{name}/{phase}-{plan}-PLAN.md` - executable phase plans.
 
 **Naming:** `{phase}-{plan}-PLAN.md` (e.g., `01-02-PLAN.md` for Phase 1, Plan 2)
 
@@ -32,9 +32,9 @@ autonomous: true                 # false if plan has checkpoints requiring user 
 
 <context>
 ## Project Context
-@.paul/PROJECT.md
-@.paul/ROADMAP.md
-@.paul/STATE.md
+@.forge/PROJECT.md
+@.forge/ROADMAP.md
+@.forge/STATE.md
 
 ## Prior Work (only if genuinely needed)
 # Only reference prior SUMMARYs if:
@@ -51,7 +51,7 @@ autonomous: true                 # false if plan has checkpoints requiring user 
 <skills>
 ## Required Skills (from SPECIAL-FLOWS.md)
 
-<!-- If .paul/SPECIAL-FLOWS.md exists, this section is auto-populated by /paul:plan -->
+<!-- If .forge/SPECIAL-FLOWS.md exists, this section is auto-populated by /forge:plan -->
 <!-- If no SPECIAL-FLOWS.md, omit this section or show "No specialized flows configured" -->
 
 | Skill | Priority | When to Invoke | Loaded? |
@@ -175,7 +175,7 @@ Before declaring plan complete:
 </success_criteria>
 
 <output>
-After completion, create `.paul/phases/XX-name/{phase}-{plan}-SUMMARY.md`
+After completion, create `.forge/phases/XX-name/{phase}-{plan}-SUMMARY.md`
 </output>
 ```
 

@@ -1,5 +1,5 @@
 ---
-name: paul:remove-phase
+name: forge:remove-phase
 description: Remove a future (not started) phase
 argument-hint: "<phase-number-or-name>"
 allowed-tools: [Read, Write, Edit, Bash]
@@ -12,19 +12,19 @@ Remove a future phase from the roadmap and clean up its directory.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/roadmap-management.md
+@~/.claude/forge-framework/workflows/roadmap-management.md
 </execution_context>
 
 <context>
 $ARGUMENTS
 
-@.paul/PROJECT.md
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/PROJECT.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 </context>
 
 <process>
-Follow workflow: @~/.claude/paul-framework/workflows/roadmap-management.md
+Follow workflow: @~/.claude/forge-framework/workflows/roadmap-management.md
 
 Execute: **remove-phase** operation
 </process>

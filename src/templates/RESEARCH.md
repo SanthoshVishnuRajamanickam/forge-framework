@@ -1,8 +1,8 @@
 # RESEARCH.md Template
 
-Template for `.paul/research/{topic-slug}.md` - research findings from subagent discovery.
+Template for `.forge/research/{topic-slug}.md` - research findings from subagent discovery.
 
-**Purpose:** Captures research findings for main session review. Created by `/paul:research` or `/paul:research-phase`.
+**Purpose:** Captures research findings for main session review. Created by `/forge:research` or `/forge:research-phase`.
 
 ---
 
@@ -71,7 +71,7 @@ Template for `.paul/research/{topic-slug}.md` - research findings from subagent 
 
 ---
 
-*Created by /paul:research. Review before integrating.*
+*Created by /forge:research. Review before integrating.*
 *Status should be updated when findings are reviewed or integrated.*
 ```
 
@@ -110,7 +110,7 @@ Draft ──▶ Reviewed ──▶ Integrated
 
 ## Usage Pattern
 
-1. User runs `/paul:research <topic>`
+1. User runs `/forge:research <topic>`
 2. Workflow spawns appropriate subagent
 3. Subagent researches and returns findings
 4. RESEARCH.md created with status: Draft

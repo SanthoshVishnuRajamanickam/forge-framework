@@ -93,7 +93,7 @@ For: Choosing between options, new integration.
    - Findings per option
    - Confidence level (should be MEDIUM-HIGH)
 
-Output: `.paul/phases/XX-name/DISCOVERY.md`
+Output: `.forge/phases/XX-name/DISCOVERY.md`
 </step>
 
 <step name="level_3_deep">
@@ -140,7 +140,7 @@ For: Architectural decisions, novel problems.
    3. Pause (need to think)
    ```
 
-Output: Comprehensive `.paul/phases/XX-name/DISCOVERY.md`
+Output: Comprehensive `.forge/phases/XX-name/DISCOVERY.md`
 </step>
 
 <step name="route_to_planning">
@@ -160,7 +160,7 @@ Recommendation: [one-liner]
 Output: [path to DISCOVERY.md or "verbal confirmation"]
 
 ────────────────────────────────────────
-▶ NEXT: /paul:plan [phase]
+▶ NEXT: /forge:plan [phase]
 ────────────────────────────────────────
 ```
 </step>

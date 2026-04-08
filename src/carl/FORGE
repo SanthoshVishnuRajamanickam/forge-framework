@@ -1,0 +1,26 @@
+# CARL Domain: FORGE (Plan-Apply-Unify Loop)
+# AI-assisted development workflow. Activates when .forge/ exists in project.
+FORGE_STATE=active
+FORGE_ALWAYS_ON=false
+
+# Rule 0: Scope
+FORGE_RULE_0=FORGE governs structured AI development via Plan-Apply-Unify loop. Requires .forge/ directory.
+
+# MUST (critical)
+FORGE_RULE_1=LOAD BEFORE EXECUTE: Before ANY /forge:* command, MUST Read the command file (~/.claude/forge-framework/src/commands/{name}.md) AND its execution_context workflow file. NEVER execute FORGE commands from memory or inference - always load the actual files first. If files cannot be loaded, STOP and inform user.
+FORGE_RULE_2=No implementation code without approved PLAN.md. Research/exploration OK. Violation = stop, request approval.
+FORGE_RULE_3=Every APPLY must be followed by UNIFY. UNIFY reconciles plan vs actual, updates STATE.md, logs decisions.
+FORGE_RULE_4=Respect PLAN.md "Boundaries" / "DO NOT CHANGE" sections. Stop and confirm before modifying protected items.
+FORGE_RULE_5=When blocked: document in STATE.md Blockers, notify human, await approval before workarounds.
+FORGE_RULE_6=At phase transition: VERIFY state consistency (STATE.md, PROJECT.md, ROADMAP.md aligned). Blocking error if misaligned. Re-read full files, check all fields.
+
+# SHOULD (quality)
+FORGE_RULE_7=Tasks require verification criteria: <verify>[proof of success]</verify>. No verify = cannot complete.
+FORGE_RULE_8=Log all APPLY deviations: what, why, downstream impact. Audit trail for UNIFY.
+FORGE_RULE_9=Use BDD acceptance criteria: Given [precondition] / When [action] / Then [outcome].
+
+# MAY (patterns)
+FORGE_RULE_10=Size tasks for single session (~50% context). Split larger tasks during planning.
+FORGE_RULE_11=One commit per phase at transition. Format: {type}({phase}): {description}. WIP commits optional at pause. Version alignment required at milestone.
+FORGE_RULE_12=Urgent work uses decimal phases (2.1, 2.2). Integers = planned, decimals = interruptions.
+

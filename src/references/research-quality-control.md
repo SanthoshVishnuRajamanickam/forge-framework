@@ -1,7 +1,7 @@
 <research_quality_control>
 
 <purpose>
-Quality assurance patterns for research subagents. When PAUL deploys subagents for research or discovery, this reference ensures findings are accurate, well-sourced, and actionable.
+Quality assurance patterns for research subagents. When FORGE deploys subagents for research or discovery, this reference ensures findings are accurate, well-sourced, and actionable.
 
 **Core principle:** Research quality is measured by accuracy and source verification, not speed or volume.
 

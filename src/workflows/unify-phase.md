@@ -15,14 +15,14 @@ Next phase: PLAN (next plan or next phase)
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/phases/{phase}/{plan}-PLAN.md
+@.forge/STATE.md
+@.forge/phases/{phase}/{plan}-PLAN.md
 </required_reading>
 
 <references>
-@~/.claude/paul-framework/references/loop-phases.md
-@~/.claude/paul-framework/templates/SUMMARY.md
-@~/.claude/paul-framework/workflows/transition-phase.md (loaded when last plan in phase)
+@~/.claude/forge-framework/references/loop-phases.md
+@~/.claude/forge-framework/templates/SUMMARY.md
+@~/.claude/forge-framework/workflows/transition-phase.md (loaded when last plan in phase)
 </references>
 
 <process>
@@ -59,9 +59,9 @@ Next phase: PLAN (next plan or next phase)
 <step name="audit_skill_invocations">
 **Check specialized workflow usage (if configured):**
 
-1. Check if .paul/SPECIAL-FLOWS.md exists:
+1. Check if .forge/SPECIAL-FLOWS.md exists:
    ```bash
-   ls .paul/SPECIAL-FLOWS.md 2>/dev/null
+   ls .forge/SPECIAL-FLOWS.md 2>/dev/null
    ```
 
 2. If not exists: Skip this step entirely
@@ -89,7 +89,7 @@ Next phase: PLAN (next plan or next phase)
 </step>
 
 <step name="create_summary">
-Create SUMMARY.md at `.paul/phases/{phase}/{plan}-SUMMARY.md`
+Create SUMMARY.md at `.forge/phases/{phase}/{plan}-SUMMARY.md`
 
 **If `is_quick_fix = true` — compressed SUMMARY:**
 
@@ -173,21 +173,21 @@ Include all standard sections:
 </step>
 
 <step name="sync_paul_json">
-**Sync satellite manifest (paul.json):**
+**Sync satellite manifest (forge.json):**
 
-1. Check if `.paul/paul.json` exists:
+1. Check if `.forge/forge.json` exists:
    ```bash
-   ls .paul/paul.json 2>/dev/null
+   ls .forge/forge.json 2>/dev/null
    ```
 2. If not found: skip silently (pre-v1.1 project)
-3. If found: read current paul.json and update:
+3. If found: read current forge.json and update:
    - `phase.number` → current phase number from STATE.md
    - `phase.name` → current phase name from STATE.md
    - `phase.status` → "complete" if phase done, "in_progress" if more plans remain
    - `loop.plan` → null (loop just closed)
    - `loop.position` → "IDLE"
    - `timestamps.updated_at` → current ISO timestamp
-4. Write updated paul.json back
+4. Write updated forge.json back
 </step>
 
 <step name="check_phase_completion">
@@ -222,13 +222,13 @@ Continue to next plan?
 ════════════════════════════════════════
 ```
 
-**Accept:** "1", "yes", "continue" → run `/paul:plan` for next plan in same phase
+**Accept:** "1", "yes", "continue" → run `/forge:plan` for next plan in same phase
 </step>
 
 <step name="execute_transition" priority="required" gate="blocking">
 **If last plan in phase — TRANSITION IS MANDATORY:**
 
-⚠️ **NEVER skip this step. This is what makes PAUL a system, not random loops.**
+⚠️ **NEVER skip this step. This is what makes FORGE a system, not random loops.**
 
 1. Announce clearly:
    ```
@@ -237,7 +237,7 @@ Continue to next plan?
    ════════════════════════════════════════
    ```
 
-2. **MUST read and execute:** @~/.claude/paul-framework/workflows/transition-phase.md
+2. **MUST read and execute:** @~/.claude/forge-framework/workflows/transition-phase.md
 
 3. Transition handles (do not skip any):
    - Evolve PROJECT.md (requirements validated → shipped)
@@ -248,13 +248,13 @@ Continue to next plan?
 
 4. **Only after transition completes** → offer next phase routing
 
-**Anti-pattern:** Closing UNIFY and immediately offering `/paul:plan` for next phase WITHOUT running transition. This breaks system cohesion and skips git commits.
+**Anti-pattern:** Closing UNIFY and immediately offering `/forge:plan` for next phase WITHOUT running transition. This breaks system cohesion and skips git commits.
 </step>
 
 </process>
 
 <output>
-- SUMMARY.md at `.paul/phases/{phase}/{plan}-SUMMARY.md`
+- SUMMARY.md at `.forge/phases/{phase}/{plan}-SUMMARY.md`
 - Updated STATE.md
 - Updated ROADMAP.md (if phase complete)
 </output>

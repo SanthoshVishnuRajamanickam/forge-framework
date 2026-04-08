@@ -1,6 +1,6 @@
 # Milestone Context Template
 
-Template for `.paul/MILESTONE-CONTEXT.md` — temporary handoff from discuss-milestone to create-milestone.
+Template for `.forge/MILESTONE-CONTEXT.md` — temporary handoff from discuss-milestone to create-milestone.
 
 **Purpose:** Persist milestone discussion context across `/clear` boundaries. This is a handoff artifact, not permanent documentation.
 
@@ -12,7 +12,7 @@ Template for `.paul/MILESTONE-CONTEXT.md` — temporary handoff from discuss-mil
 # Milestone Context
 
 **Generated:** {{DATE}}
-**Status:** Ready for /paul:create-milestone
+**Status:** Ready for /forge:create-milestone
 
 ## Features to Build
 
@@ -53,7 +53,7 @@ Template for `.paul/MILESTONE-CONTEXT.md` — temporary handoff from discuss-mil
 
 ---
 
-*This file is temporary. It will be deleted after /paul:create-milestone creates the milestone.*
+*This file is temporary. It will be deleted after /forge:create-milestone creates the milestone.*
 *Do NOT commit this file to version control.*
 ```
 
@@ -66,7 +66,7 @@ Template for `.paul/MILESTONE-CONTEXT.md` — temporary handoff from discuss-mil
 │                    MILESTONE CONTEXT LIFECYCLE                   │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│  1. /paul:discuss-milestone                                      │
+│  1. /forge:discuss-milestone                                      │
 │     └─> Explores features, scope, constraints                    │
 │     └─> Creates MILESTONE-CONTEXT.md at end                      │
 │                                                                  │
@@ -74,7 +74,7 @@ Template for `.paul/MILESTONE-CONTEXT.md` — temporary handoff from discuss-mil
 │     └─> Context persisted in file                                │
 │     └─> Session can be cleared                                   │
 │                                                                  │
-│  3. /paul:create-milestone                                       │
+│  3. /forge:create-milestone                                       │
 │     └─> Reads MILESTONE-CONTEXT.md                               │
 │     └─> Uses context to populate ROADMAP.md                      │
 │     └─> Deletes MILESTONE-CONTEXT.md after success               │
@@ -118,7 +118,7 @@ Template for `.paul/MILESTONE-CONTEXT.md` — temporary handoff from discuss-mil
 
 ---
 
-## Integration with PAUL Workflow
+## Integration with FORGE Workflow
 
 ### Before discuss-milestone
 
@@ -150,7 +150,7 @@ STATE.md: Updated with new phase position
 # Milestone Context
 
 **Generated:** 2026-01-29
-**Status:** Ready for /paul:create-milestone
+**Status:** Ready for /forge:create-milestone
 
 ## Features to Build
 
@@ -162,7 +162,7 @@ STATE.md: Updated with new phase position
 
 **Suggested name:** v0.3 Roadmap & Milestone Management
 **Estimated phases:** 3
-**Focus:** Complete milestone management tooling for PAUL framework
+**Focus:** Complete milestone management tooling for FORGE framework
 
 ## Phase Mapping
 
@@ -185,6 +185,6 @@ STATE.md: Updated with new phase position
 
 ---
 
-*This file is temporary. It will be deleted after /paul:create-milestone creates the milestone.*
+*This file is temporary. It will be deleted after /forge:create-milestone creates the milestone.*
 *Do NOT commit this file to version control.*
 ```

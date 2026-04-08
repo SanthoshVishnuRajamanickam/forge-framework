@@ -1,8 +1,8 @@
 # CONTEXT.md Template
 
-Template for `.paul/phases/{NN}-{name}/CONTEXT.md` - phase discussion context handoff.
+Template for `.forge/phases/{NN}-{name}/CONTEXT.md` - phase discussion context handoff.
 
-**Purpose:** Captures user's vision, goals, and approach before planning. Created by `/paul:discuss`, consumed by `/paul:plan`.
+**Purpose:** Captures user's vision, goals, and approach before planning. Created by `/forge:discuss`, consumed by `/forge:plan`.
 
 ---
 
@@ -48,7 +48,7 @@ Template for `.paul/phases/{NN}-{name}/CONTEXT.md` - phase discussion context ha
 ---
 
 *This file is temporary. It informs planning but is not required.*
-*Created by /paul:discuss, consumed by /paul:plan.*
+*Created by /forge:discuss, consumed by /forge:plan.*
 ```
 
 ---
@@ -70,10 +70,10 @@ Template for `.paul/phases/{NN}-{name}/CONTEXT.md` - phase discussion context ha
 
 ## Usage Pattern
 
-1. User runs `/paul:discuss <phase>`
+1. User runs `/forge:discuss <phase>`
 2. Discussion workflow explores goals and approach
 3. CONTEXT.md created in phase directory
-4. `/paul:plan` reads CONTEXT.md to inform planning
+4. `/forge:plan` reads CONTEXT.md to inform planning
 5. CONTEXT.md remains for reference (not deleted)
 
 ---

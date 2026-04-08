@@ -1,5 +1,5 @@
 <principles>
-Core principles for the PAUL development workflow.
+Core principles for the FORGE development workflow.
 
 <solo_developer_claude>
 

@@ -21,7 +21,7 @@ If no arguments:
 - Find most recently modified SUMMARY.md
 
 ```bash
-find .paul/phases -name "*SUMMARY.md" -type f -exec ls -lt {} + | head -5
+find .forge/phases -name "*SUMMARY.md" -type f -exec ls -lt {} + | head -5
 ```
 
 Read the SUMMARY.md to understand what was built.
@@ -131,7 +131,7 @@ For each failed/partial test, gather:
 
 If any issues found:
 
-1. Create `.paul/phases/XX-name/{phase}-{plan}-UAT.md` if doesn't exist
+1. Create `.forge/phases/XX-name/{phase}-{plan}-UAT.md` if doesn't exist
 2. Use template from `@src/templates/UAT-ISSUES.md`
 3. Add each issue with UAT-NNN format:
 
@@ -147,7 +147,7 @@ If any issues found:
 **Actual:** [What actually happened]
 ```
 
-**Note:** Issues go to phase-scoped UAT file, NOT global `.paul/ISSUES.md`.
+**Note:** Issues go to phase-scoped UAT file, NOT global `.forge/ISSUES.md`.
 </step>
 
 <step name="summarize">
@@ -209,18 +209,18 @@ Use AskUserQuestion:
 **Routing per classification:**
 
 **Intent (1):** "Let's re-plan with updated intent."
-- Route to `/paul:plan` for affected phase with updated intent
+- Route to `/forge:plan` for affected phase with updated intent
 - Previous plan's issues inform the re-plan
 - Do NOT create a fix plan — the spec itself needs rethinking
 
 **Spec (2):** "The plan needs updating before we fix code."
-- Route to `/paul:plan-fix` with spec-level scope
+- Route to `/forge:plan-fix` with spec-level scope
 - Identify which ACs or tasks need revision
 - Update the plan FIRST, then generate code fixes from the corrected spec
 - This prevents patching code against a wrong spec
 
 **Code (3):** "Standard fix — plan was right, code needs patching."
-- Route to `/paul:plan-fix` with code-level scope (existing behavior)
+- Route to `/forge:plan-fix` with code-level scope (existing behavior)
 - Generate targeted fix plan from UAT issues
 
 **Log and continue (4):** Issues logged, proceed anyway (existing behavior)

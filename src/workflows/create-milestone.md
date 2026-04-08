@@ -4,7 +4,7 @@ Define a new milestone in the project. Creates milestone structure in ROADMAP.md
 
 <when_to_use>
 - User explicitly requests new milestone
-- Triggered after /paul:discuss-milestone (reads context)
+- Triggered after /forge:discuss-milestone (reads context)
 - Project completed previous milestone, needs next
 - Starting fresh project milestone planning
 </when_to_use>
@@ -15,9 +15,9 @@ After create-milestone, project is ready for first phase PLAN.
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/ROADMAP.md
-@.paul/MILESTONE-CONTEXT.md (if exists)
+@.forge/STATE.md
+@.forge/ROADMAP.md
+@.forge/MILESTONE-CONTEXT.md (if exists)
 </required_reading>
 
 <references>
@@ -30,7 +30,7 @@ After create-milestone, project is ready for first phase PLAN.
 <step name="load_context" priority="first">
 1. Check for MILESTONE-CONTEXT.md:
    ```bash
-   cat .paul/MILESTONE-CONTEXT.md 2>/dev/null
+   cat .forge/MILESTONE-CONTEXT.md 2>/dev/null
    ```
 
 2. **If found:**
@@ -106,7 +106,7 @@ Read current ROADMAP.md and update:
    ### Phase {N}: {name}
 
    Focus: {description}
-   Plans: TBD (defined during /paul:plan)
+   Plans: TBD (defined during /forge:plan)
    ```
 
 4. **Update footer timestamp**
@@ -116,7 +116,7 @@ Read current ROADMAP.md and update:
 For each phase in the new milestone:
 
 ```bash
-mkdir -p .paul/phases/{NN}-{name-slug}
+mkdir -p .forge/phases/{NN}-{name-slug}
 ```
 
 Where:
@@ -161,20 +161,20 @@ Update STATE.md:
 
    Last session: {timestamp}
    Stopped at: Milestone created, ready to plan
-   Next action: /paul:plan for Phase {first_phase_number}
-   Resume file: .paul/ROADMAP.md
+   Next action: /forge:plan for Phase {first_phase_number}
+   Resume file: .forge/ROADMAP.md
    ```
 </step>
 
 <step name="sync_paul_json">
-**Sync satellite manifest (paul.json):**
+**Sync satellite manifest (forge.json):**
 
-1. Check if `.paul/paul.json` exists:
+1. Check if `.forge/forge.json` exists:
    ```bash
-   ls .paul/paul.json 2>/dev/null
+   ls .forge/forge.json 2>/dev/null
    ```
 2. If not found: skip silently (pre-v1.1 project)
-3. If found: read current paul.json and update:
+3. If found: read current forge.json and update:
    - `milestone.name` → new milestone name
    - `milestone.version` → new milestone version
    - `milestone.status` → "in_progress"
@@ -185,7 +185,7 @@ Update STATE.md:
    - `loop.plan` → null
    - `loop.position` → "IDLE"
    - `timestamps.updated_at` → current ISO timestamp
-4. Write updated paul.json back
+4. Write updated forge.json back
 </step>
 
 <step name="cleanup_context">
@@ -193,7 +193,7 @@ Update STATE.md:
 
 Delete the handoff file:
 ```bash
-rm .paul/MILESTONE-CONTEXT.md
+rm .forge/MILESTONE-CONTEXT.md
 ```
 
 Display: "Cleaned up milestone context handoff."
@@ -214,15 +214,15 @@ Theme: {milestone_theme}
 Phases: {phase_count}
 
 Created:
-  .paul/phases/{phase-1-slug}/     ✓
-  .paul/phases/{phase-2-slug}/     ✓
-  .paul/phases/{phase-N-slug}/     ✓
+  .forge/phases/{phase-1-slug}/     ✓
+  .forge/phases/{phase-2-slug}/     ✓
+  .forge/phases/{phase-N-slug}/     ✓
 
 ROADMAP.md updated ✓
 STATE.md updated ✓
 
 ────────────────────────────────────────
-▶ NEXT: /paul:plan
+▶ NEXT: /forge:plan
   Begin planning Phase {first_phase_number}: {first_phase_name}
 ────────────────────────────────────────
 
@@ -236,10 +236,10 @@ Type "yes" to proceed, or ask questions first.
 
 <output>
 - ROADMAP.md updated with new milestone section
-- Phase directories created in .paul/phases/
+- Phase directories created in .forge/phases/
 - STATE.md updated with new position
 - MILESTONE-CONTEXT.md deleted (if existed)
-- Clear routing to /paul:plan
+- Clear routing to /forge:plan
 </output>
 
 <success_criteria>
@@ -264,5 +264,5 @@ Type "yes" to proceed, or ask questions first.
 
 **ROADMAP.md missing:**
 - Create basic structure
-- Or route to /paul:init if project not initialized
+- Or route to /forge:init if project not initialized
 </error_handling>

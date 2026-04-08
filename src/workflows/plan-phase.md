@@ -16,16 +16,16 @@ Next phase: APPLY (after plan approval)
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/ROADMAP.md
-@.paul/PROJECT.md
-@.paul/phases/{prior-phase}/{plan}-SUMMARY.md (if exists and relevant)
+@.forge/STATE.md
+@.forge/ROADMAP.md
+@.forge/PROJECT.md
+@.forge/phases/{prior-phase}/{plan}-SUMMARY.md (if exists and relevant)
 </required_reading>
 
 <references>
-@~/.claude/paul-framework/references/plan-format.md
-@~/.claude/paul-framework/references/checkpoints.md (if plan will have checkpoints)
-@~/.claude/paul-framework/templates/PLAN.md
+@~/.claude/forge-framework/references/plan-format.md
+@~/.claude/forge-framework/references/checkpoints.md (if plan will have checkpoints)
+@~/.claude/forge-framework/templates/PLAN.md
 </references>
 
 <process>
@@ -111,7 +111,7 @@ Wait for response. Store as `plan_track`.
 
 **Skip this step for quick-fix plans** — compressed format doesn't include skills section.
 
-1. Check if `.paul/SPECIAL-FLOWS.md` exists
+1. Check if `.forge/SPECIAL-FLOWS.md` exists
 2. If exists:
    - Read SPECIAL-FLOWS.md
    - Extract skills marked as "required" for the work type being planned
@@ -128,7 +128,7 @@ Wait for response. Store as `plan_track`.
    - /skill-1 (work type: X)
    - /skill-2 (work type: Y)
 
-   These must be loaded before /paul:apply will proceed.
+   These must be loaded before /forge:apply will proceed.
    ════════════════════════════════════════
    ```
 
@@ -139,7 +139,7 @@ Required skills will BLOCK apply-phase until confirmed loaded.
 <step name="create_plan">
 **Generate PLAN.md — format adapts based on `plan_track`.**
 
-1. Create phase directory: `.paul/phases/{NN}-{phase-name}/`
+1. Create phase directory: `.forge/phases/{NN}-{phase-name}/`
 
 **If `plan_track = quick-fix`:**
 
@@ -158,7 +158,7 @@ autonomous: true
 </objective>
 
 <context>
-@.paul/PROJECT.md
+@.forge/PROJECT.md
 @relevant/source/file
 </context>
 
@@ -274,7 +274,7 @@ Wait for user response if issues found.
 <step name="check_audit_config">
 **Check if enterprise plan audit is enabled for this project.**
 
-1. Check if `.paul/config.md` exists
+1. Check if `.forge/config.md` exists
 2. If exists, read and check for `enterprise_plan_audit:` section with `enabled: true`
 3. Store `audit_enabled` flag (true/false) for use in update_state prompt
 4. If config missing or section missing: `audit_enabled = false`
@@ -312,7 +312,7 @@ This flag determines whether the post-plan routing suggests audit before APPLY.
 
    Last session: [timestamp]
    Stopped at: Plan [NN-PP] created
-   Next action: Review and approve plan, then run /paul:apply [plan-path]
+   Next action: Review and approve plan, then run /forge:apply [plan-path]
    Resume file: [plan-path]
    ```
 
@@ -340,8 +340,8 @@ This flag determines whether the post-plan routing suggests audit before APPLY.
 
    [1] Run AUDIT (recommended) | [2] Skip audit, run APPLY | [3] Questions first | [4] Pause here
    ```
-   Accept quick inputs: "1", "audit" → run `/paul:audit [plan-path]`
-   Accept quick inputs: "2", "skip", "apply" → run `/paul:apply [plan-path]`
+   Accept quick inputs: "1", "audit" → run `/forge:audit [plan-path]`
+   Accept quick inputs: "2", "skip", "apply" → run `/forge:apply [plan-path]`
 
    **If `audit_enabled` is false (default):**
    ```
@@ -359,15 +359,15 @@ This flag determines whether the post-plan routing suggests audit before APPLY.
 
    [1] Approved, run APPLY | [2] Questions first | [3] Pause here
    ```
-   Accept quick inputs: "1", "approved", "yes", "go" → run `/paul:apply [plan-path]`
+   Accept quick inputs: "1", "approved", "yes", "go" → run `/forge:apply [plan-path]`
 </step>
 
 </process>
 
 <output>
-PLAN.md at `.paul/phases/{NN}-{phase-name}/{NN}-{plan}-PLAN.md`
+PLAN.md at `.forge/phases/{NN}-{phase-name}/{NN}-{plan}-PLAN.md`
 
-Example: `.paul/phases/04-workflows-layer/04-01-PLAN.md`
+Example: `.forge/phases/04-workflows-layer/04-01-PLAN.md`
 </output>
 
 <error_handling>

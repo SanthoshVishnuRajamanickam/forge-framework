@@ -29,7 +29,7 @@ Templates define the structure for generated documents. Each template file conta
 **Curly braces** for variable interpolation:
 ```
 {phase}-{plan}-PLAN.md
-.paul/phases/{phase-number}-{name}/
+.forge/phases/{phase-number}-{name}/
 ```
 
 ## YAML Frontmatter in Template Content

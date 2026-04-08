@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Explain the semantics of PAUL's three loop phases: PLAN, APPLY, UNIFY. Every unit of work follows this loop. Skipping phases breaks traceability and increases risk.
+Explain the semantics of FORGE's three loop phases: PLAN, APPLY, UNIFY. Every unit of work follows this loop. Skipping phases breaks traceability and increases risk.
 
 ## The Loop
 
@@ -22,7 +22,7 @@ Explain the semantics of PAUL's three loop phases: PLAN, APPLY, UNIFY. Every uni
 **Purpose:** Define what will be built, how it will be verified, and what's out of scope.
 
 **Artifacts Created:**
-- `{phase}-{plan}-PLAN.md` in `.paul/phases/{phase-name}/`
+- `{phase}-{plan}-PLAN.md` in `.forge/phases/{phase-name}/`
 
 **Activities:**
 1. Analyze requirements and context
@@ -124,7 +124,7 @@ PLAN ──▶ APPLY ──▶ UNIFY
 **Purpose:** Reconcile what was planned vs. what was built. Close the loop.
 
 **Artifacts Created:**
-- `{phase}-{plan}-SUMMARY.md` in `.paul/phases/{phase-name}/`
+- `{phase}-{plan}-SUMMARY.md` in `.forge/phases/{phase-name}/`
 - Updated `STATE.md`
 - Updated `ROADMAP.md` (if phase complete)
 

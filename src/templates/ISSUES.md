@@ -1,10 +1,10 @@
 # Project Issues Log
 
-Template for `.paul/ISSUES.md` — deferred enhancements discovered during execution.
+Template for `.forge/ISSUES.md` — deferred enhancements discovered during execution.
 
 **Purpose:** Track nice-to-haves that aren't critical to current work. These follow deviation rule #5: log enhancements, continue with plan.
 
-**Location:** `.paul/ISSUES.md` (project-level, not phase-level)
+**Location:** `.forge/ISSUES.md` (project-level, not phase-level)
 
 ---
 
@@ -86,7 +86,7 @@ Enhancements discovered during execution. Not critical - address in future phase
 ## Workflow
 
 1. During APPLY, notice enhancement opportunity
-2. Log to `.paul/ISSUES.md` with ISS-NNN format
+2. Log to `.forge/ISSUES.md` with ISS-NNN format
 3. Note in SUMMARY.md: "Logged ISS-003 for future consideration"
 4. Continue with current plan
 5. Review ISSUES.md during phase planning

@@ -1,8 +1,8 @@
 # Project Config Template
 
-Template for `.paul/config.md` - project-specific configuration and integrations.
+Template for `.forge/config.md` - project-specific configuration and integrations.
 
-**Purpose:** Store project settings and optional integration flags. Allows PAUL to adapt behavior based on available tools.
+**Purpose:** Store project settings and optional integration flags. Allows FORGE to adapt behavior based on available tools.
 
 ---
 
@@ -24,7 +24,7 @@ project:
 
 ## Integrations
 
-Optional integrations that enhance PAUL functionality.
+Optional integrations that enhance FORGE functionality.
 
 ### SonarQube
 
@@ -38,7 +38,7 @@ sonarqube:
 ```
 
 **When enabled:**
-- `/paul:quality-gate` runs scans and updates CONCERNS.md
+- `/forge:quality-gate` runs scans and updates CONCERNS.md
 - Quality metrics inform planning decisions
 - Issues feed into tech debt tracking
 
@@ -57,8 +57,8 @@ enterprise_plan_audit:
 ```
 
 **When enabled:**
-- `/paul:plan` suggests running `/paul:audit` before APPLY
-- `/paul:audit` performs enterprise-grade architectural review
+- `/forge:plan` suggests running `/forge:audit` before APPLY
+- `/forge:audit` performs enterprise-grade architectural review
 - Must-have and strongly-recommended findings auto-applied to plan
 - Audit report saved alongside PLAN.md as `{NN}-{PP}-AUDIT.md`
 
@@ -82,7 +82,7 @@ Reserved for future use:
 
 ## Preferences
 
-Optional user preferences for PAUL behavior.
+Optional user preferences for FORGE behavior.
 
 ```yaml
 preferences:
@@ -162,7 +162,7 @@ preferences:
 - Project identification (name, version)
 - Integration toggles (enabled/disabled flags)
 - Integration-specific settings (project keys, URLs)
-- User preferences for PAUL behavior
+- User preferences for FORGE behavior
 
 **What does NOT belong here:**
 - Sensitive credentials (use environment variables)
@@ -171,9 +171,9 @@ preferences:
 - Roadmap information (that's ROADMAP.md)
 
 **When to create config.md:**
-- During `/paul:init` if user enables integrations
+- During `/forge:init` if user enables integrations
 - Manually when adding integrations later
-- Not required for basic PAUL usage
+- Not required for basic FORGE usage
 
 **Git behavior:**
 - Can be committed (no secrets)

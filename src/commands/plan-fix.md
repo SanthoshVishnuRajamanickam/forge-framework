@@ -1,5 +1,5 @@
 ---
-name: paul:plan-fix
+name: forge:plan-fix
 description: Plan fixes for UAT issues from verify
 argument-hint: "<plan, e.g., '04-02'>"
 allowed-tools: [Read, Bash, Write, Glob, Grep, AskUserQuestion]
@@ -8,21 +8,21 @@ allowed-tools: [Read, Bash, Write, Glob, Grep, AskUserQuestion]
 <objective>
 Create FIX.md plan from UAT issues found during verify.
 
-**When to use:** After `/paul:verify` logs issues to phase-scoped UAT file.
+**When to use:** After `/forge:verify` logs issues to phase-scoped UAT file.
 
 **Output:** `{plan}-FIX.md` in the phase directory, ready for execution.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/references/plan-format.md
-@~/.claude/paul-framework/references/checkpoints.md
+@~/.claude/forge-framework/references/plan-format.md
+@~/.claude/forge-framework/references/checkpoints.md
 </execution_context>
 
 <context>
 Plan number: $ARGUMENTS (required - e.g., "04-02" or "10-01")
 
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 </context>
 
 <process>
@@ -37,9 +37,9 @@ If no argument provided:
 ```
 Error: Plan number required.
 
-Usage: /paul:plan-fix 04-02
+Usage: /forge:plan-fix 04-02
 
-This creates a fix plan from .paul/phases/XX-name/{plan}-UAT.md
+This creates a fix plan from .forge/phases/XX-name/{plan}-UAT.md
 ```
 Exit.
 </step>
@@ -49,14 +49,14 @@ Exit.
 
 Search for matching UAT file:
 ```bash
-ls .paul/phases/*/{plan}-UAT.md 2>/dev/null
+ls .forge/phases/*/{plan}-UAT.md 2>/dev/null
 ```
 
 If not found:
 ```
 No UAT.md found for plan {plan}.
 
-UAT.md files are created by /paul:verify when testing finds issues.
+UAT.md files are created by /forge:verify when testing finds issues.
 If no issues were found during testing, no fix plan is needed.
 ```
 Exit.
@@ -103,7 +103,7 @@ Prioritize: Blocker → Major → Minor → Cosmetic
 <step name="write">
 **Write FIX.md:**
 
-Create `.paul/phases/XX-name/{plan}-FIX.md`:
+Create `.forge/phases/XX-name/{plan}-FIX.md`:
 
 ```markdown
 ---
@@ -131,14 +131,14 @@ Priority: {blocker count} blocker, {major count} major, {minor count} minor, {co
 </objective>
 
 <context>
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 
 **Issues being fixed:**
-@.paul/phases/XX-name/{plan}-UAT.md
+@.forge/phases/XX-name/{plan}-UAT.md
 
 **Original plan for reference:**
-@.paul/phases/XX-name/{plan}-PLAN.md
+@.forge/phases/XX-name/{plan}-PLAN.md
 </context>
 
 <acceptance_criteria>
@@ -169,11 +169,11 @@ Before declaring plan complete:
 
 <success_criteria>
 - All UAT issues from {plan}-UAT.md addressed
-- Ready for re-verification with /paul:verify
+- Ready for re-verification with /forge:verify
 </success_criteria>
 
 <output>
-After completion, create `.paul/phases/XX-name/{plan}-FIX-SUMMARY.md`
+After completion, create `.forge/phases/XX-name/{plan}-FIX-SUMMARY.md`
 </output>
 ```
 </step>
@@ -203,7 +203,7 @@ Continue to APPLY?
 ```
 
 Use AskUserQuestion to get response.
-If approved: `/paul:apply .paul/phases/XX-name/{plan}-FIX.md`
+If approved: `/forge:apply .forge/phases/XX-name/{plan}-FIX.md`
 </step>
 
 </process>
@@ -211,6 +211,6 @@ If approved: `/paul:apply .paul/phases/XX-name/{plan}-FIX.md`
 <success_criteria>
 - [ ] UAT.md found and parsed
 - [ ] Fix tasks created for each issue (or grouped)
-- [ ] FIX.md written with proper PAUL structure
+- [ ] FIX.md written with proper FORGE structure
 - [ ] User offered to execute or review
 </success_criteria>

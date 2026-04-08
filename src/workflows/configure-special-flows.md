@@ -1,10 +1,10 @@
 <purpose>
-Configure specialized skill integrations for a PAUL project. Discovers available skills, prompts user to select applicable ones, maps skills to work types, and generates .paul/SPECIAL-FLOWS.md.
+Configure specialized skill integrations for a FORGE project. Discovers available skills, prompts user to select applicable ones, maps skills to work types, and generates .forge/SPECIAL-FLOWS.md.
 </purpose>
 
 <when_to_use>
 - During init when user has specialized skills/commands
-- Ad-hoc via `/paul:flows` command
+- Ad-hoc via `/forge:flows` command
 - When adding new skills to an existing project
 - When amending existing SPECIAL-FLOWS.md
 </when_to_use>
@@ -15,8 +15,8 @@ Can be run at any time without affecting PLAN/APPLY/UNIFY state.
 </loop_context>
 
 <required_reading>
-@.paul/PROJECT.md (project context)
-@.paul/SPECIAL-FLOWS.md (if exists, for amendment)
+@.forge/PROJECT.md (project context)
+@.forge/SPECIAL-FLOWS.md (if exists, for amendment)
 </required_reading>
 
 <references>
@@ -27,9 +27,9 @@ Can be run at any time without affecting PLAN/APPLY/UNIFY state.
 <process>
 
 <step name="check_existing" priority="first">
-1. Check if .paul/SPECIAL-FLOWS.md exists:
+1. Check if .forge/SPECIAL-FLOWS.md exists:
    ```bash
-   ls .paul/SPECIAL-FLOWS.md 2>/dev/null
+   ls .forge/SPECIAL-FLOWS.md 2>/dev/null
    ```
 2. If exists:
    ```
@@ -161,7 +161,7 @@ Repeat or ask "Add another asset? [y/n]"
 </step>
 
 <step name="generate_output">
-1. Create .paul/SPECIAL-FLOWS.md using template:
+1. Create .forge/SPECIAL-FLOWS.md using template:
    - Replace all {{placeholders}} with gathered data
    - Populate tables with skill mappings
    - Set timestamp to current date/time
@@ -170,7 +170,7 @@ Repeat or ask "Add another asset? [y/n]"
    ```markdown
    ## Specialized Flows
 
-   See: .paul/SPECIAL-FLOWS.md
+   See: .forge/SPECIAL-FLOWS.md
 
    Quick Reference:
    - /skill1 → Work type 1
@@ -183,7 +183,7 @@ Repeat or ask "Add another asset? [y/n]"
    SPECIAL-FLOWS CONFIGURED
    ════════════════════════════════════════
 
-   Created: .paul/SPECIAL-FLOWS.md
+   Created: .forge/SPECIAL-FLOWS.md
 
    Skills configured:
    - /skill1 (required) → Work type 1
@@ -194,7 +194,7 @@ Repeat or ask "Add another asset? [y/n]"
 
    ────────────────────────────────────────
    Verification will occur during UNIFY.
-   Run /paul:flows audit to check current phase.
+   Run /forge:flows audit to check current phase.
    ────────────────────────────────────────
    ```
 </step>
@@ -215,8 +215,8 @@ Quick add a single skill without full configuration:
 <subcommand name="audit">
 Check current phase against declared flows:
 
-1. Read .paul/SPECIAL-FLOWS.md
-2. Read .paul/STATE.md for current phase
+1. Read .forge/SPECIAL-FLOWS.md
+2. Read .forge/STATE.md for current phase
 3. Check ROADMAP.md for phase skill requirements
 4. Display:
    ```
@@ -233,7 +233,7 @@ Check current phase against declared flows:
 <subcommand name="list">
 Display current configuration:
 
-1. Read .paul/SPECIAL-FLOWS.md
+1. Read .forge/SPECIAL-FLOWS.md
 2. Display formatted summary:
    ```
    SPECIAL-FLOWS CONFIGURATION
@@ -250,8 +250,8 @@ Display current configuration:
 </subcommand>
 
 <output>
-- `.paul/SPECIAL-FLOWS.md` created or updated
-- `.paul/PROJECT.md` updated with quick reference
+- `.forge/SPECIAL-FLOWS.md` created or updated
+- `.forge/PROJECT.md` updated with quick reference
 - User informed of configuration
 </output>
 
@@ -271,10 +271,10 @@ Enter skill names (comma-separated) or "skip":
 - Add new entries from this session
 - Update timestamp
 
-**No .paul/ directory:**
+**No .forge/ directory:**
 ```
-PAUL not initialized in this project.
-Run /paul:init first, or create .paul/ manually.
+FORGE not initialized in this project.
+Run /forge:init first, or create .forge/ manually.
 ```
 
 **User provides invalid skill name:**

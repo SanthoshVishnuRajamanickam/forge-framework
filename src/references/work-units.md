@@ -111,7 +111,7 @@ Plan 03: Visualization components
 </estimating_context>
 
 <paul_integration>
-**How this fits PAUL's loop:**
+**How this fits FORGE's loop:**
 
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
@@ -127,7 +127,7 @@ CARL context brackets automate these checks:
 - MODERATE (40-60%): Consider splitting
 - DEPLETED (<40%): Handoff or fresh agent
 
-PAUL provides the framework. CARL provides operational automation.
+FORGE provides the framework. CARL provides operational automation.
 </paul_integration>
 
 <anti_patterns>

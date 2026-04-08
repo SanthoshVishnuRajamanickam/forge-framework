@@ -1,5 +1,5 @@
 <purpose>
-Orchestrate parallel Explore agents to analyze codebase and produce structured documents in .paul/codebase/
+Orchestrate parallel Explore agents to analyze codebase and produce structured documents in .forge/codebase/
 
 Each agent has fresh context and focuses on specific aspects. Output is concise and actionable for planning.
 </purpose>
@@ -31,16 +31,16 @@ Documents are reference material for Claude when planning/executing. Vague descr
 <process>
 
 <step name="check_existing" priority="first">
-Check if .paul/codebase/ already exists:
+Check if .forge/codebase/ already exists:
 
 ```bash
-ls -la .paul/codebase/ 2>/dev/null
+ls -la .forge/codebase/ 2>/dev/null
 ```
 
 **If exists:**
 
 ```
-.paul/codebase/ already exists with these documents:
+.forge/codebase/ already exists with these documents:
 [List files found]
 
 What's next?
@@ -51,7 +51,7 @@ What's next?
 
 Wait for user response.
 
-If "Refresh": Delete .paul/codebase/, continue to create_structure
+If "Refresh": Delete .forge/codebase/, continue to create_structure
 If "Update": Ask which documents to update, continue to spawn_agents (filtered)
 If "Skip": Exit workflow
 
@@ -60,10 +60,10 @@ Continue to create_structure.
 </step>
 
 <step name="create_structure">
-Create .paul/codebase/ directory:
+Create .forge/codebase/ directory:
 
 ```bash
-mkdir -p .paul/codebase
+mkdir -p .forge/codebase
 ```
 
 **Expected output files:**
@@ -315,7 +315,7 @@ For each document:
      - "Not detected" for optional infrastructure
      - "Not applicable" for patterns that don't fit this codebase
      - "No significant concerns" for clean codebase areas
-4. **Write to .paul/codebase/{NAME}.md** (uppercase filename)
+4. **Write to .forge/codebase/{NAME}.md** (uppercase filename)
 
 **Example filling pattern:**
 
@@ -353,8 +353,8 @@ After all documents written, continue to verify_output.
 Verify all documents created successfully:
 
 ```bash
-ls -la .paul/codebase/
-wc -l .paul/codebase/*.md
+ls -la .forge/codebase/
+wc -l .forge/codebase/*.md
 ```
 
 **Verification checklist:**
@@ -371,7 +371,7 @@ Continue to commit_codebase_map.
 Commit the codebase map:
 
 ```bash
-git add .paul/codebase/*.md
+git add .forge/codebase/*.md
 git commit -m "$(cat <<'EOF'
 docs: map existing codebase
 
@@ -392,13 +392,13 @@ Continue to update_state.
 </step>
 
 <step name="update_state">
-If .paul/STATE.md exists, note that codebase has been mapped.
+If .forge/STATE.md exists, note that codebase has been mapped.
 
 Add to Accumulated Context section:
 ```
 ### Codebase Mapped
 Date: [current date]
-Documents: .paul/codebase/ (7 files)
+Documents: .forge/codebase/ (7 files)
 ```
 
 Continue to offer_next.
@@ -412,7 +412,7 @@ Present completion summary and next steps.
 ```
 Codebase mapping complete.
 
-Created .paul/codebase/:
+Created .forge/codebase/:
 - STACK.md ([N] lines) - Technologies and dependencies
 - ARCHITECTURE.md ([N] lines) - System design and patterns
 - STRUCTURE.md ([N] lines) - Directory layout and organization
@@ -426,17 +426,17 @@ Created .paul/codebase/:
 
 ## ▶ Next Up
 
-**Initialize PAUL project** — use codebase context for planning
+**Initialize FORGE project** — use codebase context for planning
 
-`/paul:init`
+`/forge:init`
 
 <sub>`/clear` first → fresh context window</sub>
 
 ---
 
 **Also available:**
-- Re-run mapping: `/paul:map-codebase`
-- Review specific file: `cat .paul/codebase/STACK.md`
+- Re-run mapping: `/forge:map-codebase`
+- Review specific file: `cat .forge/codebase/STACK.md`
 - Edit any document before proceeding
 
 ---
@@ -448,7 +448,7 @@ End workflow.
 </process>
 
 <success_criteria>
-- .paul/codebase/ directory created
+- .forge/codebase/ directory created
 - 4 parallel Explore agents spawned with run_in_background=true
 - Agent prompts are specific and actionable
 - TaskOutput used to collect all agent results

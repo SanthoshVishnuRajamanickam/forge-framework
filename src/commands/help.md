@@ -1,10 +1,10 @@
 ---
-name: paul:help
-description: Show available PAUL commands and usage guide
+name: forge:help
+description: Show available FORGE commands and usage guide
 ---
 
 <objective>
-Display the complete PAUL command reference.
+Display the complete FORGE command reference.
 
 Output ONLY the reference content below. Do NOT add:
 
@@ -15,9 +15,9 @@ Output ONLY the reference content below. Do NOT add:
 </objective>
 
 <reference>
-# PAUL Command Reference
+# FORGE Command Reference
 
-**PAUL** (Plan-Apply-Unify Loop) is a structured AI-assisted development framework for Claude Code.
+**FORGE** (Plan-Apply-Unify Loop) is a structured AI-assisted development framework for Claude Code.
 
 ## The Loop
 
@@ -36,10 +36,10 @@ Every unit of work follows this cycle:
 
 ## Quick Start
 
-1. `/paul:init` - Initialize PAUL in your project
-2. `/paul:plan` - Create a plan for your work
-3. `/paul:apply` - Execute the approved plan
-4. `/paul:unify` - Close the loop with summary
+1. `/forge:init` - Initialize FORGE in your project
+2. `/forge:plan` - Create a plan for your work
+3. `/forge:apply` - Execute the approved plan
+4. `/forge:unify` - Close the loop with summary
 
 ## Commands Overview
 
@@ -58,19 +58,19 @@ Every unit of work follows this cycle:
 
 ## Core Loop Commands
 
-### `/paul:init`
-Initialize PAUL in a project.
+### `/forge:init`
+Initialize FORGE in a project.
 
-- Creates `.paul/` directory structure
+- Creates `.forge/` directory structure
 - Creates PROJECT.md, STATE.md, ROADMAP.md
 - Prompts for project context and phases
 - Optionally configures integrations (SonarQube, etc.)
 
-Usage: `/paul:init`
+Usage: `/forge:init`
 
 ---
 
-### `/paul:plan [phase]`
+### `/forge:plan [phase]`
 Enter PLAN phase - create an executable plan.
 
 - Reads current state from STATE.md
@@ -78,12 +78,12 @@ Enter PLAN phase - create an executable plan.
 - Populates skills section from SPECIAL-FLOWS.md (if configured)
 - Updates loop position
 
-Usage: `/paul:plan` (auto-detects next phase)
-Usage: `/paul:plan 3` (specific phase)
+Usage: `/forge:plan` (auto-detects next phase)
+Usage: `/forge:plan 3` (specific phase)
 
 ---
 
-### `/paul:apply [plan-path]`
+### `/forge:apply [plan-path]`
 Execute an approved PLAN.md file.
 
 - **Blocks if required skills not loaded** (from SPECIAL-FLOWS.md)
@@ -92,12 +92,12 @@ Execute an approved PLAN.md file.
 - Handles checkpoints (decision, human-verify, human-action)
 - Reports completion and prompts for UNIFY
 
-Usage: `/paul:apply`
-Usage: `/paul:apply .paul/phases/01-foundation/01-01-PLAN.md`
+Usage: `/forge:apply`
+Usage: `/forge:apply .forge/phases/01-foundation/01-01-PLAN.md`
 
 ---
 
-### `/paul:unify [plan-path]`
+### `/forge:unify [plan-path]`
 Reconcile plan vs actual and close the loop.
 
 - Creates SUMMARY.md documenting what was built
@@ -106,40 +106,40 @@ Reconcile plan vs actual and close the loop.
 - Updates STATE.md with loop closure
 - **Required** - never skip this step
 
-Usage: `/paul:unify`
-Usage: `/paul:unify .paul/phases/01-foundation/01-01-PLAN.md`
+Usage: `/forge:unify`
+Usage: `/forge:unify .forge/phases/01-foundation/01-01-PLAN.md`
 
 ---
 
-### `/paul:help`
+### `/forge:help`
 Show this command reference.
 
-Usage: `/paul:help`
+Usage: `/forge:help`
 
 ---
 
-### `/paul:status` *(deprecated)*
-> Use `/paul:progress` instead.
+### `/forge:status` *(deprecated)*
+> Use `/forge:progress` instead.
 
-Shows current loop position. Deprecated in favor of `/paul:progress` which provides better routing.
+Shows current loop position. Deprecated in favor of `/forge:progress` which provides better routing.
 
 ---
 
 ## Session Commands
 
-### `/paul:pause [reason]`
+### `/forge:pause [reason]`
 Create handoff file and prepare for session break.
 
 - Creates HANDOFF.md with complete context
 - Updates STATE.md session continuity section
 - Designed for context limits or multi-session work
 
-Usage: `/paul:pause`
-Usage: `/paul:pause "switching to other project"`
+Usage: `/forge:pause`
+Usage: `/forge:pause "switching to other project"`
 
 ---
 
-### `/paul:resume [handoff-path]`
+### `/forge:resume [handoff-path]`
 Restore context from handoff and continue work.
 
 - Reads STATE.md and any HANDOFF files
@@ -147,12 +147,12 @@ Restore context from handoff and continue work.
 - Suggests exactly ONE next action
 - Archives consumed handoffs
 
-Usage: `/paul:resume`
-Usage: `/paul:resume .paul/HANDOFF-context.md`
+Usage: `/forge:resume`
+Usage: `/forge:resume .forge/HANDOFF-context.md`
 
 ---
 
-### `/paul:progress [context]`
+### `/forge:progress [context]`
 Smart status with routing - suggests ONE next action.
 
 - Shows milestone and phase progress visually
@@ -161,61 +161,61 @@ Smart status with routing - suggests ONE next action.
 - Accepts optional context to tailor suggestion
 - Warns about context limits
 
-Usage: `/paul:progress`
-Usage: `/paul:progress "I only have 30 minutes"`
+Usage: `/forge:progress`
+Usage: `/forge:progress "I only have 30 minutes"`
 
 ---
 
-### `/paul:handoff [context]`
+### `/forge:handoff [context]`
 Generate comprehensive session handoff document.
 
 - Creates detailed handoff for complex session breaks
 - Captures decisions, progress, blockers, next steps
-- More thorough than `/paul:pause`
+- More thorough than `/forge:pause`
 
-Usage: `/paul:handoff`
-Usage: `/paul:handoff "phase10-audit"`
+Usage: `/forge:handoff`
+Usage: `/forge:handoff "phase10-audit"`
 
 ---
 
 ## Roadmap Commands
 
-### `/paul:add-phase <description>`
+### `/forge:add-phase <description>`
 Append a new phase to the roadmap.
 
 - Adds phase to end of ROADMAP.md
 - Updates phase numbering
 - Records in STATE.md decisions
 
-Usage: `/paul:add-phase "API Authentication Layer"`
+Usage: `/forge:add-phase "API Authentication Layer"`
 
 ---
 
-### `/paul:remove-phase <number>`
+### `/forge:remove-phase <number>`
 Remove a future (not started) phase from roadmap.
 
 - Cannot remove completed or in-progress phases
 - Renumbers subsequent phases
 - Updates ROADMAP.md
 
-Usage: `/paul:remove-phase 5`
+Usage: `/forge:remove-phase 5`
 
 ---
 
 ## Milestone Commands
 
-### `/paul:milestone <name>`
+### `/forge:milestone <name>`
 Create a new milestone with phases.
 
 - Guides through milestone definition
 - Creates phase structure
 - Updates ROADMAP.md with milestone grouping
 
-Usage: `/paul:milestone "v2.0 API Redesign"`
+Usage: `/forge:milestone "v2.0 API Redesign"`
 
 ---
 
-### `/paul:complete-milestone [version]`
+### `/forge:complete-milestone [version]`
 Archive milestone, tag, and reorganize roadmap.
 
 - Verifies all phases complete
@@ -223,72 +223,72 @@ Archive milestone, tag, and reorganize roadmap.
 - Archives milestone to MILESTONES.md
 - Evolves PROJECT.md for next milestone
 
-Usage: `/paul:complete-milestone`
-Usage: `/paul:complete-milestone v0.3`
+Usage: `/forge:complete-milestone`
+Usage: `/forge:complete-milestone v0.3`
 
 ---
 
-### `/paul:discuss-milestone`
+### `/forge:discuss-milestone`
 Explore and articulate vision before starting a milestone.
 
 - Conversational exploration of goals
 - Creates milestone context document
-- Prepares for `/paul:milestone`
+- Prepares for `/forge:milestone`
 
-Usage: `/paul:discuss-milestone`
+Usage: `/forge:discuss-milestone`
 
 ---
 
 ## Pre-Planning Commands
 
-### `/paul:discuss <phase>`
+### `/forge:discuss <phase>`
 Articulate vision and explore approach before planning.
 
 - Conversational discussion of phase goals
 - Creates CONTEXT.md capturing vision
-- Prepares for `/paul:plan`
+- Prepares for `/forge:plan`
 
-Usage: `/paul:discuss 3`
-Usage: `/paul:discuss "authentication layer"`
+Usage: `/forge:discuss 3`
+Usage: `/forge:discuss "authentication layer"`
 
 ---
 
-### `/paul:assumptions <phase>`
+### `/forge:assumptions <phase>`
 Surface Claude's assumptions about a phase before planning.
 
 - Shows what Claude would do if given free rein
 - Identifies gaps in understanding
 - Prevents misaligned planning
 
-Usage: `/paul:assumptions 3`
+Usage: `/forge:assumptions 3`
 
 ---
 
-### `/paul:discover <topic>`
+### `/forge:discover <topic>`
 Research technical options before planning a phase.
 
 - Explores codebase for relevant patterns
 - Documents findings for planning reference
 - Lightweight alternative to full research
 
-Usage: `/paul:discover "authentication patterns"`
+Usage: `/forge:discover "authentication patterns"`
 
 ---
 
-### `/paul:consider-issues [source]`
+### `/forge:consider-issues [source]`
 Review deferred issues with codebase context, triage and route.
 
 - Reads deferred issues from STATE.md or specified source
 - Analyzes with current codebase context
 - Suggests routing: fix now, defer, or close
 
-Usage: `/paul:consider-issues`
+Usage: `/forge:consider-issues`
 
 ---
 
 ## Research Commands
 
-### `/paul:research <topic>`
+### `/forge:research <topic>`
 Deploy research agents for documentation/web search.
 
 - Spawns subagents for parallel research
@@ -296,70 +296,70 @@ Deploy research agents for documentation/web search.
 - Creates RESEARCH.md with findings
 - Main session vets and reviews results
 
-Usage: `/paul:research "JWT best practices 2026"`
+Usage: `/forge:research "JWT best practices 2026"`
 
 ---
 
-### `/paul:research-phase <number>`
+### `/forge:research-phase <number>`
 Research unknowns for a phase using subagents.
 
 - Identifies unknowns in phase scope
 - Deploys research agents
 - Synthesizes findings for planning
 
-Usage: `/paul:research-phase 4`
+Usage: `/forge:research-phase 4`
 
 ---
 
 ## Specialized Commands
 
-### `/paul:flows`
+### `/forge:flows`
 Configure specialized workflow integrations.
 
 - Creates/updates SPECIAL-FLOWS.md
 - Defines required skills per work type
 - Skills are enforced at APPLY time
 
-Usage: `/paul:flows`
+Usage: `/forge:flows`
 
 ---
 
-### `/paul:config`
-View or modify PAUL configuration.
+### `/forge:config`
+View or modify FORGE configuration.
 
 - Shows current config.md settings
 - Allows toggling integrations
 - Manages project-level settings
 
-Usage: `/paul:config`
+Usage: `/forge:config`
 
 ---
 
-### `/paul:map-codebase`
+### `/forge:map-codebase`
 Generate codebase map for context.
 
 - Creates structured overview of project
 - Identifies key files and patterns
 - Useful for research and planning
 
-Usage: `/paul:map-codebase`
+Usage: `/forge:map-codebase`
 
 ---
 
 ## Quality Commands
 
-### `/paul:verify`
+### `/forge:verify`
 Guide manual user acceptance testing of recently built features.
 
 - Generates verification checklist from SUMMARY.md
 - Guides through manual testing
 - Records verification results
 
-Usage: `/paul:verify`
+Usage: `/forge:verify`
 
 ---
 
-### `/paul:audit [plan-path]`
+### `/forge:audit [plan-path]`
 Run enterprise-grade architectural audit on a plan.
 
 - Performs senior engineer + compliance review
@@ -367,26 +367,26 @@ Run enterprise-grade architectural audit on a plan.
 - Creates AUDIT.md report in phase directory
 - Optional: enabled via `enterprise_plan_audit` in config
 
-Usage: `/paul:audit`
-Usage: `/paul:audit .paul/phases/20-ai-schema/20-01-PLAN.md`
+Usage: `/forge:audit`
+Usage: `/forge:audit .forge/phases/20-ai-schema/20-01-PLAN.md`
 
 ---
 
-### `/paul:plan-fix`
+### `/forge:plan-fix`
 Plan fixes for UAT issues from verify.
 
 - Reads issues identified during verify
 - Creates targeted fix plan
 - Smaller scope than full phase plan
 
-Usage: `/paul:plan-fix`
+Usage: `/forge:plan-fix`
 
 ---
 
 ## Files & Structure
 
 ```
-.paul/
+.forge/
 ├── PROJECT.md           # Project context and value prop
 ├── ROADMAP.md           # Phase breakdown and milestones
 ├── STATE.md             # Loop position and session state
@@ -456,51 +456,51 @@ Completion checks
 
 **Starting a new project:**
 ```
-/paul:init
-/paul:plan
+/forge:init
+/forge:plan
 # Approve plan
-/paul:apply
-/paul:unify
+/forge:apply
+/forge:unify
 ```
 
 **Enterprise workflow (with audit enabled):**
 ```
-/paul:plan        # Create plan
-/paul:audit       # Audit + auto-fix plan
+/forge:plan        # Create plan
+/forge:audit       # Audit + auto-fix plan
 # Approve audited plan
-/paul:apply       # Execute
-/paul:unify       # Close loop
+/forge:apply       # Execute
+/forge:unify       # Close loop
 ```
 
 **Checking where you are:**
 ```
-/paul:progress   # State + ONE next action (recommended)
+/forge:progress   # State + ONE next action (recommended)
 ```
 
 **Resuming work (new session):**
 ```
-/paul:resume     # Restores context, suggests next action
+/forge:resume     # Restores context, suggests next action
 ```
 
 **Pausing work (before break):**
 ```
-/paul:pause      # Creates handoff, updates state
+/forge:pause      # Creates handoff, updates state
 ```
 
 **Pre-planning exploration:**
 ```
-/paul:discuss 3       # Articulate vision
-/paul:assumptions 3   # See Claude's assumptions
-/paul:research "topic"  # Gather external info
-/paul:plan 3          # Now create the plan
+/forge:discuss 3       # Articulate vision
+/forge:assumptions 3   # See Claude's assumptions
+/forge:research "topic"  # Gather external info
+/forge:plan 3          # Now create the plan
 ```
 
 **Managing roadmap:**
 ```
-/paul:add-phase "New Feature"    # Add phase
-/paul:remove-phase 5             # Remove future phase
-/paul:milestone "v2.0"           # Create milestone
-/paul:complete-milestone         # Archive milestone
+/forge:add-phase "New Feature"    # Add phase
+/forge:remove-phase 5             # Remove future phase
+/forge:milestone "v2.0"           # Create milestone
+/forge:complete-milestone         # Archive milestone
 ```
 
 ## Key Principles
@@ -514,12 +514,12 @@ Completion checks
 
 ## Getting Help
 
-- Run `/paul:progress` to see where you are and what to do next
-- Read `.paul/PROJECT.md` for project context
-- Read `.paul/STATE.md` for current position
-- Check `.paul/ROADMAP.md` for phase overview
+- Run `/forge:progress` to see where you are and what to do next
+- Read `.forge/PROJECT.md` for project context
+- Read `.forge/STATE.md` for current position
+- Check `.forge/ROADMAP.md` for phase overview
 
 ---
 
-*PAUL Framework v0.4+ | 26 commands | Last updated: 2026-01-29*
+*FORGE Framework v0.4+ | 26 commands | Last updated: 2026-01-29*
 </reference>

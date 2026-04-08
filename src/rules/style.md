@@ -3,9 +3,9 @@ paths:
   - "src/**/*.md"
 ---
 
-# PAUL Style Rules
+# FORGE Style Rules
 
-Universal conventions for all PAUL framework files.
+Universal conventions for all FORGE framework files.
 
 ## Language & Tone
 
@@ -30,7 +30,7 @@ Exception: SUMMARY.md deviations section, git commits (their purpose IS tracking
 | Type | Convention | Example |
 |------|------------|---------|
 | Files | kebab-case | `plan-phase.md` |
-| Commands | `paul:kebab-case` | `paul:plan` |
+| Commands | `forge:kebab-case` | `forge:plan` |
 | Step names | snake_case | `name="load_project_state"` |
 | Bash variables | CAPS_UNDERSCORES | `PHASE_ARG` |
 | Type attributes | colon separator | `type="checkpoint:human-verify"` |
@@ -78,16 +78,16 @@ Enable secure user access
 @src/templates/PLAN.md
 
 # Project-relative (dynamic)
-@.paul/PROJECT.md
-@.paul/STATE.md
+@.forge/PROJECT.md
+@.forge/STATE.md
 
 # Conditional
-@.paul/DISCOVERY.md (if exists)
+@.forge/DISCOVERY.md (if exists)
 ```
 
 ## Loop Terminology
 
-PAUL uses explicit loop phase names:
+FORGE uses explicit loop phase names:
 
 | Phase | Purpose | Artifacts |
 |-------|---------|-----------|

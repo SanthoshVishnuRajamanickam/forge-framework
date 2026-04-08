@@ -1,6 +1,6 @@
 # Technology Stack Template
 
-Template for `.paul/codebase/STACK.md` - captures the technology foundation.
+Template for `.forge/codebase/STACK.md` - captures the technology foundation.
 
 **Purpose:** Document what technologies run this codebase. Focused on "what executes when you run the code."
 

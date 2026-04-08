@@ -1,6 +1,6 @@
 # PROJECT.md Template
 
-Template for `.paul/PROJECT.md` — the project's business context and requirements.
+Template for `.forge/PROJECT.md` — the project's business context and requirements.
 
 **Purpose:** Define what we're building, why it matters, and constraints. This is the "brief" that informs all planning. Init populates this from a type-adapted requirements walkthrough — instead of leaving placeholders, because plans built against real requirements produce better output.
 

@@ -1,5 +1,5 @@
 ---
-name: paul:pause
+name: forge:pause
 description: Create handoff file and prepare for session break
 argument-hint: [reason]
 allowed-tools: [Read, Write, Bash, AskUserQuestion]
@@ -12,18 +12,18 @@ Create a HANDOFF.md file capturing current context and update STATE.md for sessi
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/pause-work.md
+@~/.claude/forge-framework/workflows/pause-work.md
 </execution_context>
 
 <context>
 $ARGUMENTS
 
-@.paul/STATE.md
-@.paul/PROJECT.md
+@.forge/STATE.md
+@.forge/PROJECT.md
 </context>
 
 <process>
-**Follow the pause-work workflow** from `@~/.claude/paul-framework/workflows/pause-work.md`.
+**Follow the pause-work workflow** from `@~/.claude/forge-framework/workflows/pause-work.md`.
 
 The workflow handles:
 1. Detecting current position

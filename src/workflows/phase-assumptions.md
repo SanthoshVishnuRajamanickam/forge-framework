@@ -27,7 +27,7 @@ Exit workflow.
 Validate phase exists in ROADMAP.md:
 
 ```bash
-cat .paul/ROADMAP.md | grep -i "Phase ${PHASE}"
+cat .forge/ROADMAP.md | grep -i "Phase ${PHASE}"
 ```
 
 **If phase not found:**

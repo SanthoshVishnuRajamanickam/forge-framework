@@ -1,6 +1,6 @@
 # UAT Issues Template
 
-Template for `.paul/phases/XX-name/{phase}-{plan}-UAT.md` — issues discovered during user acceptance testing.
+Template for `.forge/phases/XX-name/{phase}-{plan}-UAT.md` — issues discovered during user acceptance testing.
 
 **Purpose:** Capture problems found during verify-work workflow. Unlike global ISSUES.md (for deferred enhancements), this file tracks bugs and problems in specific delivered work.
 
@@ -76,7 +76,7 @@ Template for `.paul/phases/XX-name/{phase}-{plan}-UAT.md` — issues discovered 
 # UAT Issues: Phase 5 Plan 2
 
 **Tested:** 2026-01-15
-**Source:** .paul/phases/05-auth/05-02-SUMMARY.md
+**Source:** .forge/phases/05-auth/05-02-SUMMARY.md
 **Tester:** User via verify-work workflow
 
 ## Open Issues

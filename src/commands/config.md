@@ -1,5 +1,5 @@
 <objective>
-Manage PAUL project configuration and integrations. Create or update .paul/config.md at any point in the project lifecycle.
+Manage FORGE project configuration and integrations. Create or update .forge/config.md at any point in the project lifecycle.
 </objective>
 
 <when_to_use>
@@ -14,7 +14,7 @@ Manage PAUL project configuration and integrations. Create or update .paul/confi
 **Step 1: Check for existing config**
 
 ```bash
-ls .paul/config.md 2>/dev/null
+ls .forge/config.md 2>/dev/null
 ```
 
 **If config exists:**
@@ -86,7 +86,7 @@ Current: [enabled/disabled/not configured]
 
 **If enabling:**
 - Create/update config.md with enterprise_plan_audit.enabled = true
-- Inform: "After /paul:plan, you'll be prompted to run /paul:audit before APPLY."
+- Inform: "After /forge:plan, you'll be prompted to run /forge:audit before APPLY."
 
 **If disabling:**
 - Update config.md with enterprise_plan_audit.enabled = false
@@ -94,7 +94,7 @@ Current: [enabled/disabled/not configured]
 
 **Step 3: Write config**
 
-Create or update `.paul/config.md`:
+Create or update `.forge/config.md`:
 
 ```markdown
 # Project Config
@@ -150,16 +150,16 @@ Integrations:
   SonarQube: [enabled/disabled]
   Enterprise Plan Audit: [enabled/disabled]
 
-Config saved to: .paul/config.md
+Config saved to: .forge/config.md
 
 ────────────────────────────────────────
 [If SonarQube just enabled:]
-▶ NEXT: /paul:quality-gate
+▶ NEXT: /forge:quality-gate
   Run your first code quality scan.
 
 [If Enterprise Plan Audit just enabled:]
 ▶ Enterprise audit will run between PLAN and APPLY.
-  After /paul:plan, you'll be prompted to run /paul:audit.
+  After /forge:plan, you'll be prompted to run /forge:audit.
 
 [Otherwise:]
 Configuration complete.
@@ -169,7 +169,7 @@ Configuration complete.
 </process>
 
 <output>
-- `.paul/config.md` created or updated
+- `.forge/config.md` created or updated
 - Integration status changed as requested
 - Clear next steps if applicable
 </output>

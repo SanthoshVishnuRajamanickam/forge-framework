@@ -12,10 +12,10 @@ Handle phase-level transition after all plans in a phase are complete. Evolves P
 </when_to_use>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/PROJECT.md
-@.paul/ROADMAP.md
-@.paul/phases/{current-phase}/*-SUMMARY.md
+@.forge/STATE.md
+@.forge/PROJECT.md
+@.forge/ROADMAP.md
+@.forge/phases/{current-phase}/*-SUMMARY.md
 </required_reading>
 
 <process>
@@ -53,16 +53,16 @@ Wait for user decision before proceeding.
 <step name="cleanup_handoffs">
 1. Check for stale handoffs in phase directory:
    ```bash
-   ls .paul/phases/{current-phase}/HANDOFF*.md 2>/dev/null
+   ls .forge/phases/{current-phase}/HANDOFF*.md 2>/dev/null
    ```
 2. If found, delete them — phase is complete, handoffs are stale
-3. Note: Active handoffs at `.paul/` root are preserved
+3. Note: Active handoffs at `.forge/` root are preserved
 </step>
 
 <step name="evolve_project">
 **Read phase summaries:**
 ```bash
-cat .paul/phases/{current-phase}/*-SUMMARY.md
+cat .forge/phases/{current-phase}/*-SUMMARY.md
 ```
 
 **Assess and update PROJECT.md:**
@@ -131,8 +131,8 @@ Update Session Continuity:
 
 Last session: [today]
 Stopped at: Phase [N] complete, ready to plan Phase [N+1]
-Next action: /paul:plan for Phase [N+1]
-Resume file: .paul/ROADMAP.md
+Next action: /forge:plan for Phase [N+1]
+Resume file: .forge/ROADMAP.md
 ```
 </step>
 
@@ -198,7 +198,7 @@ Cannot auto-merge. Options:
 
 **3. Stage phase files:**
 ```bash
-git add .paul/phases/{phase}/ .paul/STATE.md .paul/PROJECT.md .paul/ROADMAP.md
+git add .forge/phases/{phase}/ .forge/STATE.md .forge/PROJECT.md .forge/ROADMAP.md
 git add src/  # If source files were modified
 ```
 
@@ -236,13 +236,13 @@ Git commit created: {short-hash}
 <step name="verify_state_consistency" priority="critical">
 **CRITICAL: Verify state files are aligned before declaring transition complete.**
 
-State consistency is foundational to PAUL. If STATE.md, PROJECT.md, or ROADMAP.md are misaligned, all downstream work breaks — resume fails, progress tracking is wrong, context is lost.
+State consistency is foundational to FORGE. If STATE.md, PROJECT.md, or ROADMAP.md are misaligned, all downstream work breaks — resume fails, progress tracking is wrong, context is lost.
 
 **1. Re-read all three files completely:**
 ```bash
-cat .paul/STATE.md
-cat .paul/PROJECT.md
-cat .paul/ROADMAP.md
+cat .forge/STATE.md
+cat .forge/PROJECT.md
+cat .forge/ROADMAP.md
 ```
 
 **2. Verify alignment across these fields:**
@@ -317,7 +317,7 @@ Next: Phase {N+1} — {Name}
 ════════════════════════════════════════
 ```
 
-**Accept:** "1", "yes", "continue" → run `/paul:plan` for Phase N+1
+**Accept:** "1", "yes", "continue" → run `/forge:plan` for Phase N+1
 
 ---
 

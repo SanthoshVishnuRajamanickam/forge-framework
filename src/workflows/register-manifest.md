@@ -1,9 +1,9 @@
 <purpose>
-Generate .paul/paul.json for an existing PAUL project that predates v1.1. Reads current STATE.md to populate fields accurately, falls back to sensible defaults if STATE.md is unreadable.
+Generate .forge/forge.json for an existing FORGE project that predates v1.1. Reads current STATE.md to populate fields accurately, falls back to sensible defaults if STATE.md is unreadable.
 </purpose>
 
 <when_to_use>
-- Project has .paul/ directory but no paul.json
+- Project has .forge/ directory but no forge.json
 - User needs BASE satellite auto-detection to work for this project
 - Migrating a pre-v1.1 project to v1.1+ infrastructure
 </when_to_use>
@@ -11,25 +11,25 @@ Generate .paul/paul.json for an existing PAUL project that predates v1.1. Reads 
 <process>
 
 <step name="validate_preconditions" priority="first">
-1. Check .paul/ exists:
+1. Check .forge/ exists:
    ```bash
-   ls .paul/ 2>/dev/null
+   ls .forge/ 2>/dev/null
    ```
-   If missing: "No .paul/ directory found. Run /paul:init first."
+   If missing: "No .forge/ directory found. Run /forge:init first."
    Stop.
 
-2. Check paul.json doesn't already exist:
+2. Check forge.json doesn't already exist:
    ```bash
-   ls .paul/paul.json 2>/dev/null
+   ls .forge/forge.json 2>/dev/null
    ```
-   If exists: "paul.json already exists. Nothing to do. BASE will detect this project on next session start."
+   If exists: "forge.json already exists. Nothing to do. BASE will detect this project on next session start."
    Stop.
 </step>
 
 <step name="read_state">
-Read .paul/STATE.md to extract current project state:
+Read .forge/STATE.md to extract current project state:
 ```bash
-cat .paul/STATE.md 2>/dev/null
+cat .forge/STATE.md 2>/dev/null
 ```
 
 Extract from STATE.md (best-effort — use defaults if not found):
@@ -51,7 +51,7 @@ Extract from STATE.md (best-effort — use defaults if not found):
 </step>
 
 <step name="create_paul_json">
-Generate `.paul/paul.json` using extracted values:
+Generate `.forge/forge.json` using extracted values:
 
 ```json
 {
@@ -81,15 +81,15 @@ Generate `.paul/paul.json` using extracted values:
 }
 ```
 
-Write to `.paul/paul.json`.
+Write to `.forge/forge.json`.
 </step>
 
 <step name="confirm">
 Report:
 ```
-paul.json created for [project_name]
+forge.json created for [project_name]
 
-.paul/paul.json registered with:
+.forge/forge.json registered with:
   name:      [project_name]
   version:   [version]
   milestone: [milestone_name] ([milestone_status])
@@ -103,5 +103,5 @@ BASE will auto-detect and register this project on next session start.
 </process>
 
 <output>
-`.paul/paul.json` created with current project state populated from STATE.md.
+`.forge/forge.json` created with current project state populated from STATE.md.
 </output>

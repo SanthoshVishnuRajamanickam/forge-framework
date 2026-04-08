@@ -15,14 +15,14 @@ Next phase: UNIFY (after execution completes)
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/phases/{phase}/{plan}-PLAN.md
+@.forge/STATE.md
+@.forge/phases/{phase}/{plan}-PLAN.md
 </required_reading>
 
 <references>
-@~/.claude/paul-framework/references/checkpoints.md (if plan has checkpoints)
-@~/.claude/paul-framework/references/loop-phases.md
-@~/.claude/paul-framework/references/quality-principles.md
+@~/.claude/forge-framework/references/checkpoints.md (if plan has checkpoints)
+@~/.claude/forge-framework/references/loop-phases.md
+@~/.claude/forge-framework/references/quality-principles.md
 </references>
 
 <process>
@@ -235,7 +235,7 @@ Before any verification, honestly report one of:
 
    **Intent (1):** "Let's re-plan this phase with updated intent."
    - Archive current plan: rename with `_superseded` suffix
-   - Route to `/paul:plan` for same phase with updated intent
+   - Route to `/forge:plan` for same phase with updated intent
    - Do NOT patch — the spec itself was wrong
 
    **Spec (2):** "The plan needs updating before we patch code."
@@ -269,7 +269,7 @@ Before any verification, honestly report one of:
    ```
 3. Wait for user selection
 4. **Record decision to STATE.md:**
-   - Open `.paul/STATE.md`
+   - Open `.forge/STATE.md`
    - Find `### Decisions` under `## Accumulated Context`
    - Add row: `| [date]: [Decision summary] | Phase [N] | [Impact on work] |`
 5. Continue with chosen direction
@@ -334,7 +334,7 @@ After all tasks attempted:
 
    [1] Yes, run UNIFY | [2] Pause here
    ```
-4. **Accept quick inputs:** "1", "yes", "continue", "go" → run `/paul:unify [plan-path]`
+4. **Accept quick inputs:** "1", "yes", "continue", "go" → run `/forge:unify [plan-path]`
 </step>
 
 </process>

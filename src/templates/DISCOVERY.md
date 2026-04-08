@@ -1,6 +1,6 @@
 # DISCOVERY.md Template
 
-Template for `.paul/phases/{phase-number}-{name}/DISCOVERY.md` — technical discovery documentation.
+Template for `.forge/phases/{phase-number}-{name}/DISCOVERY.md` — technical discovery documentation.
 
 **Purpose:** Document technical research, options comparison, and recommendations before planning.
 
@@ -115,7 +115,7 @@ Or: "None — discovery answered all questions."
 ---
 *Discovery completed: [date]*
 *Confidence: [level]*
-*Ready for: /paul:plan [phase]*
+*Ready for: /forge:plan [phase]*
 ```
 
 ---

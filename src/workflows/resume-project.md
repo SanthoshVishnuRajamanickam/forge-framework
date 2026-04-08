@@ -1,12 +1,12 @@
 <purpose>
-Resume PAUL work after a session break. Reads STATE.md to restore context, determines current loop position, and routes to exactly ONE next action. Includes handoff lifecycle management.
+Resume FORGE work after a session break. Reads STATE.md to restore context, determines current loop position, and routes to exactly ONE next action. Includes handoff lifecycle management.
 </purpose>
 
 <when_to_use>
-- Starting a new session on an existing PAUL project
+- Starting a new session on an existing FORGE project
 - Context was cleared (new conversation)
 - Handoff from another session
-- User asks to "continue" or "resume" PAUL work
+- User asks to "continue" or "resume" FORGE work
 </when_to_use>
 
 <loop_context>
@@ -22,23 +22,23 @@ No multiple options. Prevents decision fatigue. User can redirect if needed.
 </philosophy>
 
 <required_reading>
-@.paul/STATE.md
+@.forge/STATE.md
 </required_reading>
 
 <references>
-@~/.claude/paul-framework/references/context-management.md
-@~/.claude/paul-framework/references/loop-phases.md
+@~/.claude/forge-framework/references/context-management.md
+@~/.claude/forge-framework/references/loop-phases.md
 </references>
 
 <process>
 
 <step name="verify_paul_exists" priority="first">
-1. Check for .paul/ directory:
+1. Check for .forge/ directory:
    ```bash
-   ls .paul/STATE.md 2>/dev/null
+   ls .forge/STATE.md 2>/dev/null
    ```
 2. If not found:
-   - "No PAUL project found. Run /paul:init first."
+   - "No FORGE project found. Run /forge:init first."
    - Exit workflow
 3. If found: proceed with resume
 </step>
@@ -48,7 +48,7 @@ No multiple options. Prevents decision fatigue. User can redirect if needed.
 
 1. Search for handoff files:
    ```bash
-   ls -t .paul/HANDOFF*.md 2>/dev/null | head -5
+   ls -t .forge/HANDOFF*.md 2>/dev/null | head -5
    ```
 
 2. If handoff argument provided ($ARGUMENTS):
@@ -57,7 +57,7 @@ No multiple options. Prevents decision fatigue. User can redirect if needed.
 
 3. If no argument but handoffs found:
    - Use most recent handoff (by modification time)
-   - Note: `.paul/HANDOFF-{context}.md` is standard pattern
+   - Note: `.forge/HANDOFF-{context}.md` is standard pattern
 
 4. Track handoff for lifecycle:
    - Store path for later archive/delete
@@ -65,7 +65,7 @@ No multiple options. Prevents decision fatigue. User can redirect if needed.
 </step>
 
 <step name="load_state">
-1. Read `.paul/STATE.md`
+1. Read `.forge/STATE.md`
 2. Extract:
    - Current Position (phase, plan, status)
    - Loop Position (PLAN/APPLY/UNIFY markers)
@@ -98,10 +98,10 @@ Based on loop position, determine **exactly ONE** next action:
 
 | Loop State | Single Next Action |
 |------------|-------------------|
-| PLAN ○ (no plan yet) | `/paul:plan` |
-| PLAN ✓, APPLY ○ (plan awaiting approval) | `/paul:apply [plan-path]` |
-| PLAN ✓, APPLY ✓, UNIFY ○ (executed, not reconciled) | `/paul:unify [plan-path]` |
-| All ✓ (loop complete) | `/paul:plan` (next phase) |
+| PLAN ○ (no plan yet) | `/forge:plan` |
+| PLAN ✓, APPLY ○ (plan awaiting approval) | `/forge:apply [plan-path]` |
+| PLAN ✓, APPLY ✓, UNIFY ○ (executed, not reconciled) | `/forge:unify [plan-path]` |
+| All ✓ (loop complete) | `/forge:plan` (next phase) |
 | Blocked | "Address blocker: [specific issue]" |
 
 **Do NOT offer multiple options.** Pick the ONE correct action.
@@ -112,7 +112,7 @@ Display to user with ONE next action:
 
 ```
 ════════════════════════════════════════
-PAUL PROJECT RESUMED
+FORGE PROJECT RESUMED
 ════════════════════════════════════════
 
 Project: [from PROJECT.md]
@@ -137,7 +137,7 @@ Type "yes" to proceed, or provide context for a different action.
 ```
 
 **IMPORTANT:** Do NOT show numbered options (1, 2, 3, 4).
-Show exactly ONE suggested action with the standard PAUL routing format.
+Show exactly ONE suggested action with the standard FORGE routing format.
 </step>
 
 </process>
@@ -149,8 +149,8 @@ When user confirms next action (e.g., "yes", "1", "approved"):
 
 1. **Archive handoff** (if one was consumed):
    ```bash
-   mkdir -p .paul/handoffs/archive
-   mv .paul/HANDOFF-{context}.md .paul/handoffs/archive/
+   mkdir -p .forge/handoffs/archive
+   mv .forge/HANDOFF-{context}.md .forge/handoffs/archive/
    ```
    - Preserves history while removing from active path
    - Alternative: delete if archive not needed
@@ -158,7 +158,7 @@ When user confirms next action (e.g., "yes", "1", "approved"):
 2. **Clean orphaned handoffs:**
    ```bash
    # Find handoffs older than current phase
-   find .paul -maxdepth 1 -name "HANDOFF*.md" -mtime +7 -type f
+   find .forge -maxdepth 1 -name "HANDOFF*.md" -mtime +7 -type f
    ```
    - Move to archive or delete
    - Prevents accumulation of stale handoffs
@@ -182,7 +182,7 @@ When user confirms next action (e.g., "yes", "1", "approved"):
 <error_handling>
 **STATE.md corrupted or incomplete:**
 - Report what's missing
-- Suggest: `/paul:init` to reinitialize (destructive) or manual repair
+- Suggest: `/forge:init` to reinitialize (destructive) or manual repair
 
 **Conflicting information:**
 - STATE.md says X, but files suggest Y

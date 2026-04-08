@@ -2,7 +2,7 @@
 
 ## Purpose
 
-SPECIAL-FLOWS enables explicit tracking of specialized skills, commands, and workflows within PAUL governance. Instead of ad-hoc skill invocation, projects declare which skills apply, when they're required, and UNIFY verifies they were actually used.
+SPECIAL-FLOWS enables explicit tracking of specialized skills, commands, and workflows within FORGE governance. Instead of ad-hoc skill invocation, projects declare which skills apply, when they're required, and UNIFY verifies they were actually used.
 
 **Core principle:** If a skill is important enough to use, it's important enough to track.
 
@@ -16,7 +16,7 @@ Users build specialized skills for their work (e.g., `/revops-expert` for persua
 - Knowledge about "which skills for which work" lives only in human memory
 
 ### The Solution
-Layered reinforcement through the PAUL loop:
+Layered reinforcement through the FORGE loop:
 
 ```
 SPECIAL-FLOWS.md   →  "This project uses X, Y, Z skills"
@@ -159,10 +159,10 @@ When intentional deviation becomes the norm:
 ## Integration Points
 
 ### With Init
-During `/paul:init`, optionally configure specialized flows:
+During `/forge:init`, optionally configure specialized flows:
 - "Do you have specialized skills for this project?"
 - If yes, route to configuration workflow
-- If no, skip (can add later via `/paul:flows`)
+- If no, skip (can add later via `/forge:flows`)
 
 ### With UNIFY
 During UNIFY, audit skill usage:
@@ -176,7 +176,7 @@ Quick reference in PROJECT.md:
 ```markdown
 ## Specialized Flows
 
-See: .paul/SPECIAL-FLOWS.md
+See: .forge/SPECIAL-FLOWS.md
 
 Quick Reference:
 - /revops-expert → Persuasion copy, offers, CTAs

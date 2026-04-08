@@ -1,6 +1,6 @@
 # STATE.md Template
 
-Template for `.paul/STATE.md` — the project's living memory.
+Template for `.forge/STATE.md` — the project's living memory.
 
 **Purpose:** Single source of truth for current position, accumulated context, and session continuity.
 
@@ -13,7 +13,7 @@ Template for `.paul/STATE.md` — the project's living memory.
 
 ## Project Reference
 
-See: .paul/PROJECT.md (updated [YYYY-MM-DD])
+See: .forge/PROJECT.md (updated [YYYY-MM-DD])
 
 **Core value:** [One-liner from PROJECT.md - the ONE thing that matters]
 **Current focus:** [Current milestone and phase name]
@@ -131,7 +131,7 @@ Resume context: [Key information needed to continue]
 **Update:** After every phase/plan state change.
 
 ### Loop Position
-**Purpose:** Visual indicator of PAUL loop state.
+**Purpose:** Visual indicator of FORGE loop state.
 **States:**
 - Planning: PLAN active, APPLY/UNIFY pending
 - Applying: PLAN complete, APPLY active, UNIFY pending

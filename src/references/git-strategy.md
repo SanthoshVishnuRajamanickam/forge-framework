@@ -1,5 +1,5 @@
 <overview>
-Git integration for PAUL workflow.
+Git integration for FORGE workflow.
 </overview>
 
 <core_principle>
@@ -40,7 +40,7 @@ Phases:
 
 What to commit:
 ```bash
-git add .paul/
+git add .forge/
 git commit
 ```
 
@@ -98,14 +98,14 @@ AC Results:
 - AC-1: [PASS/FAIL]
 - AC-2: [PASS/FAIL]
 
-SUMMARY: .paul/phases/XX-name/{phase}-{plan}-SUMMARY.md
+SUMMARY: .forge/phases/XX-name/{phase}-{plan}-SUMMARY.md
 ```
 
 What to commit:
 ```bash
-git add .paul/phases/XX-name/
-git add .paul/STATE.md
-git add .paul/ROADMAP.md
+git add .forge/phases/XX-name/
+git add .forge/STATE.md
+git add .forge/ROADMAP.md
 git commit
 ```
 
@@ -122,7 +122,7 @@ Current: [task name]
 
 What to commit:
 ```bash
-git add .paul/
+git add .forge/
 git commit
 ```
 
@@ -130,7 +130,7 @@ git commit
 
 <example_log>
 
-**Per-task commits (PAUL approach):**
+**Per-task commits (FORGE approach):**
 
 ```
 # Phase 08.5 - Quality Patterns
@@ -153,7 +153,7 @@ a1b2c3 feat(08.5-01): create git-strategy.md
 7k8l9m feat(07-01): add session continuity to STATE.md
 
 # Initialization
-0n1o2p docs: initialize paul-framework (8 phases)
+0n1o2p docs: initialize forge-framework (8 phases)
 ```
 
 Each plan produces 2-4 commits (tasks + metadata). Clear, granular, bisectable.

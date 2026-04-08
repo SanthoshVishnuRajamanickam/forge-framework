@@ -14,25 +14,25 @@ Any position in PLAN/APPLY/UNIFY loop. Captures state regardless of where loop i
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/PROJECT.md
+@.forge/STATE.md
+@.forge/PROJECT.md
 </required_reading>
 
 <references>
-@~/.claude/paul-framework/references/context-management.md
-@~/.claude/paul-framework/templates/HANDOFF.md
+@~/.claude/forge-framework/references/context-management.md
+@~/.claude/forge-framework/templates/HANDOFF.md
 </references>
 
 <process>
 
 <step name="detect_position" priority="first">
-1. Read `.paul/STATE.md` to get:
+1. Read `.forge/STATE.md` to get:
    - Current phase and plan
    - Loop position (PLAN/APPLY/UNIFY markers)
    - Last activity
 2. Identify current working directory:
    ```bash
-   ls -t .paul/phases/*/PLAN*.md 2>/dev/null | head -1
+   ls -t .forge/phases/*/PLAN*.md 2>/dev/null | head -1
    ```
 </step>
 
@@ -58,13 +58,13 @@ If user doesn't provide, summarize from:
 ```bash
 # Generate filename
 TIMESTAMP=$(date +%Y-%m-%d)
-HANDOFF_FILE=".paul/HANDOFF-${TIMESTAMP}.md"
+HANDOFF_FILE=".forge/HANDOFF-${TIMESTAMP}.md"
 ```
 
 **Write content (NOT from template, populate directly):**
 
 ```markdown
-# PAUL Handoff
+# FORGE Handoff
 
 **Date:** [current timestamp]
 **Status:** [paused/blocked/context-limit]
@@ -120,17 +120,17 @@ PLAN ──▶ APPLY ──▶ UNIFY
 
 | File | Purpose |
 |------|---------|
-| `.paul/STATE.md` | Live project state |
-| `.paul/ROADMAP.md` | Phase overview |
+| `.forge/STATE.md` | Live project state |
+| `.forge/ROADMAP.md` | Phase overview |
 | [current plan path] | [plan purpose] |
 
 ---
 
 ## Resume Instructions
 
-1. Read `.paul/STATE.md` for latest position
+1. Read `.forge/STATE.md` for latest position
 2. Check loop position
-3. Run `/paul:resume` or `/paul:progress`
+3. Run `/forge:resume` or `/forge:progress`
 
 ---
 
@@ -141,7 +141,7 @@ Be specific enough for a fresh Claude to understand immediately.
 </step>
 
 <step name="update_state">
-**Update `.paul/STATE.md` Session Continuity section:**
+**Update `.forge/STATE.md` Session Continuity section:**
 
 ```markdown
 ## Session Continuity
@@ -149,7 +149,7 @@ Be specific enough for a fresh Claude to understand immediately.
 Last session: [timestamp]
 Stopped at: [what was happening]
 Next action: [clear directive]
-Resume file: .paul/HANDOFF-[date].md
+Resume file: .forge/HANDOFF-[date].md
 Resume context:
 - [bullet 1 - key context]
 - [bullet 2 - key context]
@@ -186,7 +186,7 @@ Note: Feature branch is useful if work isn't ready for main.
 
 **If main (option 1):**
 ```bash
-git add .paul/ src/
+git add .forge/ src/
 git commit -m "wip({phase}): paused at {plan}
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -198,7 +198,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 git checkout -b feature/{phase-name}
 
 # Commit to feature branch
-git add .paul/ src/
+git add .forge/ src/
 git commit -m "wip({phase}): paused at {plan}
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
@@ -219,10 +219,10 @@ This enables transition-phase.md to know the branch strategy when reconciling.
 
 ```
 ════════════════════════════════════════
-PAUL SESSION PAUSED
+FORGE SESSION PAUSED
 ════════════════════════════════════════
 
-Handoff created: .paul/HANDOFF-[date].md
+Handoff created: .forge/HANDOFF-[date].md
 
 Current State:
   Phase: [N] of [M]
@@ -230,7 +230,7 @@ Current State:
   Loop: [PLAN/APPLY/UNIFY position]
 
 To resume later:
-  /paul:resume
+  /forge:resume
 
 ════════════════════════════════════════
 ```
@@ -239,7 +239,7 @@ To resume later:
 </process>
 
 <output>
-- HANDOFF-{date}.md created in .paul/
+- HANDOFF-{date}.md created in .forge/
 - STATE.md updated with session continuity
 - Optional WIP commit with branch choice (main or feature/{phase})
 - Git strategy recorded in STATE.md for transition-phase
@@ -247,8 +247,8 @@ To resume later:
 </output>
 
 <error_handling>
-**No .paul/ directory:**
-- "No PAUL project found. Nothing to pause."
+**No .forge/ directory:**
+- "No FORGE project found. Nothing to pause."
 
 **STATE.md missing or corrupted:**
 - Create minimal handoff from available context

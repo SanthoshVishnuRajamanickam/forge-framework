@@ -9,19 +9,19 @@ Facilitate vision articulation before planning a phase. Acts as a thinking partn
 <when_to_use>
 - User starting a new phase and wants to think through approach
 - User has rough ideas but needs to articulate them before planning
-- Before /paul:plan when discussion is desired
+- Before /forge:plan when discussion is desired
 - Phase scope is unclear or has multiple possible approaches
 </when_to_use>
 
 <loop_context>
 N/A - This is a pre-planning workflow, not a loop phase.
-After discussion, routes to /paul:plan (plan-phase).
+After discussion, routes to /forge:plan (plan-phase).
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/PROJECT.md (current requirements and progress)
-@.paul/ROADMAP.md (phase scope and goals)
+@.forge/STATE.md
+@.forge/PROJECT.md (current requirements and progress)
+@.forge/ROADMAP.md (phase scope and goals)
 </required_reading>
 
 <references>
@@ -37,8 +37,8 @@ After discussion, routes to /paul:plan (plan-phase).
 ```
 Error: Phase number required.
 
-Usage: /paul:discuss <phase-number>
-Example: /paul:discuss 10
+Usage: /forge:discuss <phase-number>
+Example: /forge:discuss 10
 ```
 Exit workflow.
 
@@ -138,13 +138,13 @@ Confirm with user before proceeding.
 </step>
 
 <step name="write_context">
-Create `.paul/phases/{NN}-{name}/CONTEXT.md`:
+Create `.forge/phases/{NN}-{name}/CONTEXT.md`:
 
 Use CONTEXT.md template format.
 
 Display:
 ```
-Context saved to .paul/phases/{NN}-{name}/CONTEXT.md
+Context saved to .forge/phases/{NN}-{name}/CONTEXT.md
 
 This file persists across /clear so you can take a break if needed.
 ```
@@ -165,22 +165,22 @@ Status: Ready for planning
 Context saved for handoff.
 
 ────────────────────────────────────────
-▶ NEXT: /paul:plan
+▶ NEXT: /forge:plan
   Create the plan structure from this context
 ────────────────────────────────────────
 
 Type "yes" to proceed, or continue discussing.
 ```
 
-**Accept:** "yes", "go", "plan" → run `/paul:plan`
+**Accept:** "yes", "go", "plan" → run `/forge:plan`
 </step>
 
 </process>
 
 <output>
-- .paul/phases/{NN}-{name}/CONTEXT.md created (handoff file)
+- .forge/phases/{NN}-{name}/CONTEXT.md created (handoff file)
 - Goals and approach articulated
-- Ready for /paul:plan to consume
+- Ready for /forge:plan to consume
 </output>
 
 <success_criteria>
@@ -190,7 +190,7 @@ Type "yes" to proceed, or continue discussing.
 - [ ] Approach discussed
 - [ ] Context synthesized and confirmed
 - [ ] CONTEXT.md written to phase directory
-- [ ] Clear handoff to /paul:plan
+- [ ] Clear handoff to /forge:plan
 </success_criteria>
 
 <anti_patterns>
@@ -212,7 +212,7 @@ DO: Always write the file so /clear doesn't lose progress.
 
 **Duplicating assumptions workflow:**
 DON'T: Surface Claude's assumptions here.
-DO: Focus on user input. Use /paul:assumptions for Claude's analysis.
+DO: Focus on user input. Use /forge:assumptions for Claude's analysis.
 </anti_patterns>
 
 <error_handling>
@@ -226,6 +226,6 @@ DO: Focus on user input. Use /paul:assumptions for Claude's analysis.
 - Ask: "What's the most critical part?"
 
 **User wants to skip discussion:**
-- Route directly to /paul:plan
+- Route directly to /forge:plan
 - Note: "Going straight to planning — no discussion context will be available"
 </error_handling>

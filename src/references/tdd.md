@@ -56,8 +56,8 @@ Output: [Working, tested feature]
 
 ## Context
 
-@.paul/PROJECT.md
-@.paul/ROADMAP.md
+@.forge/PROJECT.md
+@.forge/ROADMAP.md
 @relevant/source/files.ts
 
 ## Acceptance Criteria
@@ -142,7 +142,7 @@ DO NOT CHANGE: [files outside TDD scope]
 
 <commit_pattern>
 
-## PAUL Commit Pattern for TDD Plans
+## FORGE Commit Pattern for TDD Plans
 
 TDD plans produce 2-3 atomic commits (one per phase):
 

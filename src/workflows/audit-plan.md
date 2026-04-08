@@ -4,7 +4,7 @@ Perform an enterprise-grade architectural audit on an approved PLAN.md. Assume t
 
 <when_to_use>
 - After PLAN phase when `enterprise_plan_audit: enabled: true` in config.md
-- When `/paul:audit` is explicitly invoked by the user
+- When `/forge:audit` is explicitly invoked by the user
 - Before APPLY phase to strengthen plan quality for commercial/enterprise software
 </when_to_use>
 
@@ -15,9 +15,9 @@ Next phase: APPLY (after audit and approval)
 </loop_context>
 
 <required_reading>
-@.paul/STATE.md
-@.paul/config.md
-@.paul/phases/{phase}/{plan}-PLAN.md
+@.forge/STATE.md
+@.forge/config.md
+@.forge/phases/{phase}/{plan}-PLAN.md
 </required_reading>
 
 <process>
@@ -27,7 +27,7 @@ Next phase: APPLY (after audit and approval)
    - Loop position shows PLAN complete (checkmark on PLAN)
    - A plan path exists (from $ARGUMENTS or infer from STATE.md "Resume file" field)
 2. If no plan found:
-   - Error: "No plan found to audit. Run /paul:plan first."
+   - Error: "No plan found to audit. Run /forge:plan first."
    - Exit workflow
 3. If loop is not at PLAN complete:
    - Warn: "Loop not at PLAN stage. Current state: [state]"
@@ -37,7 +37,7 @@ Next phase: APPLY (after audit and approval)
    - If not enabled or config missing: display warning but allow manual invocation:
      ```
      Enterprise plan audit is not enabled in config.
-     Running audit manually. To auto-suggest after /paul:plan, add to config.md:
+     Running audit manually. To auto-suggest after /forge:plan, add to config.md:
 
      enterprise_plan_audit:
        enabled: true
@@ -242,7 +242,7 @@ Write the audit report to `{NN}-{PP}-AUDIT.md` in the same phase directory as th
 **Plan status:** [Updated and ready for APPLY / Requires manual review before APPLY]
 
 ---
-*Audit performed by PAUL Enterprise Audit Workflow*
+*Audit performed by FORGE Enterprise Audit Workflow*
 *Audit template version: 1.0*
 ```
 </step>
@@ -285,7 +285,7 @@ Continue to APPLY?
 ```
 
 **Accept quick inputs:**
-- "1", "approved", "yes", "go" → run `/paul:apply [plan-path]`
+- "1", "approved", "yes", "go" → run `/forge:apply [plan-path]`
 - "2", "review" → Read and display the AUDIT.md report contents
 
 **If verdict is "not acceptable":**
@@ -312,7 +312,7 @@ Do NOT offer direct APPLY routing when verdict is "not acceptable".
 <error_handling>
 **Plan not found:**
 - Check STATE.md for correct path
-- Ask user to confirm plan location or run /paul:plan first
+- Ask user to confirm plan location or run /forge:plan first
 
 **Config missing enterprise_plan_audit:**
 - Warn but proceed (manual invocation is always valid)

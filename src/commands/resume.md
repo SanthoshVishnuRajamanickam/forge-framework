@@ -1,33 +1,33 @@
 ---
-name: paul:resume
+name: forge:resume
 description: Restore context from handoff and continue work
-argument-hint: "[optional: handoff path, e.g., '.paul/HANDOFF-phase10-audit.md']"
+argument-hint: "[optional: handoff path, e.g., '.forge/HANDOFF-phase10-audit.md']"
 allowed-tools: [Read, Glob, Bash]
 ---
 
 <objective>
-Restore PAUL context after a session break, determine current position, and suggest exactly ONE next action.
+Restore FORGE context after a session break, determine current position, and suggest exactly ONE next action.
 
-**When to use:** Starting a new session on an existing PAUL project.
+**When to use:** Starting a new session on an existing FORGE project.
 
 **Handoff lifecycle:** Detects handoffs, presents content, archives after work proceeds.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/resume-project.md
+@~/.claude/forge-framework/workflows/resume-project.md
 </execution_context>
 
 <context>
 $ARGUMENTS (optional handoff path)
 
-@.paul/STATE.md
+@.forge/STATE.md
 </context>
 
 <process>
-**Follow workflow: @~/.claude/paul-framework/workflows/resume-project.md**
+**Follow workflow: @~/.claude/forge-framework/workflows/resume-project.md**
 
 The workflow implements:
-1. Verify .paul/ exists
+1. Verify .forge/ exists
 2. Detect handoff files (use $ARGUMENTS if provided, else find most recent)
 3. Load STATE.md
 4. Present handoff content if detected
@@ -38,7 +38,7 @@ The workflow implements:
 
 **Key behavior:** Suggest exactly ONE next action, not multiple options.
 
-**Handoff pattern:** `.paul/HANDOFF-{context}.md` (e.g., `HANDOFF-phase10-audit.md`)
+**Handoff pattern:** `.forge/HANDOFF-{context}.md` (e.g., `HANDOFF-phase10-audit.md`)
 </process>
 
 <success_criteria>

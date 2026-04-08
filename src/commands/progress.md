@@ -1,5 +1,5 @@
 ---
-name: paul:progress
+name: forge:progress
 description: Smart status with routing - suggests ONE next action
 argument-hint: "[context]"
 allowed-tools: [Read]
@@ -10,7 +10,7 @@ Show current progress and **route to exactly ONE next action**. Prevents decisio
 
 **When to use:**
 - Mid-session check on progress
-- After `/paul:resume` for more context
+- After `/forge:resume` for more context
 - When unsure what to do next
 - To get a tailored suggestion based on your current focus
 </objective>
@@ -21,14 +21,14 @@ Show current progress and **route to exactly ONE next action**. Prevents decisio
 <context>
 $ARGUMENTS
 
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 </context>
 
 <process>
 
 <step name="load_state">
-Read `.paul/STATE.md` and `.paul/ROADMAP.md`:
+Read `.forge/STATE.md` and `.forge/ROADMAP.md`:
 - Current phase and total phases
 - Current plan (if any)
 - Loop position (PLAN/APPLY/UNIFY markers)
@@ -36,7 +36,7 @@ Read `.paul/STATE.md` and `.paul/ROADMAP.md`:
 - Performance metrics (if tracked)
 - Blockers or concerns
 
-Also check `.paul/config.md` (if exists):
+Also check `.forge/config.md` (if exists):
 - Is `enterprise_plan_audit: enabled: true`?
 - If plan is at "created, awaiting approval" stage: check if STATE.md mentions "audited"
 - Store `audit_enabled` and `audit_completed` flags for routing
@@ -74,15 +74,15 @@ Based on state (+ user context if provided), determine **ONE** next action:
 
 | Situation | Single Suggestion |
 |-----------|-------------------|
-| No plan exists | `/paul:plan` |
-| Plan awaiting approval (audit enabled, not yet audited) | `/paul:audit [path]` |
+| No plan exists | `/forge:plan` |
+| Plan awaiting approval (audit enabled, not yet audited) | `/forge:audit [path]` |
 | Plan awaiting approval (audit complete or not enabled) | "Approve plan to proceed" |
-| Plan approved, not executed | `/paul:apply [path]` |
-| Applied, not unified | `/paul:unify [path]` |
-| Loop complete, more phases | `/paul:plan` (next phase) |
+| Plan approved, not executed | `/forge:apply [path]` |
+| Applied, not unified | `/forge:unify [path]` |
+| Loop complete, more phases | `/forge:plan` (next phase) |
 | Milestone complete | "Create next milestone or ship" |
 | Blockers present | "Address blocker: [specific]" |
-| Context at DEEP/CRITICAL | `/paul:pause` |
+| Context at DEEP/CRITICAL | `/forge:pause` |
 
 **With user context:** Adjust suggestion to align with stated intent.
 
@@ -94,7 +94,7 @@ Show progress with single routing:
 
 ```
 ════════════════════════════════════════
-PAUL PROGRESS
+FORGE PROGRESS
 ════════════════════════════════════════
 
 Milestone: [name] - [X]% complete
@@ -110,7 +110,7 @@ Current Loop: Phase 2, Plan 02-03
 └─────────────────────────────────────┘
 
 ────────────────────────────────────────
-▶ NEXT: /paul:unify .paul/phases/02-features/02-03-PLAN.md
+▶ NEXT: /forge:unify .forge/phases/02-features/02-03-PLAN.md
   Close the loop and update state.
 ────────────────────────────────────────
 
@@ -123,7 +123,7 @@ If context is at DEEP or CRITICAL bracket:
 
 ```
 ⚠️ Context Advisory: Session at [X]% capacity.
-   Recommended: /paul:pause before continuing.
+   Recommended: /forge:pause before continuing.
 ```
 </step>
 

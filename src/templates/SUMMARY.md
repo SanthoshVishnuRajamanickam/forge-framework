@@ -1,6 +1,6 @@
 # SUMMARY.md Template
 
-Template for `.paul/phases/{phase-number}-{name}/{phase}-{plan}-SUMMARY.md` — plan completion documentation.
+Template for `.forge/phases/{phase-number}-{name}/{phase}-{plan}-SUMMARY.md` — plan completion documentation.
 
 **Purpose:** Document what was built, decisions made, deviations from plan, and readiness for next phase.
 

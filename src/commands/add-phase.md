@@ -1,5 +1,5 @@
 ---
-name: paul:add-phase
+name: forge:add-phase
 description: Add a new phase to current milestone
 argument-hint: "[phase-name]"
 allowed-tools: [Read, Write, Edit, Bash]
@@ -12,19 +12,19 @@ Add a new phase to the current milestone's roadmap.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/roadmap-management.md
+@~/.claude/forge-framework/workflows/roadmap-management.md
 </execution_context>
 
 <context>
 $ARGUMENTS
 
-@.paul/PROJECT.md
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/PROJECT.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 </context>
 
 <process>
-Follow workflow: @~/.claude/paul-framework/workflows/roadmap-management.md
+Follow workflow: @~/.claude/forge-framework/workflows/roadmap-management.md
 
 Execute: **add-phase** operation
 </process>

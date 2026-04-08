@@ -6,7 +6,7 @@ Strategies for working effectively within context window limits. Context is a fi
 
 ## Context Brackets
 
-PAUL uses context brackets to adapt behavior based on remaining capacity:
+FORGE uses context brackets to adapt behavior based on remaining capacity:
 
 | Bracket | Remaining | Mode | Behavior |
 |---------|-----------|------|----------|
@@ -47,17 +47,17 @@ PAUL uses context brackets to adapt behavior based on remaining capacity:
 ```markdown
 <!-- GOOD: Targeted loading -->
 <context>
-@.paul/STATE.md
+@.forge/STATE.md
 @src/models/user.ts  (the specific file being modified)
 </context>
 
 <!-- BAD: Kitchen sink -->
 <context>
-@.paul/PROJECT.md
-@.paul/ROADMAP.md
-@.paul/STATE.md
-@.paul/phases/01-foundation/01-01-SUMMARY.md
-@.paul/phases/01-foundation/01-02-SUMMARY.md
+@.forge/PROJECT.md
+@.forge/ROADMAP.md
+@.forge/STATE.md
+@.forge/phases/01-foundation/01-01-SUMMARY.md
+@.forge/phases/01-foundation/01-02-SUMMARY.md
 @src/models/user.ts
 @src/models/product.ts
 @src/api/routes.ts
@@ -69,11 +69,11 @@ When referencing prior work:
 
 ```markdown
 <!-- GOOD: Reference summary -->
-@.paul/phases/01-foundation/01-01-SUMMARY.md
+@.forge/phases/01-foundation/01-01-SUMMARY.md
 
 <!-- AVOID: Full plan + summary -->
-@.paul/phases/01-foundation/01-01-PLAN.md
-@.paul/phases/01-foundation/01-01-SUMMARY.md
+@.forge/phases/01-foundation/01-01-PLAN.md
+@.forge/phases/01-foundation/01-01-SUMMARY.md
 ```
 
 Summaries capture what was built. Plans capture what was intended. After completion, the summary is more useful.
@@ -134,7 +134,7 @@ depends_on: ["01-01", "01-02"]  # Genuine: imports types from both
 
 ## Session Handoffs
 
-When context is exhausted or work spans sessions, PAUL provides explicit handoff support.
+When context is exhausted or work spans sessions, FORGE provides explicit handoff support.
 
 ### Two Levels of Continuity
 
@@ -152,7 +152,7 @@ Always updated. Minimal but sufficient for quick resume:
 Last session: 2026-01-28 11:15
 Stopped at: Phase 3, Plan 01, Task 2 complete
 Next action: Create context-management.md reference
-Resume file: .paul/phases/03-references-layer/03-01-PLAN.md
+Resume file: .forge/phases/03-references-layer/03-01-PLAN.md
 Resume context:
 - Task 1 complete (checkpoints.md, plan-format.md created)
 - Task 2 in progress
@@ -160,7 +160,7 @@ Resume context:
 ```
 
 ### HANDOFF.md Document
-For zero-context sessions or complex multi-session work. Created by `/paul:pause`:
+For zero-context sessions or complex multi-session work. Created by `/forge:pause`:
 
 - Self-contained entry point (assumes no prior context)
 - What was accomplished this session
@@ -178,9 +178,9 @@ For zero-context sessions or complex multi-session work. Created by `/paul:pause
 
 | Command | Purpose |
 |---------|---------|
-| `/paul:pause` | Create HANDOFF, update STATE, prepare for break |
-| `/paul:resume` | Restore context from HANDOFF/STATE, suggest next action |
-| `/paul:progress` | Mid-session check, suggests ONE next action |
+| `/forge:pause` | Create HANDOFF, update STATE, prepare for break |
+| `/forge:resume` | Restore context from HANDOFF/STATE, suggest next action |
+| `/forge:progress` | Mid-session check, suggests ONE next action |
 
 ## Anti-Patterns
 

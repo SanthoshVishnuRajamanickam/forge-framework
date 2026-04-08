@@ -1,5 +1,5 @@
 <objective>
-Analyze existing codebase and create structured documentation in .paul/codebase/
+Analyze existing codebase and create structured documentation in .forge/codebase/
 
 Spawns parallel Explore agents to analyze technology stack, architecture, conventions, testing patterns, external integrations, and areas of concern.
 </objective>
@@ -12,7 +12,7 @@ Spawns parallel Explore agents to analyze technology stack, architecture, conven
 **Follow workflow:** @src/workflows/map-codebase.md
 
 The workflow implements:
-1. Check if .paul/codebase/ exists (offer refresh/update/skip)
+1. Check if .forge/codebase/ exists (offer refresh/update/skip)
 2. Create directory structure
 3. Spawn 4 parallel Explore agents:
    - Agent 1: Stack + Integrations (Technology Focus)
@@ -26,7 +26,7 @@ The workflow implements:
 </process>
 
 <success_criteria>
-- [ ] .paul/codebase/ directory created
+- [ ] .forge/codebase/ directory created
 - [ ] All 7 documents populated with findings
 - [ ] Documents include actual file paths (actionable)
 - [ ] Codebase map committed

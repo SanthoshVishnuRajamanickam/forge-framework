@@ -1,9 +1,9 @@
 <purpose>
-Initialize PAUL structure in a new project. Creates .paul/ directory with PROJECT.md, ROADMAP.md, STATE.md, and phases/ directory. Gathers project context through a type-adapted requirements walkthrough before populating files — instead of leaving skeleton placeholders for planning to fill.
+Initialize FORGE structure in a new project. Creates .forge/ directory with PROJECT.md, ROADMAP.md, STATE.md, and phases/ directory. Gathers project context through a type-adapted requirements walkthrough before populating files — instead of leaving skeleton placeholders for planning to fill.
 </purpose>
 
 <when_to_use>
-- Starting PAUL in a project that doesn't have .paul/ directory
+- Starting FORGE in a project that doesn't have .forge/ directory
 - User explicitly requests project initialization
 - Beginning a new project from scratch
 </when_to_use>
@@ -24,20 +24,20 @@ After init, project is ready for first PLAN.
 
 <references>
 @src/templates/config.md
-@src/templates/paul-json.md
+@src/templates/forge-json.md
 @src/references/sonarqube-integration.md
 </references>
 
 <process>
 
 <step name="check_existing" priority="first">
-1. Check if .paul/ directory exists:
+1. Check if .forge/ directory exists:
    ```bash
-   ls .paul/ 2>/dev/null
+   ls .forge/ 2>/dev/null
    ```
 2. If exists:
-   - "PAUL already initialized in this project."
-   - Route to `/paul:resume` or `/paul:progress`
+   - "FORGE already initialized in this project."
+   - Route to `/forge:resume` or `/forge:progress`
    - Exit this workflow
 3. If not exists: proceed with initialization
 </step>
@@ -54,7 +54,7 @@ After init, project is ready for first PLAN.
      ```
      Found PLANNING.md in this directory.
 
-     This file contains project requirements that can populate your PAUL setup
+     This file contains project requirements that can populate your FORGE setup
      automatically — instead of answering setup questions from scratch.
 
      [1] Yes, import from PLANNING.md
@@ -76,12 +76,12 @@ After init, project is ready for first PLAN.
 <step name="create_structure">
 Create directories first (gives immediate feedback):
 ```bash
-mkdir -p .paul/phases
+mkdir -p .forge/phases
 ```
 
 Display:
 ```
-PAUL structure created.
+FORGE structure created.
 
 Before planning, I need to understand what you're building.
 ```
@@ -132,7 +132,7 @@ Store as `project_name`.
 </step>
 
 <step name="detect_project_type">
-**Determine what kind of project this is — instead of assuming everything is a software application, because PAUL manages campaigns, workflows, and other non-code projects equally well.**
+**Determine what kind of project this is — instead of assuming everything is a software application, because FORGE manages campaigns, workflows, and other non-code projects equally well.**
 
 Present type selection:
 ```
@@ -216,19 +216,19 @@ Wait for user response at each section boundary before proceeding.
 Present SEED recommendation:
 ```
 This project has significant scope. For deeper incubation — detailed planning,
-phased breakdown, design decisions, data model design — PAUL has a companion
+phased breakdown, design decisions, data model design — FORGE has a companion
 tool called SEED that specializes in this.
 
-SEED produces a PLANNING.md that PAUL can consume directly.
+SEED produces a PLANNING.md that FORGE can consume directly.
 
 [1] Install SEED and start there (recommended for complex projects)
-[2] Continue with PAUL init using what we've gathered
+[2] Continue with FORGE init using what we've gathered
 ```
 
 Wait for user response.
 
 **If "1" or "install":**
-1. Run: `npx paul-framework add-skill seed` (or applicable install command)
+1. Run: `npx forge-framework add-skill seed` (or applicable install command)
 2. Display: "SEED installed. Starting ideation with your project context..."
 3. Hand off to `/seed` — pass project_name, description, core_value, project_type, and any gathered requirements as context
 4. Exit init workflow (SEED will handle the rest; user returns via `/seed launch`)
@@ -240,7 +240,7 @@ Wait for user response.
 <step name="create_project_md">
 **Generate PROJECT.md populated from walkthrough data — instead of skeleton placeholders, because plans built against real requirements produce better output.**
 
-Create `.paul/PROJECT.md`:
+Create `.forge/PROJECT.md`:
 
 ```markdown
 # [project_name]
@@ -321,11 +321,11 @@ None yet.
 
 **If PLANNING.md was imported:** Populate all sections from parsed PLANNING.md data instead of walkthrough data. Preserve all decisions, tech stack choices, phase breakdowns, and constraints from the original document.
 
-**Fallback:** If any section has no data from the walkthrough (user skipped or answered minimally), use a single-line placeholder: `- To be defined during /paul:plan` — instead of multi-line placeholder blocks, because minimal placeholders signal "not yet explored" without cluttering the document.
+**Fallback:** If any section has no data from the walkthrough (user skipped or answered minimally), use a single-line placeholder: `- To be defined during /forge:plan` — instead of multi-line placeholder blocks, because minimal placeholders signal "not yet explored" without cluttering the document.
 </step>
 
 <step name="create_roadmap_md">
-Create `.paul/ROADMAP.md`:
+Create `.forge/ROADMAP.md`:
 
 ```markdown
 # Roadmap: [project_name]
@@ -346,7 +346,7 @@ Phases: 0 of TBD complete
 
 ## Phase Details
 
-Phases will be defined during `/paul:plan`.
+Phases will be defined during `/forge:plan`.
 
 ---
 *Roadmap created: [timestamp]*
@@ -356,14 +356,14 @@ Note: Phase details are populated during planning, not init.
 </step>
 
 <step name="create_state_md">
-Create `.paul/STATE.md`:
+Create `.forge/STATE.md`:
 
 ```markdown
 # Project State
 
 ## Project Reference
 
-See: .paul/PROJECT.md (updated [timestamp])
+See: .forge/PROJECT.md (updated [timestamp])
 
 **Core value:** [core_value]
 **Current focus:** Project initialized — ready for planning
@@ -402,8 +402,8 @@ None yet.
 
 Last session: [timestamp]
 Stopped at: Project initialization complete
-Next action: Run /paul:plan to define phases and first plan
-Resume file: .paul/PROJECT.md
+Next action: Run /forge:plan to define phases and first plan
+Resume file: .forge/PROJECT.md
 
 ---
 *STATE.md — Updated after every significant action*
@@ -413,9 +413,9 @@ Resume file: .paul/PROJECT.md
 <step name="create_paul_json">
 **Create satellite manifest for external system discovery.**
 
-Reference: @src/templates/paul-json.md
+Reference: @src/templates/forge-json.md
 
-Create `.paul/paul.json`:
+Create `.forge/forge.json`:
 ```json
 {
   "name": "[project_name]",
@@ -444,7 +444,7 @@ Create `.paul/paul.json`:
 }
 ```
 
-**Note:** paul.json is infrastructure — no extra display or user prompts needed.
+**Note:** forge.json is infrastructure — no extra display or user prompts needed.
 </step>
 
 <step name="prompt_integrations">
@@ -473,7 +473,7 @@ Wait for user response.
    - If user presses Enter: use `project_name`
    - Otherwise: use provided key
 
-2. Create `.paul/config.md`:
+2. Create `.forge/config.md`:
    ```markdown
    # Project Config
 
@@ -545,7 +545,7 @@ Store `enterprise_audit_enabled = false`
 
 If `sonarqube_enabled` OR `enterprise_audit_enabled`:
 
-Create `.paul/config.md`:
+Create `.forge/config.md`:
 ```markdown
 # Project Config
 
@@ -594,7 +594,7 @@ Store `integrations_enabled = true`
 **If neither was enabled:**
 
 Store `integrations_enabled = false`
-(Don't create config.md - user can add later via /paul:config)
+(Don't create config.md - user can add later via /forge:config)
 </step>
 
 <step name="check_specialized_flows">
@@ -605,7 +605,7 @@ Do you have specialized skills or commands for this project?
 (e.g., /revops-expert, /frontend-design, custom workflows)
 
 [1] Yes, configure now
-[2] Skip for now (add later via /paul:flows)
+[2] Skip for now (add later via /forge:flows)
 ```
 
 Wait for user response.
@@ -620,7 +620,7 @@ Wait for user response.
 **If "2" or "skip" or "no":**
 
 Store `specialized_flows_enabled = false`
-(User can add later via /paul:flows)
+(User can add later via /forge:flows)
 </step>
 
 <step name="confirm_and_route">
@@ -630,7 +630,7 @@ Store `specialized_flows_enabled = false`
 
 ```
 ════════════════════════════════════════
-PAUL INITIALIZED
+FORGE INITIALIZED
 ════════════════════════════════════════
 
 Project: [project_name]
@@ -638,16 +638,16 @@ Type: [project_type]
 Core value: [core_value]
 
 Created:
-  .paul/PROJECT.md    ✓  (requirements populated from walkthrough)
-  .paul/ROADMAP.md    ✓
-  .paul/STATE.md      ✓
-  .paul/paul.json     ✓
-  .paul/config.md     ✓  (if integrations_enabled: list enabled integrations)
-  .paul/SPECIAL-FLOWS.md  ✓  (if specialized_flows_enabled: "[N] skills configured")
-  .paul/phases/       ✓
+  .forge/PROJECT.md    ✓  (requirements populated from walkthrough)
+  .forge/ROADMAP.md    ✓
+  .forge/STATE.md      ✓
+  .forge/forge.json     ✓
+  .forge/config.md     ✓  (if integrations_enabled: list enabled integrations)
+  .forge/SPECIAL-FLOWS.md  ✓  (if specialized_flows_enabled: "[N] skills configured")
+  .forge/phases/       ✓
 
 ────────────────────────────────────────
-▶ NEXT: /paul:plan
+▶ NEXT: /forge:plan
   Define your phases and create your first plan.
 ────────────────────────────────────────
 
@@ -660,7 +660,7 @@ If neither was enabled, show the minimal version without those lines.
 **Config line detail:** When showing config.md, list what's enabled:
 - If sonarqube_enabled: include "SonarQube"
 - If enterprise_audit_enabled: include "Enterprise Plan Audit"
-- Example: `.paul/config.md ✓ (SonarQube, Enterprise Plan Audit enabled)`
+- Example: `.forge/config.md ✓ (SonarQube, Enterprise Plan Audit enabled)`
 
 **Do NOT suggest multiple next steps.** ONE action only.
 </step>
@@ -668,15 +668,15 @@ If neither was enabled, show the minimal version without those lines.
 </process>
 
 <output>
-- `.paul/` directory structure
-- `.paul/PROJECT.md` (populated from walkthrough or PLANNING.md import)
-- `.paul/ROADMAP.md` (skeleton for planning)
-- `.paul/STATE.md` (initialized state)
-- `.paul/paul.json` (satellite manifest for external system discovery)
-- `.paul/config.md` (if integrations enabled)
-- `.paul/SPECIAL-FLOWS.md` (if specialized flows enabled)
-- `.paul/phases/` (empty directory)
-- Clear routing to `/paul:plan`
+- `.forge/` directory structure
+- `.forge/PROJECT.md` (populated from walkthrough or PLANNING.md import)
+- `.forge/ROADMAP.md` (skeleton for planning)
+- `.forge/STATE.md` (initialized state)
+- `.forge/forge.json` (satellite manifest for external system discovery)
+- `.forge/config.md` (if integrations enabled)
+- `.forge/SPECIAL-FLOWS.md` (if specialized flows enabled)
+- `.forge/phases/` (empty directory)
+- Clear routing to `/forge:plan`
 </output>
 
 <error_handling>
@@ -685,7 +685,7 @@ If neither was enabled, show the minimal version without those lines.
 - Ask user to check permissions
 
 **User declines to answer:**
-- Use single-line placeholder: "- To be defined during /paul:plan"
+- Use single-line placeholder: "- To be defined during /forge:plan"
 - Note that planning will ask for this information
 
 **Partial creation failure:**

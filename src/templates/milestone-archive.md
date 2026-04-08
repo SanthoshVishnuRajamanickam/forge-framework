@@ -1,6 +1,6 @@
 # Milestone Archive Template
 
-Template for milestone archives at `.paul/milestones/v{VERSION}-{NAME}.md`.
+Template for milestone archives at `.forge/milestones/v{VERSION}-{NAME}.md`.
 
 **Purpose:** Preserve complete phase details for completed milestones. Created by complete-milestone workflow when a milestone ships.
 
@@ -112,7 +112,7 @@ None
 
 ## Filename Convention
 
-**Pattern:** `.paul/milestones/v{VERSION}-{NAME}.md`
+**Pattern:** `.forge/milestones/v{VERSION}-{NAME}.md`
 
 **Rules:**
 - VERSION: Numeric version without `v` prefix in filename → `0.2`, `1.0`, `2.0`
@@ -193,7 +193,7 @@ Plans:
 
 **Goal:** Project-level Claude Code configuration
 **Depends on:** Phase 8.5
-**Reason:** Improve agent context for PAUL projects
+**Reason:** Improve agent context for FORGE projects
 
 Plans:
 - [x] 08.6-01: CLAUDE.md template for codebase guidance

@@ -1,5 +1,5 @@
 ---
-name: paul:audit
+name: forge:audit
 description: Run enterprise-grade architectural audit on current plan
 argument-hint: "[plan-path]"
 allowed-tools: [Read, Write, Edit, Glob, AskUserQuestion]
@@ -16,18 +16,18 @@ Produces an AUDIT.md report in the same phase directory.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/audit-plan.md
+@~/.claude/forge-framework/workflows/audit-plan.md
 </execution_context>
 
 <context>
 Plan path: $ARGUMENTS
 
-@.paul/STATE.md
-@.paul/config.md
+@.forge/STATE.md
+@.forge/config.md
 </context>
 
 <process>
-**Follow workflow: @~/.claude/paul-framework/workflows/audit-plan.md**
+**Follow workflow: @~/.claude/forge-framework/workflows/audit-plan.md**
 
 The workflow implements:
 1. Validate preconditions (PLAN exists, loop at PLAN complete)

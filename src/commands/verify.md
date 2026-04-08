@@ -1,5 +1,5 @@
 ---
-name: paul:verify
+name: forge:verify
 description: Guide manual user acceptance testing of recently built features
 argument-hint: "[optional: phase or plan number, e.g., '4' or '04-02']"
 allowed-tools: [Read, Bash, Glob, Grep, Edit, Write, AskUserQuestion]
@@ -14,8 +14,8 @@ Guide the user through manual acceptance testing of recently built features.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/verify-work.md
-@~/.claude/paul-framework/templates/UAT-ISSUES.md
+@~/.claude/forge-framework/workflows/verify-work.md
+@~/.claude/forge-framework/templates/UAT-ISSUES.md
 </execution_context>
 
 <context>
@@ -23,12 +23,12 @@ Scope: $ARGUMENTS (optional)
 - If provided: Test specific phase or plan (e.g., "4" or "04-02")
 - If not provided: Test most recently completed plan
 
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 </context>
 
 <process>
-**Follow workflow: @~/.claude/paul-framework/workflows/verify-work.md**
+**Follow workflow: @~/.claude/forge-framework/workflows/verify-work.md**
 
 The workflow implements:
 1. Identify test scope (specified or most recent SUMMARY)
@@ -46,7 +46,7 @@ The workflow implements:
 - [ ] Checklist generated based on deliverables
 - [ ] User guided through each test
 - [ ] All test results captured (pass/fail/partial/skip)
-- [ ] Any issues logged to `.paul/phases/XX-name/{plan}-UAT.md`
+- [ ] Any issues logged to `.forge/phases/XX-name/{plan}-UAT.md`
 - [ ] Summary presented with verdict
 - [ ] User knows next steps based on results
 </success_criteria>

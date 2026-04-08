@@ -1,5 +1,5 @@
 ---
-name: paul:milestone
+name: forge:milestone
 description: Create a new milestone in the project
 argument-hint: "[milestone-name]"
 allowed-tools: [Read, Write, Edit, Bash, Glob, AskUserQuestion]
@@ -12,19 +12,19 @@ Create a new milestone with defined scope and phases.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/create-milestone.md
+@~/.claude/forge-framework/workflows/create-milestone.md
 </execution_context>
 
 <context>
 $ARGUMENTS
 
-@.paul/PROJECT.md
-@.paul/STATE.md
-@.paul/ROADMAP.md
+@.forge/PROJECT.md
+@.forge/STATE.md
+@.forge/ROADMAP.md
 </context>
 
 <process>
-Follow workflow: @~/.claude/paul-framework/workflows/create-milestone.md
+Follow workflow: @~/.claude/forge-framework/workflows/create-milestone.md
 </process>
 
 <success_criteria>

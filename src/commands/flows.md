@@ -1,12 +1,12 @@
 ---
-name: paul:flows
+name: forge:flows
 description: Configure specialized workflow integrations
 argument-hint: "[add|audit|list]"
 allowed-tools: [Read, Write, Bash, Glob]
 ---
 
 <objective>
-Configure, amend, or audit specialized skill integrations for a PAUL project.
+Configure, amend, or audit specialized skill integrations for a FORGE project.
 
 **When to use:**
 - Setting up skill dependencies for a new project
@@ -22,16 +22,16 @@ Configure, amend, or audit specialized skill integrations for a PAUL project.
 </objective>
 
 <execution_context>
-@~/.claude/paul-framework/workflows/configure-special-flows.md
-@~/.claude/paul-framework/references/specialized-workflow-integration.md
+@~/.claude/forge-framework/workflows/configure-special-flows.md
+@~/.claude/forge-framework/references/specialized-workflow-integration.md
 </execution_context>
 
 <context>
 Subcommand: $ARGUMENTS (optional)
 
-@.paul/PROJECT.md
-@.paul/STATE.md
-@.paul/SPECIAL-FLOWS.md (if exists)
+@.forge/PROJECT.md
+@.forge/STATE.md
+@.forge/SPECIAL-FLOWS.md (if exists)
 </context>
 
 <process>
@@ -40,7 +40,7 @@ Subcommand: $ARGUMENTS (optional)
 **No argument (full configuration):**
 1. Follow @workflows/configure-special-flows.md
 2. Interactive skill discovery and mapping
-3. Generate .paul/SPECIAL-FLOWS.md
+3. Generate .forge/SPECIAL-FLOWS.md
 4. Update PROJECT.md with quick reference
 
 **`add` (quick add):**
@@ -51,14 +51,14 @@ Subcommand: $ARGUMENTS (optional)
 5. Confirm addition
 
 **`audit` (check current phase):**
-1. Read .paul/SPECIAL-FLOWS.md
-2. Read .paul/STATE.md for current phase
+1. Read .forge/SPECIAL-FLOWS.md
+2. Read .forge/STATE.md for current phase
 3. Check ROADMAP.md for phase skill requirements
 4. Display required skills for this phase
 5. Remind: "Verify invocations before UNIFY"
 
 **`list` (display configuration):**
-1. Read .paul/SPECIAL-FLOWS.md
+1. Read .forge/SPECIAL-FLOWS.md
 2. Display formatted summary:
    - Project-level skills (with priority)
    - Phase overrides

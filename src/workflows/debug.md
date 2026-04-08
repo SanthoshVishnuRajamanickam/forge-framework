@@ -31,7 +31,7 @@ Ask about experience. Investigate the cause yourself.
 **First: Check for active debug sessions**
 
 ```bash
-ls .paul/debug/*.md 2>/dev/null | grep -v resolved
+ls .forge/debug/*.md 2>/dev/null | grep -v resolved
 ```
 
 **If active sessions exist AND no $ARGUMENTS provided:**
@@ -73,7 +73,7 @@ Wait for user to describe the issue.
 Generate slug from user input (lowercase, hyphens, max 30 chars).
 
 ```bash
-mkdir -p .paul/debug
+mkdir -p .forge/debug
 ```
 
 Create file using DEBUG.md template with initial state:
@@ -81,7 +81,7 @@ Create file using DEBUG.md template with initial state:
 - trigger: [verbatim user input]
 - Current Focus: next_action = "gather symptoms from user"
 
-Write to `.paul/debug/[slug].md`
+Write to `.forge/debug/[slug].md`
 
 Proceed to `symptom_gathering`.
 </step>
@@ -237,8 +237,8 @@ If verification PASSES:
 Update status to "resolved".
 
 ```bash
-mkdir -p .paul/debug/resolved
-mv .paul/debug/[slug].md .paul/debug/resolved/
+mkdir -p .forge/debug/resolved
+mv .forge/debug/[slug].md .forge/debug/resolved/
 ```
 
 Commit:
@@ -247,7 +247,7 @@ git add -A
 git commit -m "fix: [brief description]
 
 Root cause: [from Resolution.root_cause]
-Debug session: .paul/debug/resolved/[slug].md"
+Debug session: .forge/debug/resolved/[slug].md"
 ```
 
 Report:
@@ -258,7 +258,7 @@ Root cause: [root_cause]
 Fix: [fix]
 Files: [files_changed]
 
-Session archived: .paul/debug/resolved/[slug].md
+Session archived: .forge/debug/resolved/[slug].md
 ```
 </step>
 
