@@ -1,7 +1,7 @@
 {
   "name": "forge-framework",
-  "version": "1.2.0",
-  "description": "Plan-Apply-Unify Loop - A structured AI-assisted development framework for Claude Code",
+  "version": "0.1.0",
+  "description": "Autonomous engineering framework — PRD intake, self-healing plan/apply/verify/unify loop, and dynamic stack adapters. Built on PAUL's Plan-Apply-Unify patterns.",
   "bin": {
     "forge-framework": "bin/install.js"
   },
@@ -17,21 +17,13 @@
     "claude",
     "claude-code",
     "ai",
-    "planning",
-    "structured-development",
+    "autonomous-engineering",
+    "prd",
     "forge",
-    "plan-apply-unify"
+    "structured-development"
   ],
-  "author": "Chris Kahler",
+  "author": "Santhosh Vishnu",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ChristopherKahler/forge.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ChristopherKahler/forge/issues"
-  },
-  "homepage": "https://github.com/ChristopherKahler/forge#readme",
   "engines": {
     "node": ">=16.7.0"
   }
