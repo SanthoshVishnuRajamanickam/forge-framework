@@ -158,6 +158,21 @@ Usage: `/forge:resume .forge/HANDOFF-context.md`
 
 ---
 
+### `/forge:dashboard [--html]`
+Single-screen view of entire project state.
+
+- Milestones, phases, loop position with progress bars
+- Test profile status (configured tiers, coverage, flaky count)
+- Special flows and integration status
+- Git health metrics (commits, contributors, uncommitted)
+- Blockers, deferred issues, suggested next action
+- `--html` generates interactive dashboard at `.forge/dashboard.html`
+
+Usage: `/forge:dashboard`
+Usage: `/forge:dashboard --html`
+
+---
+
 ### `/forge:progress [context]`
 Smart status with routing - suggests ONE next action.
 
@@ -571,5 +586,5 @@ Completion checks
 
 ---
 
-*FORGE Framework v0.4+ | 31 commands | Last updated: 2026-04-10*
+*FORGE Framework v0.4+ | 32 commands | Last updated: 2026-04-10*
 </reference>
