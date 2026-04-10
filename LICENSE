@@ -1,6 +1,9 @@
 MIT License
 
-Copyright (c) 2026 Chris Kahler
+Copyright (c) 2026 Santhosh Vishnu
+
+Based on paul-framework by Chris Kahler (https://github.com/ChristopherKahler/paul),
+also licensed under MIT.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,7 +1,7 @@
 {
   "name": "forge-framework",
   "version": "0.2.0",
-  "description": "Autonomous engineering framework — PRD intake, self-healing plan/apply/verify/unify loop, and dynamic stack adapters. Built on PAUL's Plan-Apply-Unify patterns.",
+  "description": "Autonomous engineering framework — plan/apply/verify/unify loop with pluggable test flows, git history retrofit, and project dashboard for Claude Code.",
   "bin": {
     "forge-framework": "bin/install.js"
   },
@@ -16,12 +16,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/santhoshvishnu/forge-framework.git"
+    "url": "git+https://github.com/santhoshvishnu-sketch/forge-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/santhoshvishnu/forge-framework/issues"
+    "url": "https://github.com/santhoshvishnu-sketch/forge-framework/issues"
   },
-  "homepage": "https://github.com/santhoshvishnu/forge-framework#readme",
+  "homepage": "https://github.com/santhoshvishnu-sketch/forge-framework#readme",
   "keywords": [
     "claude",
     "claude-code",

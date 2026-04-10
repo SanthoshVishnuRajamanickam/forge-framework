@@ -5,8 +5,8 @@
     "name": "Santhosh Vishnu"
   },
   "metadata": {
-    "description": "Autonomous engineering framework built on PAUL patterns",
-    "homepage": "https://github.com/santhoshvishnu/forge-framework"
+    "description": "Autonomous engineering framework with pluggable test flows, git history retrofit, and project dashboard",
+    "homepage": "https://github.com/santhoshvishnu-sketch/forge-framework"
   },
   "plugins": [
     {

@@ -1,23 +1,20 @@
 # Contributing to Forge
 
-Thanks for your interest in forge-framework. This project is a thin layer on
-top of [PAUL](https://github.com/ChristopherKahler/paul) — changes should
-respect that boundary.
+Thanks for your interest in forge-framework.
 
 ## Ground rules
 
-- **Don't diverge from PAUL's core loop.** If a change would touch
-  `plan → apply → unify` semantics, raise an issue first so we can decide
-  whether it belongs in forge or upstream in PAUL.
 - **Keep additions modular.** New capability lives in its own workflow and
-  command. We don't edit PAUL-clone workflows except to fix bugs.
+  command. Don't edit core loop workflows unless fixing a bug.
 - **Templates over code.** Forge is a prompt framework. Most contributions
   are markdown: new commands, workflows, references, or templates.
+- **Test what you add.** If you add a command, make sure `src/commands/help.md`
+  lists it and the count matches.
 
 ## Development setup
 
 ```bash
-git clone https://github.com/santhoshvishnu/forge-framework.git
+git clone https://github.com/santhoshvishnu-sketch/forge-framework.git
 cd forge-framework
 npm install                     # no runtime deps; just the installer
 node bin/install.js --local     # smoke test the installer into ./.claude
@@ -42,5 +39,4 @@ Open an issue with:
 - What you ran (`/forge:*` command + args)
 - What you expected
 - What actually happened (paste the debug file if one was generated)
-- `forge-framework` version (`cat ~/.claude/forge-framework/VERSION` or
-  `npm view forge-framework version`)
+- `forge-framework` version (`npm view forge-framework version`)

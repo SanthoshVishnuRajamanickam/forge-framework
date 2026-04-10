@@ -50,7 +50,7 @@
 
     <!-- Title and subtitle -->
     <text class="text white" font-size="15" y="188">  FORGE Framework <tspan class="dim">v0.2.0</tspan></text>
-    <text class="text white" font-size="15" y="212">  Autonomous Engineering on PAUL patterns</text>
+    <text class="text white" font-size="15" y="212">  Autonomous Engineering Framework</text>
 
     <!-- Install output -->
     <text class="text" font-size="15" y="260"><tspan class="green">  ✓</tspan><tspan class="white"> Installed commands/forge</tspan></text>

@@ -1,6 +1,6 @@
 # FORGE Framework
 
-Autonomous engineering framework built on PAUL's Plan-Apply-Unify patterns.
+Autonomous engineering framework — plan/apply/verify/unify loop with pluggable test flows, git history retrofit, and project dashboard.
 
 ## Commands
 
