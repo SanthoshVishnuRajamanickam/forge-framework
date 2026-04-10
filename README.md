@@ -26,43 +26,9 @@ npx forge-framework
 
 <br>
 
-[Why Forge](#why-forge) · [Getting Started](#getting-started) · [The Loop](#the-loop) · [Commands](#commands) · [Test Flows](#test-flows) · [Retrofit](#retrofit) · [Dashboard](#dashboard)
+[Getting Started](#getting-started) · [Why Forge](#why-forge) · [The Loop](#the-loop) · [Commands](#commands) · [Test Flows](#test-flows) · [Retrofit](#retrofit) · [Dashboard](#dashboard)
 
 </div>
-
----
-
-## Why Forge
-
-Building with Claude Code is powerful — until context rots, plans orphan, and you spend more time managing AI output than shipping features.
-
-Forge fixes this with **four principles:**
-
-1. **Loop integrity** — Every plan closes with UNIFY. No orphan plans. UNIFY reconciles what was planned vs what happened, updates state, and logs decisions. This is the heartbeat.
-
-2. **Pluggable test architecture** — 10 test tiers (static, unit, integration, e2e, MCP-driven, visual, performance, security, platform, manual), each bound to configurable executors (CLI commands, skills, MCP servers, or human checklists). The AI can test itself via MCP tools — no scripts needed.
-
-3. **Mid-project adoption** — Most frameworks assume greenfield. Forge's retrofit command reverse-engineers your project state from git history, tags, and changelogs. Join any project mid-flight without starting over.
-
-4. **Evidence-driven development** — Acceptance criteria are first-class. Every task requires `<verify>` criteria. CARL rules enforce plan validation, blocker sync, and transition commits. Confidence without evidence is not completion.
-
----
-
-## Who This Is For
-
-**Engineers who use AI to ship** — web apps, mobile apps, embedded firmware, APIs, CLIs, libraries. Forge adapts to your stack, not the other way around.
-
-- **Solo developers** — structured loop keeps you on track across sessions
-- **Teams adopting AI** — shared state, decision logs, handoff files
-- **Complex stacks** — Qt + Android + dSPACE HIL? Forge's platform tier handles cross-device test orchestration
-- **Regulated industries** — ISO 26262 / DO-178C safety traceability, MC/DC coverage reporting
-
-You describe what you want, Claude Code builds it, and Forge ensures:
-- Plans have clear acceptance criteria before execution starts
-- Every task is qualified against the spec — not just executed and assumed correct
-- Tests run automatically at the right time (per-task, per-checkpoint, per-phase, per-milestone)
-- State persists across sessions with handoff files
-- Decisions are logged for future reference
 
 ---
 
@@ -159,6 +125,24 @@ Retrofit analyzes package metadata, git tags, changelogs, and commit patterns to
 
 ---
 
+## Why Forge
+
+Building with Claude Code is powerful — until context rots, plans orphan, and you spend more time managing AI output than shipping features.
+
+Forge fixes this with **four principles:**
+
+1. **Loop integrity** — Every plan closes with UNIFY. No orphan plans. UNIFY reconciles what was planned vs what happened, updates state, and logs decisions.
+
+2. **Pluggable test architecture** — 10 test tiers, each bound to configurable executors (CLI, skills, MCP servers, manual checklists). The AI can test itself via any MCP server — no scripts needed.
+
+3. **Mid-project adoption** — Forge's retrofit command reverse-engineers your project state from git history. Join any project mid-flight without starting over.
+
+4. **Evidence-driven development** — Every task requires `<verify>` criteria. CARL rules enforce plan validation, blocker sync, and transition commits.
+
+**Who this is for:** Engineers who use AI to ship — web apps, mobile apps, embedded firmware, APIs, CLIs, libraries. Solo developers, teams, complex stacks (Qt + Android + HIL), regulated industries (ISO 26262 / DO-178C).
+
+---
+
 ## The Loop
 
 ```
@@ -221,7 +205,7 @@ Each tier binds to one or more executors:
 |------|---------|-------------|
 | **CLI** | `npm test`, `pytest`, `ctest` | FORGE runs command, reads exit code + output |
 | **Skill** | `/playwright-cli` | FORGE invokes skill, reads structured result |
-| **MCP** | Playwright, PSIX, dSPACE | AI uses MCP tools directly — no scripts, AC *are* the test spec |
+| **MCP** | Any MCP server (browser, desktop, mobile, hardware, custom) | AI uses MCP tools directly — no scripts, AC *are* the test spec |
 | **Manual** | Human checklist | FORGE generates checklist from acceptance criteria |
 
 ### Get Started with Testing

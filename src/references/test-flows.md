@@ -94,28 +94,47 @@ Examples: `/playwright-cli`, `/frontend-design test`, custom project skills
 
 ### 3. MCP Server (`type: mcp`)
 
-An MCP server that exposes testing tools. FORGE uses the MCP tools directly —
-no scripts, no skill wrapper. The AI reads acceptance criteria and drives the tools.
+Any MCP server that exposes tools can be a test executor. FORGE uses the MCP
+tools directly — no scripts, no skill wrapper. The AI reads acceptance criteria
+and drives the tools. This is the most powerful executor type because it works
+for ANY domain: web, desktop, mobile, embedded, hardware, IoT, robotics.
 
 ```yaml
 executor:
   type: mcp
-  server: "playwright"                    # MCP server name from settings
+  server: "{{server_name}}"              # MCP server name from Claude Code settings
   tools:                                  # which MCP tools to use
-    - browser_navigate
-    - browser_snapshot
-    - browser_click
-    - browser_fill_form
-    - browser_take_screenshot
+    - "{{tool_1}}"
+    - "{{tool_2}}"
+    - "{{tool_3}}"
   strategy: ac-driven                     # ac-driven | scripted | exploratory
-  evidence: screenshots                   # what to capture
+  evidence: screenshots                   # screenshots | logs | traces | signals | report
 ```
 
-Examples:
-- `playwright` MCP — browser E2E testing
-- `psix` MCP — Qt application testing via PSIX protocol
-- `dspace` MCP — HIL testing via dSPACE hardware interface
-- Any custom MCP server that exposes test-relevant tools
+**Domain examples — any MCP server is a valid executor:**
+
+| Domain | MCP Server | Tools | Evidence |
+|--------|-----------|-------|----------|
+| Web browser | playwright | navigate, click, fill, screenshot | screenshots |
+| Qt desktop | psix | launch, send_signal, read_state, screenshot | screenshots + state traces |
+| Mobile | appium-mcp | tap, swipe, type, screenshot | screenshots |
+| HIL hardware | dspace | load_model, inject_signal, verify_timing | timing logs + signal traces |
+| Embedded UART | serial-mcp | connect, send, read, expect | serial logs |
+| CAN bus | can-mcp | send_frame, read_frame, verify_signal | CAN traces |
+| SPI/I2C | probe-mcp | write_register, read_register, verify | register dumps |
+| JTAG/SWD | openocd-mcp | halt, read_memory, set_breakpoint, resume | memory dumps |
+| GPIO | gpio-mcp | set_pin, read_pin, wait_for_edge | pin state logs |
+| BLE/Bluetooth | ble-mcp | scan, connect, read_char, write_char | BLE traces |
+| MQTT/IoT | mqtt-mcp | publish, subscribe, verify_message | message logs |
+| REST API | http-mcp | get, post, put, assert_status | response logs |
+| Database | db-mcp | query, assert_row, verify_migration | query results |
+| Robotics | ros-mcp | publish_topic, call_service, verify_state | sensor data |
+
+To add a new MCP test executor, you only need:
+1. An MCP server running and configured in Claude Code settings
+2. A test_profile entry mapping the server's tools to a tier
+
+No FORGE code changes required — it's pure configuration.
 
 ### 4. Manual (`type: manual`)
 
@@ -677,6 +696,285 @@ To add a new MCP test executor, you only need:
 No FORGE code changes required — it's configuration, not implementation.
 
 </mcp_driven_testing>
+
+<embedded_testing_workflows>
+
+## Embedded & Hardware Testing Workflows
+
+Embedded projects have fundamentally different testing needs than web/mobile. FORGE
+handles this through executor extensions and platform tier bindings — not special tiers.
+
+### The Embedded Testing Pyramid
+
+```
+                    ╱╲
+                   ╱  ╲         HIL / System Integration
+                  ╱ HW ╲        (real hardware, real signals)
+                 ╱──────╲
+                ╱        ╲      Simulator / Emulation
+               ╱   SIM    ╲    (QEMU, Renode, vendor sim)
+              ╱────────────╲
+             ╱              ╲   Host-Side Tests
+            ╱    HOST        ╲  (x86 unit tests, mocks)
+           ╱──────────────────╲
+          ╱                    ╲ Static Analysis
+         ╱       STATIC        ╲ (MISRA, Polyspace, lint)
+        ╱────────────────────────╲
+```
+
+### Workflow 1: Flash → Test → Report
+
+Embedded tests require firmware on the target before testing. Use lifecycle hooks:
+
+```yaml
+platform:
+  enabled: true
+  executors:
+    - name: "Firmware integration test"
+      type: mcp
+      server: "openocd-mcp"
+      tools: [flash_firmware, halt, read_memory, set_breakpoint, resume, verify_output]
+      strategy: ac-driven
+      evidence: logs
+      hooks:
+        pre_build:
+          - "cmake --build build/ --target firmware"
+        pre_flash:
+          - "openocd -f board/stm32f4.cfg -c 'program build/firmware.elf verify reset exit'"
+        pre_test:
+          - "sleep 2"                     # wait for boot
+        post_test:
+          - "openocd -f board/stm32f4.cfg -c 'reset halt; exit'"
+      target: device
+      timing_assertions:
+        - metric: "boot_time"
+          threshold_ms: 500
+          tolerance_pct: 10
+```
+
+### Workflow 2: UART/Serial Output Verification
+
+Many embedded tests output results via serial console. Capture and parse:
+
+```yaml
+unit:
+  enabled: true
+  executors:
+    - name: "On-target unit tests (Unity)"
+      type: mcp
+      server: "serial-mcp"
+      tools: [connect, read_until, expect_pattern, disconnect]
+      strategy: scripted
+      evidence: logs
+      hooks:
+        pre_build:
+          - "cmake --build build/ --target test_runner"
+        pre_flash:
+          - "openocd -f board.cfg -c 'program build/test_runner.elf verify reset exit'"
+      target: device
+      # MCP reads serial output, parses Unity test framework format:
+      # "test_name:PASS" or "test_name:FAIL:message"
+```
+
+### Workflow 3: CAN Bus / Protocol Testing
+
+Automotive and industrial systems communicate via CAN, LIN, SPI, I2C:
+
+```yaml
+integration:
+  enabled: true
+  executors:
+    - name: "CAN bus message verification"
+      type: mcp
+      server: "can-mcp"
+      tools: [send_frame, read_frame, verify_signal, set_filter, dump_traffic]
+      strategy: ac-driven
+      evidence: traces
+      timing_assertions:
+        - metric: "can_response_time"
+          threshold_ms: 10
+        - metric: "message_jitter"
+          threshold_ms: 1
+          tolerance_pct: 20
+    - name: "SPI peripheral register test"
+      type: mcp
+      server: "probe-mcp"
+      tools: [write_register, read_register, verify_bitmask, bulk_read]
+      strategy: scripted
+      evidence: logs
+```
+
+### Workflow 4: Simulator-First Development
+
+Test on QEMU/Renode before flashing real hardware:
+
+```yaml
+# Tier layering: simulator runs at checkpoint, real HW at milestone
+integration:
+  enabled: true
+  executors:
+    - name: "QEMU ARM simulation"
+      type: cli
+      command: "qemu-system-arm -machine lm3s6965evb -kernel build/test.elf -nographic -semihosting"
+      parse_format: exit-code
+      target: simulator
+      hooks:
+        pre_build:
+          - "cmake --build build/ --target test_sim"
+
+platform:
+  enabled: true
+  executors:
+    - name: "Real hardware validation"
+      type: mcp
+      server: "openocd-mcp"
+      tools: [flash_firmware, run_test_suite, read_serial, verify_output]
+      target: device
+      hooks:
+        pre_flash:
+          - "openocd -f board.cfg -c 'program build/firmware.elf verify reset exit'"
+```
+
+### Workflow 5: Power & Timing Verification
+
+For safety-critical and real-time systems:
+
+```yaml
+platform:
+  enabled: true
+  executors:
+    - name: "Real-time timing verification"
+      type: mcp
+      server: "logic-analyzer-mcp"
+      tools: [arm_trigger, capture, measure_period, measure_pulse_width, export_vcd]
+      strategy: ac-driven
+      evidence: traces
+      timing_assertions:
+        - metric: "interrupt_latency"
+          threshold_ms: 0.05              # 50 microseconds
+          tolerance_pct: 5
+        - metric: "watchdog_kick_period"
+          threshold_ms: 100
+          tolerance_pct: 2
+        - metric: "gpio_toggle_frequency"
+          threshold_ms: 0.001             # 1 microsecond (1 MHz)
+    - name: "Power consumption test"
+      type: mcp
+      server: "power-monitor-mcp"
+      tools: [start_measurement, stop_measurement, get_average_current, get_peak_current]
+      evidence: logs
+      timing_assertions:
+        - metric: "sleep_mode_current_ua"
+          threshold_ms: 10                # repurposed: 10 microamps
+        - metric: "active_mode_current_ma"
+          threshold_ms: 50                # repurposed: 50 milliamps
+```
+
+### Workflow 6: OTA Update Verification
+
+Test firmware update mechanisms end-to-end:
+
+```yaml
+platform:
+  enabled: true
+  executors:
+    - name: "OTA update test"
+      type: mcp
+      server: "ota-test-mcp"
+      tools: [upload_firmware, trigger_update, verify_version, verify_rollback, check_integrity]
+      strategy: ac-driven
+      evidence: logs
+      hooks:
+        pre_test:
+          - "python3 scripts/start_ota_server.py --port 8080 --firmware build/v2.0.bin"
+        post_test:
+          - "python3 scripts/stop_ota_server.py"
+```
+
+### Complete Embedded Test Profile Example
+
+```yaml
+test_profile:
+  static:
+    enabled: true
+    executors:
+      - name: "MISRA C compliance"
+        type: cli
+        command: "cppcheck --addon=misra --enable=all src/"
+      - name: "Polyspace Bug Finder"
+        type: cli
+        command: "polyspace-bug-finder -sources src/ -results-dir reports/"
+
+  unit:
+    enabled: true
+    executors:
+      - name: "Host-side unit tests (CMock + Unity)"
+        type: cli
+        command: "ctest --test-dir build/host --output-on-failure"
+        coverage_command: "gcovr --xml build/host"
+        coverage_min: 80
+        target: host
+      - name: "On-target unit tests (Unity via serial)"
+        type: mcp
+        server: "serial-mcp"
+        tools: [connect, read_until, expect_pattern]
+        target: device
+        hooks:
+          pre_flash: ["openocd -f board.cfg -c 'program build/test.elf verify reset exit'"]
+
+  integration:
+    enabled: true
+    executors:
+      - name: "QEMU simulation"
+        type: cli
+        command: "qemu-system-arm -machine lm3s6965evb -kernel build/integration.elf -nographic"
+        target: simulator
+      - name: "CAN bus protocol"
+        type: mcp
+        server: "can-mcp"
+        tools: [send_frame, read_frame, verify_signal]
+        target: device
+
+  platform:
+    enabled: true
+    executors:
+      - name: "HIL via dSPACE"
+        type: mcp
+        server: "dspace"
+        tools: [load_model, inject_signal, read_output, verify_timing]
+        target: device
+        evidence: logs
+      - name: "Timing verification"
+        type: mcp
+        server: "logic-analyzer-mcp"
+        tools: [arm_trigger, capture, measure_period]
+        target: device
+        timing_assertions:
+          - metric: "interrupt_latency"
+            threshold_ms: 0.05
+
+  manual:
+    enabled: true
+    executors:
+      - name: "Hardware acceptance"
+        type: manual
+        generate_checklist: true
+        categories: [power-on, led-indicators, button-response, enclosure-fit]
+        device_matrix: ["proto-v2-board", "prod-v1-board"]
+
+  # Safety config
+  safety:
+    enabled: true
+    standard: iso-26262
+    asil_level: ASIL-B
+    coverage_requirements:
+      statement: 100
+      branch: 100
+      mcdc: true
+    traceability: true
+```
+
+</embedded_testing_workflows>
 
 <test_report_format>
 
