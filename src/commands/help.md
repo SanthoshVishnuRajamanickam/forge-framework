@@ -358,6 +358,22 @@ Usage: `/forge:debug "login returns 500 after deploy"`
 
 ---
 
+### `/forge:retrofit [--mode=quick|standard|full]`
+Initialize FORGE on an existing project by reverse-engineering git history.
+
+- Discovers project identity from package metadata + git tags
+- Detects workflow shape (standard, squash-merge, trunk-based)
+- Spawns parallel agents: codebase map + git history analysis
+- Reconstructs milestones, phases, and features from commit patterns
+- Presents confidence-scored findings for approval before writing
+
+Usage: `/forge:retrofit`                    — standard mode (default)
+Usage: `/forge:retrofit --mode=full`        — full reconstruction with plans
+Usage: `/forge:retrofit --resume`           — resume interrupted retrofit
+Usage: `/forge:retrofit --refine=history`   — re-run history agent only
+
+---
+
 ## Quality Commands
 
 ### `/forge:verify`
@@ -549,5 +565,5 @@ Completion checks
 
 ---
 
-*FORGE Framework v0.4+ | 30 commands | Last updated: 2026-04-09*
+*FORGE Framework v0.4+ | 31 commands | Last updated: 2026-04-10*
 </reference>
