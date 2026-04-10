@@ -1,3 +1,10 @@
+---
+name: forge:map-codebase
+description: Analyze existing codebase and create structured documentation in .forge/codebase/
+argument-hint: "[--refresh]"
+allowed-tools: [Read, Write, Glob, Grep, Bash, Task]
+---
+
 <objective>
 Analyze existing codebase and create structured documentation in .forge/codebase/
 

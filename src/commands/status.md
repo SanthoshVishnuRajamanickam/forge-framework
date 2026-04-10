@@ -1,7 +1,7 @@
 ---
 name: forge:status
 description: "[DEPRECATED] Use /forge:progress instead"
-argument-hint:
+argument-hint: "(deprecated — use /forge:progress)"
 allowed-tools: [Read]
 ---
 

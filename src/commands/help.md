@@ -346,6 +346,18 @@ Usage: `/forge:map-codebase`
 
 ---
 
+### `/forge:debug [symptom]`
+Systematic debugging with persistent state.
+
+- Creates `.forge/debug/` file as investigation brain
+- Survives context resets — investigation resumes mid-stream
+- User reports symptoms; Claude investigates autonomously
+- Routes fixes through `/forge:plan-fix` when ready
+
+Usage: `/forge:debug "login returns 500 after deploy"`
+
+---
+
 ## Quality Commands
 
 ### `/forge:verify`
@@ -380,6 +392,22 @@ Plan fixes for UAT issues from verify.
 - Smaller scope than full phase plan
 
 Usage: `/forge:plan-fix`
+
+---
+
+### `/forge:test [tier|configure|report]`
+Run test tiers or configure the project's test profile.
+
+- Pluggable executor architecture: CLI, skill, MCP server, or manual
+- 10 tiers: static, unit, integration, e2e, mcp-driven, visual, performance, security, platform, manual
+- Auto-runs during APPLY (unit per-task, integration at checkpoints)
+- Generates TEST-REPORT.md with evidence during VERIFY
+
+Usage: `/forge:test`                — run all enabled tiers
+Usage: `/forge:test brainstorm`     — guided discovery of what to test and how
+Usage: `/forge:test unit`           — run specific tier
+Usage: `/forge:test configure`      — interactive test profile setup
+Usage: `/forge:test report`         — show latest TEST-REPORT.md
 
 ---
 
@@ -521,5 +549,5 @@ Completion checks
 
 ---
 
-*FORGE Framework v0.4+ | 26 commands | Last updated: 2026-01-29*
+*FORGE Framework v0.4+ | 30 commands | Last updated: 2026-04-09*
 </reference>

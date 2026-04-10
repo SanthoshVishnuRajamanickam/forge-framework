@@ -1,3 +1,10 @@
+---
+name: forge:config
+description: Manage FORGE project configuration and integrations
+argument-hint: "[enable|disable integration-name]"
+allowed-tools: [Read, Write, Bash, AskUserQuestion]
+---
+
 <objective>
 Manage FORGE project configuration and integrations. Create or update .forge/config.md at any point in the project lifecycle.
 </objective>

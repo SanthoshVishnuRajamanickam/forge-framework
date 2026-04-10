@@ -1,7 +1,7 @@
 ---
 name: forge:discuss-milestone
 description: Explore and articulate next milestone vision
-argument-hint: ""
+argument-hint: "[milestone-name]"
 allowed-tools: [Read, Write, AskUserQuestion]
 ---
 

@@ -25,6 +25,7 @@ After completion, project is ready for /forge:discuss-milestone or /forge:milest
 <references>
 @src/templates/MILESTONES.md (entry format)
 @src/templates/milestone-archive.md (archive format)
+@~/.claude/forge-framework/references/git-strategy.md
 </references>
 
 <process>

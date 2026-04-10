@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGE Test Flows Architecture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+    background: #0d1117;
+    color: #c9d1d9;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 28px; color: #58a6ff; margin-bottom: 4px; }
+  h2 { font-size: 18px; color: #c9d1d9; margin: 32px 0 12px; }
+  .subtitle { text-align: center; color: #8b949e; margin-bottom: 32px; font-size: 14px; }
+
+  /* Cards grid */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .tier-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .tier-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.15);
+  }
+  .tier-card h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tier-card h3 .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tier-card .desc { font-size: 13px; color: #8b949e; margin-bottom: 12px; }
+  .tier-card .executors { font-size: 12px; }
+  .tier-card .executors dt { color: #c9d1d9; font-weight: 600; margin-top: 8px; }
+  .tier-card .executors dd { color: #8b949e; margin-left: 16px; }
+  .tier-card .when { font-size: 11px; margin-top: 12px; padding-top: 10px; border-top: 1px solid #21262d; color: #6e7681; }
+
+  /* Tier accent colors */
+  .tier-unit     { --accent: #58a6ff; --accent-rgb: 88,166,255; }
+  .tier-integ    { --accent: #3fb950; --accent-rgb: 63,185,80; }
+  .tier-e2e      { --accent: #bc8cff; --accent-rgb: 188,140,255; }
+  .tier-mcp      { --accent: #f0883e; --accent-rgb: 240,136,62; }
+  .tier-xplat    { --accent: #f778ba; --accent-rgb: 247,120,186; }
+  .tier-manual   { --accent: #d29922; --accent-rgb: 210,153,34; }
+
+  .tier-card h3 { color: var(--accent); }
+  .tier-card .badge { background: rgba(var(--accent-rgb), 0.15); color: var(--accent); }
+
+  /* Flow SVG */
+  svg { width: 100%; height: auto; display: block; margin: 20px 0; }
+  svg text { font-family: inherit; }
+
+  /* Executor type legend */
+  .exec-legend {
+    display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;
+    margin: 24px 0; padding: 16px; background: #161b22; border-radius: 8px; border: 1px solid #30363d;
+  }
+  .exec-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .exec-icon {
+    width: 32px; height: 32px; border-radius: 6px; display: flex;
+    align-items: center; justify-content: center; font-size: 14px;
+    font-weight: 700; color: #0d1117;
+  }
+
+  /* Example profiles */
+  .profiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .profile-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px;
+  }
+  .profile-card h4 { font-size: 14px; color: #58a6ff; margin-bottom: 8px; }
+  .profile-card pre {
+    font-size: 11px; color: #8b949e; background: #0d1117; padding: 10px;
+    border-radius: 6px; overflow-x: auto; white-space: pre; line-height: 1.5;
+  }
+  .profile-card .tag {
+    display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 4px;
+    margin: 0 2px 4px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>FORGE Test Flows</h1>
+<p class="subtitle">10 pluggable test tiers with configurable executors, lifecycle hooks, failure taxonomy, and safety traceability</p>
+
+<!-- Executor type legend -->
+<div class="exec-legend">
+  <div class="exec-item">
+    <div class="exec-icon" style="background:#58a6ff;">CLI</div>
+    <div><strong>CLI Command</strong><br><span style="color:#8b949e;font-size:11px;">npm test, pytest, ctest</span></div>
+  </div>
+  <div class="exec-item">
+    <div class="exec-icon" style="background:#3fb950;">SKL</div>
+    <div><strong>Skill</strong><br><span style="color:#8b949e;font-size:11px;">/playwright-cli, custom skills</span></div>
+  </div>
+  <div class="exec-item">
+    <div class="exec-icon" style="background:#f0883e;">MCP</div>
+    <div><strong>MCP Server</strong><br><span style="color:#8b949e;font-size:11px;">playwright, psix, dspace</span></div>
+  </div>
+  <div class="exec-item">
+    <div class="exec-icon" style="background:#d29922;">MAN</div>
+    <div><strong>Manual</strong><br><span style="color:#8b949e;font-size:11px;">Human checklist, exploratory</span></div>
+  </div>
+</div>
+
+<!-- Test Tier Cards -->
+<h2>10 Test Tiers</h2>
+<div class="tier-grid">
+
+  <div class="tier-card" style="--accent:#6e7681;--accent-rgb:110,118,129;">
+    <h3>Static <span class="badge">pre-unit</span></h3>
+    <div class="desc">Lint, type-check, MISRA, SAST. Earliest gate — catches issues before tests even run.</div>
+    <dl class="executors">
+      <dt>CLI</dt><dd>eslint, pylint, clippy, mypy, MISRA checker, Polyspace</dd>
+    </dl>
+    <div class="when">Runs: APPLY (before unit, per-task) | Gate: task completion</div>
+  </div>
+
+  <div class="tier-card tier-unit">
+    <h3>Unit <span class="badge">per-task</span></h3>
+    <div class="desc">Single function or module. Fast feedback. Runs after every task qualifies in APPLY.</div>
+    <dl class="executors">
+      <dt>CLI</dt><dd>npm test, pytest, go test, ctest</dd>
+      <dt>Coverage</dt><dd>Configurable threshold (e.g. 80%). Blocks below.</dd>
+    </dl>
+    <div class="when">Runs: APPLY (after each task) | Gate: task completion</div>
+  </div>
+
+  <div class="tier-card tier-integ">
+    <h3>Integration <span class="badge">per-checkpoint</span></h3>
+    <div class="desc">Cross-module, service boundaries, real database. Runs at plan checkpoints.</div>
+    <dl class="executors">
+      <dt>CLI</dt><dd>pytest tests/integration/, Pact contracts</dd>
+      <dt>MCP</dt><dd>PSIX MCP for Qt service integration</dd>
+      <dt>Hooks</dt><dd>pre_test: start DB, seed data. post_test: teardown.</dd>
+    </dl>
+    <div class="when">Runs: APPLY (at checkpoints) | Gate: checkpoint clearance</div>
+  </div>
+
+  <div class="tier-card tier-e2e">
+    <h3>E2E <span class="badge">per-phase</span></h3>
+    <div class="desc">Full user journey through the app. Browser, mobile, or desktop.</div>
+    <dl class="executors">
+      <dt>Skill</dt><dd>/playwright-cli for browser automation</dd>
+      <dt>MCP</dt><dd>Playwright MCP (AI drives browser directly)</dd>
+      <dt>CLI</dt><dd>Espresso, Qt Test, Detox scripts</dd>
+      <dt>Target</dt><dd>host | simulator | device | cloud-farm</dd>
+    </dl>
+    <div class="when">Runs: VERIFY phase | Gate: phase completion</div>
+  </div>
+
+  <div class="tier-card tier-mcp">
+    <h3>MCP-Driven <span class="badge">AI-as-tester</span></h3>
+    <div class="desc">AI reads acceptance criteria, uses MCP tools to test. No scripts needed. The AC <em>are</em> the test spec.</div>
+    <dl class="executors">
+      <dt>Strategies</dt>
+      <dd><strong>ac-driven:</strong> Given/When/Then &rarr; MCP calls</dd>
+      <dd><strong>scripted:</strong> fixed tool sequence</dd>
+      <dd><strong>exploratory:</strong> AI explores freely, reports anomalies</dd>
+      <dt>Evidence</dt><dd>Screenshots, DOM snapshots, network logs</dd>
+    </dl>
+    <div class="when">Runs: VERIFY or on-demand | Gate: phase completion</div>
+  </div>
+
+  <div class="tier-card" style="--accent:#da3633;--accent-rgb:218,54,51;">
+    <h3>Visual <span class="badge">per-phase</span></h3>
+    <div class="desc">Screenshot diff, snapshot testing, golden image comparison across devices/OS versions.</div>
+    <dl class="executors">
+      <dt>CLI</dt><dd>Jest snapshots, Percy CLI, Chromatic</dd>
+      <dt>Skill</dt><dd>Custom visual diff skills</dd>
+      <dt>Evidence</dt><dd>Before/after screenshots, diff images</dd>
+    </dl>
+    <div class="when">Runs: VERIFY phase | Gate: phase completion</div>
+  </div>
+
+  <div class="tier-card" style="--accent:#bf8700;--accent-rgb:191,135,0;">
+    <h3>Performance <span class="badge">per-phase</span></h3>
+    <div class="desc">Load testing, latency budgets, Lighthouse scores, embedded timing assertions.</div>
+    <dl class="executors">
+      <dt>CLI</dt><dd>k6, Artillery, Lighthouse CI</dd>
+      <dt>Timing</dt><dd>gpio_toggle &lt;100&micro;s, API p95 &lt;200ms</dd>
+      <dt>Thresholds</dt><dd>Configurable per-metric pass/fail gates</dd>
+    </dl>
+    <div class="when">Runs: VERIFY or checkpoint | Gate: phase completion</div>
+  </div>
+
+  <div class="tier-card" style="--accent:#f85149;--accent-rgb:248,81,73;">
+    <h3>Security <span class="badge">per-phase</span></h3>
+    <div class="desc">SAST, DAST, dependency scanning, secrets detection. Blocks on critical vulnerabilities.</div>
+    <dl class="executors">
+      <dt>CLI</dt><dd>npm audit, Snyk, OWASP ZAP, gitleaks</dd>
+      <dt>MCP</dt><dd>Custom security scanning MCP servers</dd>
+    </dl>
+    <div class="when">Runs: VERIFY phase | Gate: phase completion</div>
+  </div>
+
+  <div class="tier-card tier-xplat">
+    <h3>Platform <span class="badge">per-milestone</span></h3>
+    <div class="desc">Cross-system testing. Bind any number of platform executors — browsers, Qt, mobile, HIL hardware, custom MCP servers.</div>
+    <dl class="executors">
+      <dt>MCP: PSIX</dt><dd>Qt desktop apps, Bluetooth, device sync</dd>
+      <dt>MCP: dSPACE</dt><dd>HIL: inject signals, verify timing</dd>
+      <dt>Cloud farm</dt><dd>BrowserStack, Firebase Test Lab, AWS Device Farm</dd>
+      <dt>CLI</dt><dd>Custom harness, ./gradlew connectedTest</dd>
+    </dl>
+    <div class="when">Runs: milestone or on-demand | Gate: milestone</div>
+  </div>
+
+  <div class="tier-card tier-manual">
+    <h3>Manual <span class="badge">human-guided</span></h3>
+    <div class="desc">Exploratory testing, accessibility audits, device matrix. FORGE generates checklists from AC.</div>
+    <dl class="executors">
+      <dt>Checklist</dt><dd>Auto-generated from acceptance criteria</dd>
+      <dt>Categories</dt><dd>Exploratory, accessibility, edge cases</dd>
+      <dt>Device matrix</dt><dd>Repeat per device (desktop, phone, tablet)</dd>
+    </dl>
+    <div class="when">Runs: VERIFY phase | Gate: phase completion</div>
+  </div>
+
+</div>
+
+<!-- Flow Diagram -->
+<h2>Test Flow Through the FORGE Loop</h2>
+
+<svg viewBox="0 0 1060 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a-blue" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#58a6ff"/></marker>
+    <marker id="a-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3fb950"/></marker>
+    <marker id="a-purple" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#bc8cff"/></marker>
+    <marker id="a-orange" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f0883e"/></marker>
+    <marker id="a-yellow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#d29922"/></marker>
+    <marker id="a-pink" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f778ba"/></marker>
+    <marker id="a-red" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f85149"/></marker>
+  </defs>
+
+  <!-- Background lane labels -->
+  <rect x="20" y="50" width="1020" height="80" rx="8" fill="#0d2137" opacity="0.3"/>
+  <text x="35" y="95" font-size="11" fill="#58a6ff" font-weight="600">PLAN</text>
+
+  <rect x="20" y="145" width="1020" height="150" rx="8" fill="#0d2d1a" opacity="0.3"/>
+  <text x="35" y="225" font-size="11" fill="#3fb950" font-weight="600">APPLY</text>
+
+  <rect x="20" y="310" width="1020" height="100" rx="8" fill="#1a0d2d" opacity="0.3"/>
+  <text x="35" y="365" font-size="11" fill="#bc8cff" font-weight="600">VERIFY</text>
+
+  <rect x="20" y="425" width="1020" height="80" rx="8" fill="#1a0d1a" opacity="0.3"/>
+  <text x="35" y="470" font-size="11" fill="#f778ba" font-weight="600">MILESTONE</text>
+
+  <!-- PLAN LANE -->
+  <rect x="100" y="65" width="180" height="48" rx="6" fill="#0d2137" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="190" y="85" text-anchor="middle" font-size="12" fill="#58a6ff" font-weight="600">/forge:plan</text>
+  <text x="190" y="100" text-anchor="middle" font-size="10" fill="#8b949e">Detect test profile</text>
+
+  <line x1="280" y1="89" x2="340" y2="89" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a-blue)"/>
+
+  <rect x="340" y="65" width="210" height="48" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1"/>
+  <text x="445" y="85" text-anchor="middle" font-size="11" fill="#c9d1d9">Add &lt;test-strategy&gt; to PLAN</text>
+  <text x="445" y="100" text-anchor="middle" font-size="10" fill="#8b949e">"needs: unit + e2e (MCP)"</text>
+
+  <!-- APPLY LANE -->
+  <!-- Task box -->
+  <rect x="80" y="165" width="120" height="48" rx="6" fill="#0d2d1a" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="140" y="185" text-anchor="middle" font-size="12" fill="#3fb950" font-weight="600">Task N</text>
+  <text x="140" y="200" text-anchor="middle" font-size="10" fill="#8b949e">Execute + Qualify</text>
+
+  <line x1="200" y1="189" x2="235" y2="189" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a-green)"/>
+
+  <!-- Static analysis box -->
+  <rect x="235" y="163" width="120" height="52" rx="6" fill="#161b22" stroke="#6e7681" stroke-width="1.5"/>
+  <text x="295" y="183" text-anchor="middle" font-size="11" fill="#6e7681" font-weight="600">STATIC</text>
+  <text x="295" y="198" text-anchor="middle" font-size="9" fill="#8b949e">lint, type-check</text>
+  <text x="295" y="209" text-anchor="middle" font-size="9" fill="#8b949e">MISRA, SAST</text>
+
+  <line x1="355" y1="189" x2="385" y2="189" stroke="#6e7681" stroke-width="1.5" marker-end="url(#a-blue)"/>
+
+  <!-- Unit test box -->
+  <rect x="385" y="163" width="120" height="52" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="445" y="183" text-anchor="middle" font-size="11" fill="#58a6ff" font-weight="600">UNIT</text>
+  <text x="445" y="198" text-anchor="middle" font-size="10" fill="#8b949e">CLI / Skill</text>
+  <text x="445" y="209" text-anchor="middle" font-size="9" fill="#6e7681">coverage gate</text>
+
+  <!-- Pass arrow -->
+  <line x1="505" y1="189" x2="540" y2="189" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a-green)"/>
+  <text x="523" y="182" text-anchor="middle" font-size="9" fill="#3fb950">PASS</text>
+
+  <!-- Next task -->
+  <rect x="540" y="175" width="80" height="28" rx="6" fill="#0d2d1a" stroke="#3fb950" stroke-width="1"/>
+  <text x="580" y="194" text-anchor="middle" font-size="10" fill="#3fb950">Next task</text>
+
+  <!-- Fail arrow (loops back) — classify first -->
+  <path d="M 445 215 L 445 250 L 140 250 L 140 213" stroke="#f85149" stroke-width="1.5" fill="none" marker-end="url(#a-red)" stroke-dasharray="4,3"/>
+  <text x="293" y="246" text-anchor="middle" font-size="9" fill="#f85149">FAIL: classify &rarr; route</text>
+
+  <!-- Checkpoint -->
+  <rect x="640" y="165" width="140" height="48" rx="6" fill="#0d2d1a" stroke="#d29922" stroke-width="1.5"/>
+  <text x="710" y="185" text-anchor="middle" font-size="11" fill="#d29922" font-weight="600">Checkpoint</text>
+  <text x="710" y="200" text-anchor="middle" font-size="10" fill="#8b949e">Plan gate</text>
+
+  <line x1="780" y1="189" x2="830" y2="189" stroke="#d29922" stroke-width="1.5" marker-end="url(#a-yellow)"/>
+
+  <!-- Integration test box -->
+  <rect x="830" y="160" width="170" height="58" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="915" y="180" text-anchor="middle" font-size="11" fill="#3fb950" font-weight="600">INTEGRATION TESTS</text>
+  <text x="915" y="195" text-anchor="middle" font-size="10" fill="#8b949e">CLI / MCP executor</text>
+  <text x="915" y="208" text-anchor="middle" font-size="9" fill="#6e7681">e.g. PSIX MCP</text>
+
+  <!-- Dotted connector from unit to checkpoint -->
+  <line x1="590" y1="189" x2="640" y2="189" stroke="#6e7681" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="615" y="182" text-anchor="middle" font-size="8" fill="#484f58">...</text>
+
+  <!-- VERIFY LANE — expanded to two rows for 6 tiers -->
+  <rect x="80" y="325" width="110" height="42" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+  <text x="135" y="343" text-anchor="middle" font-size="10" fill="#bc8cff" font-weight="600">E2E</text>
+  <text x="135" y="358" text-anchor="middle" font-size="9" fill="#8b949e">Skill/MCP/CLI</text>
+
+  <line x1="190" y1="346" x2="210" y2="346" stroke="#bc8cff" stroke-width="1" marker-end="url(#a-purple)"/>
+
+  <rect x="210" y="325" width="110" height="42" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="265" y="343" text-anchor="middle" font-size="10" fill="#f0883e" font-weight="600">MCP-DRIVEN</text>
+  <text x="265" y="358" text-anchor="middle" font-size="9" fill="#8b949e">AI-as-tester</text>
+
+  <line x1="320" y1="346" x2="340" y2="346" stroke="#f0883e" stroke-width="1" marker-end="url(#a-orange)"/>
+
+  <rect x="340" y="325" width="100" height="42" rx="6" fill="#161b22" stroke="#da3633" stroke-width="1.5"/>
+  <text x="390" y="343" text-anchor="middle" font-size="10" fill="#da3633" font-weight="600">VISUAL</text>
+  <text x="390" y="358" text-anchor="middle" font-size="9" fill="#8b949e">Screenshot diff</text>
+
+  <line x1="440" y1="346" x2="460" y2="346" stroke="#da3633" stroke-width="1" marker-end="url(#a-red)"/>
+
+  <rect x="460" y="325" width="120" height="42" rx="6" fill="#161b22" stroke="#bf8700" stroke-width="1.5"/>
+  <text x="520" y="343" text-anchor="middle" font-size="10" fill="#bf8700" font-weight="600">PERFORMANCE</text>
+  <text x="520" y="358" text-anchor="middle" font-size="9" fill="#8b949e">k6/Lighthouse/timing</text>
+
+  <line x1="580" y1="346" x2="600" y2="346" stroke="#bf8700" stroke-width="1" marker-end="url(#a-yellow)"/>
+
+  <rect x="600" y="325" width="100" height="42" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+  <text x="650" y="343" text-anchor="middle" font-size="10" fill="#f85149" font-weight="600">SECURITY</text>
+  <text x="650" y="358" text-anchor="middle" font-size="9" fill="#8b949e">SAST/DAST/deps</text>
+
+  <line x1="700" y1="346" x2="720" y2="346" stroke="#f85149" stroke-width="1" marker-end="url(#a-red)"/>
+
+  <rect x="720" y="325" width="100" height="42" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+  <text x="770" y="343" text-anchor="middle" font-size="10" fill="#d29922" font-weight="600">MANUAL</text>
+  <text x="770" y="358" text-anchor="middle" font-size="9" fill="#8b949e">Human checklist</text>
+
+  <line x1="820" y1="346" x2="840" y2="346" stroke="#d29922" stroke-width="1" marker-end="url(#a-yellow)"/>
+
+  <!-- Test report + failure taxonomy -->
+  <rect x="840" y="320" width="170" height="55" rx="6" fill="#161b22" stroke="#6e7681" stroke-width="1.5"/>
+  <text x="925" y="338" text-anchor="middle" font-size="11" fill="#c9d1d9" font-weight="600">TEST-REPORT.md</text>
+  <text x="925" y="353" text-anchor="middle" font-size="9" fill="#8b949e">Classify failures &rarr; route</text>
+  <text x="925" y="366" text-anchor="middle" font-size="9" fill="#3fb950">PASS &rarr; UNIFY</text>
+
+  <!-- Failure routing -->
+  <rect x="860" y="385" width="135" height="20" rx="4" fill="#161b22" stroke="#f85149" stroke-width="1"/>
+  <text x="928" y="399" text-anchor="middle" font-size="9" fill="#f85149">code_bug &rarr; /plan-fix</text>
+  <line x1="925" y1="375" x2="925" y2="385" stroke="#f85149" stroke-width="1"/>
+  <text x="928" y="418" font-size="8" fill="#6e7681" text-anchor="middle">flaky &rarr; quarantine | env &rarr; retry</text>
+
+  <!-- MILESTONE LANE -->
+  <rect x="100" y="442" width="240" height="48" rx="6" fill="#161b22" stroke="#f778ba" stroke-width="1.5"/>
+  <text x="220" y="458" text-anchor="middle" font-size="11" fill="#f778ba" font-weight="600">PLATFORM TESTS</text>
+  <text x="220" y="474" text-anchor="middle" font-size="10" fill="#8b949e">PSIX + dSPACE + Appium + CLI</text>
+
+  <line x1="340" y1="466" x2="400" y2="466" stroke="#f778ba" stroke-width="1.5" marker-end="url(#a-pink)"/>
+
+  <rect x="400" y="442" width="180" height="48" rx="6" fill="#161b22" stroke="#6e7681" stroke-width="1.5"/>
+  <text x="490" y="462" text-anchor="middle" font-size="11" fill="#c9d1d9" font-weight="600">FULL REGRESSION</text>
+  <text x="490" y="477" text-anchor="middle" font-size="10" fill="#8b949e">All tiers re-run</text>
+
+  <line x1="580" y1="466" x2="640" y2="466" stroke="#6e7681" stroke-width="1.5" marker-end="url(#a-blue)"/>
+
+  <rect x="640" y="442" width="200" height="48" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="740" y="462" text-anchor="middle" font-size="11" fill="#3fb950" font-weight="600">MILESTONE COMPLETE</text>
+  <text x="740" y="477" text-anchor="middle" font-size="10" fill="#8b949e">All gates passed</text>
+
+  <!-- Vertical connectors between lanes -->
+  <line x1="190" y1="113" x2="190" y2="165" stroke="#484f58" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="170" y1="270" x2="170" y2="330" stroke="#484f58" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="185" y1="395" x2="185" y2="442" stroke="#484f58" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Title -->
+  <text x="530" y="30" text-anchor="middle" font-size="16" fill="#c9d1d9" font-weight="600">Test Execution Through the FORGE Loop</text>
+</svg>
+
+<!-- Example Profiles -->
+<h2>Example Test Profiles</h2>
+<div class="profiles">
+
+  <div class="profile-card">
+    <h4>Web SaaS (Node.js + React)</h4>
+    <span class="tag" style="background:rgba(88,166,255,0.15);color:#58a6ff;">unit</span>
+    <span class="tag" style="background:rgba(63,185,80,0.15);color:#3fb950;">integration</span>
+    <span class="tag" style="background:rgba(240,136,62,0.15);color:#f0883e;">mcp-driven</span>
+    <span class="tag" style="background:rgba(210,153,34,0.15);color:#d29922;">manual</span>
+    <pre>unit:
+  - type: cli
+    command: "npx vitest run"
+    coverage_min: 80
+integration:
+  - type: cli
+    command: "npx vitest run tests/integration/"
+e2e:
+  - type: mcp
+    server: playwright
+    strategy: ac-driven
+manual:
+  - generate_checklist: true
+    categories: [accessibility]</pre>
+  </div>
+
+  <div class="profile-card">
+    <h4>Qt + Android Cross-Platform</h4>
+    <span class="tag" style="background:rgba(88,166,255,0.15);color:#58a6ff;">unit</span>
+    <span class="tag" style="background:rgba(240,136,62,0.15);color:#f0883e;">mcp</span>
+    <span class="tag" style="background:rgba(247,120,186,0.15);color:#f778ba;">platform</span>
+    <pre>unit:
+  - type: cli, command: "ctest"
+  - type: cli, command: "./gradlew test"
+integration:
+  - type: mcp
+    server: psix
+    tools: [psix_send_signal, ...]
+platform:
+  - name: "Qt via PSIX"
+    type: mcp, server: psix
+  - name: "Android via Appium"
+    type: cli, command: "./gradlew connectedTest"
+  - name: "Bluetooth sync"
+    type: mcp, server: psix
+  - name: "HIL via dSPACE"
+    type: mcp, server: dspace</pre>
+  </div>
+
+  <div class="profile-card">
+    <h4>Python API Backend</h4>
+    <span class="tag" style="background:rgba(88,166,255,0.15);color:#58a6ff;">unit</span>
+    <span class="tag" style="background:rgba(63,185,80,0.15);color:#3fb950;">integration</span>
+    <span class="tag" style="background:rgba(188,140,255,0.15);color:#bc8cff;">e2e</span>
+    <pre>unit:
+  - type: cli
+    command: "pytest tests/unit/"
+    coverage_min: 90
+integration:
+  - type: cli
+    command: "pytest tests/integration/"
+e2e:
+  - type: skill
+    skill: "/playwright-cli"
+    args_template: "test {{test_scope}}"</pre>
+  </div>
+
+  <div class="profile-card">
+    <h4>Embedded + HIL</h4>
+    <span class="tag" style="background:rgba(88,166,255,0.15);color:#58a6ff;">unit</span>
+    <span class="tag" style="background:rgba(247,120,186,0.15);color:#f778ba;">platform</span>
+    <span class="tag" style="background:rgba(210,153,34,0.15);color:#d29922;">manual</span>
+    <pre>unit:
+  - type: cli
+    command: "ctest --test-dir build"
+platform:
+  - name: "dSPACE HIL"
+    type: mcp
+    server: dspace
+    tools: [dspace_load_model,
+      dspace_inject_signal,
+      dspace_read_output,
+      dspace_verify_timing]
+    strategy: ac-driven
+manual:
+  - generate_checklist: true
+    device_matrix: [target-hw-v2]</pre>
+  </div>
+
+</div>
+
+</div>
+</body>
+</html>

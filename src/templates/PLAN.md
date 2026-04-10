@@ -13,9 +13,9 @@ Template for `.forge/phases/{phase-number}-{name}/{phase}-{plan}-PLAN.md` - exec
 phase: XX-name
 plan: NN
 type: execute                    # execute | tdd | research
-wave: N                          # Execution wave (1, 2, 3...). Pre-computed at plan time.
-depends_on: []                   # Plan IDs this plan requires (e.g., ["01-01"]).
-files_modified: []               # Files this plan modifies.
+wave: N                          # REQUIRED. Execution wave (1, 2, 3...). Pre-computed at plan time.
+depends_on: []                   # REQUIRED. Plan IDs this plan requires (e.g., ["01-01"]). Empty array if none.
+files_modified: []               # REQUIRED. Files this plan modifies (for conflict detection). Empty array if unknown.
 autonomous: true                 # false if plan has checkpoints requiring user interaction
 ---
 

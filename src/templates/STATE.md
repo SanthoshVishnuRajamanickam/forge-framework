@@ -23,7 +23,7 @@ See: .forge/PROJECT.md (updated [YYYY-MM-DD])
 Milestone: [Name] ([version])
 Phase: [X] of [Y] ([Phase Name])
 Plan: [A] of [B] in current phase
-Status: [Ready to plan | Planning | Approved | Applying | Unifying | Complete | Blocked]
+Status: [Ready to Plan | Planning | Awaiting Approval | Applying | Unifying | Complete | Blocked]
 Last activity: [YYYY-MM-DD HH:MM] — [What happened]
 
 Progress:

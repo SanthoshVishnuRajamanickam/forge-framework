@@ -1,7 +1,7 @@
 ---
 name: forge:register
 description: Generate forge.json for an existing FORGE project that predates v1.1 satellite manifest support
-argument-hint:
+argument-hint: "(no args — generates forge.json from existing .forge/)"
 allowed-tools: [Read, Write, Bash]
 ---
 

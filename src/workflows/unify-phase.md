@@ -225,6 +225,23 @@ Continue to next plan?
 **Accept:** "1", "yes", "continue" → run `/forge:plan` for next plan in same phase
 </step>
 
+<step name="verify_transition_commit" priority="required" gate="blocking">
+**CARL RULE_11 enforcement: One commit per phase at transition.**
+
+Before offering next-phase routing, verify the transition commit exists:
+
+1. Run: `git log --oneline -5`
+2. Check for a commit matching pattern `feat({phase}):` or `docs({phase}):` since the phase began
+3. If no matching commit found:
+   - **BLOCK.** Display:
+     ```
+     ⛔ RULE_11: No transition commit found for phase {N}.
+     Running transition workflow now...
+     ```
+   - Fall through to execute_transition (do NOT skip)
+4. If commit found: confirm and proceed
+</step>
+
 <step name="execute_transition" priority="required" gate="blocking">
 **If last plan in phase — TRANSITION IS MANDATORY:**
 

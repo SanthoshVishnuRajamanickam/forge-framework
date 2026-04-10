@@ -23,6 +23,9 @@ Next phase: UNIFY (after execution completes)
 @~/.claude/forge-framework/references/checkpoints.md (if plan has checkpoints)
 @~/.claude/forge-framework/references/loop-phases.md
 @~/.claude/forge-framework/references/quality-principles.md
+@~/.claude/forge-framework/references/git-strategy.md
+@~/.claude/forge-framework/references/test-flows.md
+@~/.claude/forge-framework/workflows/test-strategy.md (if test profile enabled)
 </references>
 
 <process>
@@ -36,6 +39,16 @@ Next phase: UNIFY (after execution completes)
    - Correct phase and plan identified
 </step>
 
+<step name="validate_plan_exists" priority="blocking">
+**CARL RULE_2 enforcement: No implementation without approved PLAN.md.**
+
+1. Resolve plan path from STATE.md (field: `Plan:`)
+2. Verify the PLAN.md file exists on disk:
+   - If missing: **BLOCK.** Display: "⛔ No PLAN.md found at [path]. Run /forge:plan first."
+   - Do NOT proceed.
+3. Verify the plan has an `<objective>` section — empty plan shells are not executable.
+</step>
+
 <step name="load_plan">
 1. Read the PLAN.md file
 2. Parse frontmatter:
@@ -45,6 +58,23 @@ Next phase: UNIFY (after execution completes)
 3. Extract tasks from <tasks> section
 4. Note boundaries from <boundaries> section
 5. Load acceptance criteria for qualification reference
+</step>
+
+<step name="validate_verify_tags" priority="blocking">
+**CARL RULE_7 enforcement: Every task must have verification criteria.**
+
+1. Scan every `<task>` element in the loaded PLAN.md
+2. For each task, check for a `<verify>` child element
+3. If any task is missing `<verify>`:
+   - **BLOCK.** Display:
+     ```
+     ⛔ RULE_7 VIOLATION: Tasks missing <verify> criteria:
+       - Task N: [task name] — no <verify> element
+     
+     Add verification criteria to each task, then re-run /forge:apply.
+     ```
+   - Do NOT proceed until resolved or user explicitly types "override"
+   - If override: log deviation to STATE.md Decisions
 </step>
 
 <step name="verify_required_skills" priority="blocking">
@@ -134,7 +164,12 @@ Before any verification, honestly report one of:
       - Check: does the actual output satisfy BOTH?
 
    d. **Score the result:**
-      - **PASS** — output matches spec and AC. Move to next task.
+      - **PASS** — output matches spec and AC.
+        → **Run static analysis:** invoke test-strategy with tier="static" (if enabled)
+        → If static FAIL: task reverts to incomplete (lint/type errors must be fixed)
+        → **Run unit tests:** invoke test-strategy with tier="unit" (if enabled)
+        → If unit tests FAIL: classify via failure taxonomy, task reverts to incomplete
+        → If all PASS or SKIPPED: move to next task.
       - **GAP** — something in the spec or AC is missing from the output
       - **DRIFT** — output does something different than what was specified
 
@@ -187,9 +222,23 @@ Before any verification, honestly report one of:
 - Wait for user response
 - If skip: record as deviation for UNIFY
 
+**CARL RULE_5: Sync blockers to STATE.md**
+- When a task enters BLOCKED or NEEDS_CONTEXT status:
+  1. Read STATE.md `### Blockers & Concerns` table
+  2. Add entry: `| [task-name] | [blocker-description] | Open | [timestamp] |`
+  3. Write STATE.md
+- When a blocker is resolved:
+  1. Update the same entry status from `Open` to `Resolved`
+- This ensures STATE.md is always the source of truth for open blockers, surviving context resets.
+
 ---
 
 **CHECKPOINT TASKS:**
+
+**At every checkpoint — run integration tests (if enabled):**
+→ Invoke test-strategy with tier="integration"
+→ If integration tests FAIL: checkpoint blocks with failure detail
+→ If integration tests PASS or SKIPPED: proceed to checkpoint type handling
 
 **If type="checkpoint:human-verify":**
 1. Stop execution

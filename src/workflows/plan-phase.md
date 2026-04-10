@@ -293,7 +293,7 @@ This flag determines whether the post-plan routing suggests audit before APPLY.
    Milestone: v0.1 [Milestone Name]
    Phase: [N] of [total] ([Phase Name]) — Planning
    Plan: [NN-PP] created, awaiting approval
-   Status: PLAN created, ready for APPLY
+   Status: Awaiting Approval
    Last activity: [timestamp] — Created [plan-path]
 
    Progress:
@@ -360,6 +360,11 @@ This flag determines whether the post-plan routing suggests audit before APPLY.
    [1] Approved, run APPLY | [2] Questions first | [3] Pause here
    ```
    Accept quick inputs: "1", "approved", "yes", "go" → run `/forge:apply [plan-path]`
+
+**Approval signal definition (canonical):**
+The following explicit signals constitute plan approval: `"approved"`, `"yes"`, `"go"`, `"go ahead"`, `"execute"`, `"1"`, `"apply"`, or running `/forge:apply` directly.
+Any other response (questions, silence, hedging) is NOT approval — do not proceed to APPLY.
+This definition is the single source of truth for CARL RULE_2 enforcement in apply-phase.
 </step>
 
 </process>

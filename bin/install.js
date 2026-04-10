@@ -92,28 +92,53 @@ function expandTilde(filePath) {
 }
 
 /**
- * Recursively copy directory, replacing paths in .md files
+ * Recursively copy directory, replacing paths in .md files.
+ * Wraps fs calls so permission/IO errors surface as friendly messages.
  */
 function copyWithPathReplacement(srcDir, destDir, pathPrefix) {
-  fs.mkdirSync(destDir, { recursive: true });
+  try {
+    fs.mkdirSync(destDir, { recursive: true });
 
-  const entries = fs.readdirSync(srcDir, { withFileTypes: true });
+    const entries = fs.readdirSync(srcDir, { withFileTypes: true });
 
-  for (const entry of entries) {
-    const srcPath = path.join(srcDir, entry.name);
-    const destPath = path.join(destDir, entry.name);
+    for (const entry of entries) {
+      const srcPath = path.join(srcDir, entry.name);
+      const destPath = path.join(destDir, entry.name);
 
-    if (entry.isDirectory()) {
-      copyWithPathReplacement(srcPath, destPath, pathPrefix);
-    } else if (entry.name.endsWith('.md')) {
-      // Replace ~/.claude/ with the appropriate prefix in markdown files
-      let content = fs.readFileSync(srcPath, 'utf8');
-      content = content.replace(/~\/\.claude\//g, pathPrefix);
-      fs.writeFileSync(destPath, content);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
+      if (entry.isDirectory()) {
+        copyWithPathReplacement(srcPath, destPath, pathPrefix);
+      } else {
+        // Replace ~/.claude/ with the appropriate prefix in text files
+        // Covers .md, FORGE manifest, and any other text content
+        const textExts = ['.md', '.txt', '.json', '.yaml', '.yml'];
+        const isText = textExts.some(ext => entry.name.endsWith(ext))
+          || !entry.name.includes('.');  // extensionless files (e.g. FORGE manifest)
+        if (isText) {
+          let content = fs.readFileSync(srcPath, 'utf8');
+          content = content.replace(/~\/\.claude\//g, pathPrefix);
+          fs.writeFileSync(destPath, content);
+        } else {
+          fs.copyFileSync(srcPath, destPath);
+        }
+      }
     }
+  } catch (err) {
+    console.error(`  ${yellow}Failed to copy ${srcDir} → ${destDir}${reset}`);
+    console.error(`  ${dim}${err.message}${reset}`);
+    process.exit(1);
   }
+}
+
+/**
+ * Back up an existing install directory to a timestamped sibling, so
+ * re-running the installer never silently clobbers user customizations.
+ */
+function backupIfExists(dir) {
+  if (!fs.existsSync(dir)) return null;
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const backup = `${dir}.backup-${stamp}`;
+  fs.renameSync(dir, backup);
+  return backup;
 }
 
 /**
@@ -142,17 +167,25 @@ function install(isGlobal) {
   const commandsDir = path.join(claudeDir, 'commands');
   fs.mkdirSync(commandsDir, { recursive: true });
 
-  // Copy src/commands to commands/forge
+  // Copy src/commands to commands/forge (backing up any prior install)
   const commandsSrc = path.join(src, 'src', 'commands');
   const commandsDest = path.join(commandsDir, 'forge');
+  const commandsBackup = backupIfExists(commandsDest);
+  if (commandsBackup) {
+    console.log(`  ${dim}↳ backed up existing commands/forge → ${path.basename(commandsBackup)}${reset}`);
+  }
   copyWithPathReplacement(commandsSrc, commandsDest, pathPrefix);
   console.log(`  ${green}✓${reset} Installed commands/forge`);
 
   // Copy src/* (except commands) to forge-framework/
   const skillDest = path.join(claudeDir, 'forge-framework');
+  const skillBackup = backupIfExists(skillDest);
+  if (skillBackup) {
+    console.log(`  ${dim}↳ backed up existing forge-framework → ${path.basename(skillBackup)}${reset}`);
+  }
   fs.mkdirSync(skillDest, { recursive: true });
 
-  const srcDirs = ['templates', 'workflows', 'references', 'rules'];
+  const srcDirs = ['templates', 'workflows', 'references', 'rules', 'carl'];
   for (const dir of srcDirs) {
     const dirSrc = path.join(src, 'src', dir);
     const dirDest = path.join(skillDest, dir);

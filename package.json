@@ -11,8 +11,17 @@
     "src/templates",
     "src/references",
     "src/workflows",
-    "src/rules"
+    "src/rules",
+    "src/carl"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santhoshvishnu/forge-framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/santhoshvishnu/forge-framework/issues"
+  },
+  "homepage": "https://github.com/santhoshvishnu/forge-framework#readme",
   "keywords": [
     "claude",
     "claude-code",

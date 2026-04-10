@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGE Framework Workflow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+    background: #0d1117;
+    color: #c9d1d9;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; width: 100%; }
+  h1 { text-align: center; font-size: 28px; color: #58a6ff; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #8b949e; margin-bottom: 40px; font-size: 14px; }
+
+  svg { width: 100%; height: auto; display: block; }
+
+  /* Node styles */
+  .node rect, .node circle { stroke-width: 2; cursor: pointer; transition: filter 0.2s; }
+  .node:hover rect, .node:hover circle { filter: brightness(1.3) drop-shadow(0 0 8px rgba(88,166,255,0.4)); }
+  .node text { font-family: inherit; font-size: 13px; fill: #c9d1d9; pointer-events: none; }
+  .node .label { font-weight: 600; font-size: 14px; }
+  .node .sublabel { font-size: 11px; fill: #8b949e; }
+
+  /* Edge styles */
+  .edge line, .edge path { stroke-width: 2; }
+  .edge polygon { stroke-width: 1; }
+  marker polygon { fill: #58a6ff; }
+
+  /* Phase colors */
+  .phase-init rect   { fill: #1a1e2e; stroke: #6e7681; }
+  .phase-plan rect   { fill: #0d2137; stroke: #58a6ff; }
+  .phase-apply rect  { fill: #0d2d1a; stroke: #3fb950; }
+  .phase-unify rect  { fill: #2d1a0d; stroke: #d29922; }
+  .phase-verify rect { fill: #1a0d2d; stroke: #bc8cff; }
+  .phase-session rect{ fill: #21262d; stroke: #6e7681; }
+  .phase-mile rect   { fill: #1a0d1a; stroke: #f778ba; }
+
+  /* Legend */
+  .legend { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8b949e; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid; }
+
+  /* CARL rules callout */
+  .carl { margin-top: 30px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 20px; }
+  .carl h3 { color: #d29922; font-size: 14px; margin-bottom: 8px; }
+  .carl ul { list-style: none; padding: 0; }
+  .carl li { font-size: 12px; color: #8b949e; padding: 3px 0; }
+  .carl li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+  .carl li.must::before { background: #f85149; }
+  .carl li.should::before { background: #d29922; }
+  .carl li.may::before { background: #3fb950; }
+  .carl .tag { font-weight: 600; color: #c9d1d9; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>FORGE Framework</h1>
+  <p class="subtitle">Plan - Apply - Unify loop with CARL rule enforcement</p>
+
+  <svg viewBox="0 0 900 720" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#58a6ff"/>
+      </marker>
+      <marker id="arrow-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#3fb950"/>
+      </marker>
+      <marker id="arrow-yellow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#d29922"/>
+      </marker>
+      <marker id="arrow-pink" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#f778ba"/>
+      </marker>
+      <marker id="arrow-gray" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#6e7681"/>
+      </marker>
+    </defs>
+
+    <!-- ======== ROW 1: INIT ======== -->
+    <g class="node phase-init" transform="translate(340, 20)">
+      <rect x="0" y="0" width="220" height="52" rx="8"/>
+      <text class="label" x="110" y="24" text-anchor="middle">/forge:init</text>
+      <text class="sublabel" x="110" y="40" text-anchor="middle">Scaffold .forge/ + conversational setup</text>
+    </g>
+
+    <!-- Arrow: init -> milestone -->
+    <line class="edge" x1="450" y1="72" x2="450" y2="100" stroke="#6e7681" marker-end="url(#arrow-gray)"/>
+
+    <!-- ======== ROW 2: MILESTONE ======== -->
+    <g class="node phase-mile" transform="translate(340, 100)">
+      <rect x="0" y="0" width="220" height="52" rx="8"/>
+      <text class="label" x="110" y="24" text-anchor="middle">/forge:milestone</text>
+      <text class="sublabel" x="110" y="40" text-anchor="middle">Define milestone scope + phases</text>
+    </g>
+
+    <!-- Arrow: milestone -> discuss -->
+    <line class="edge" x1="450" y1="152" x2="450" y2="180" stroke="#6e7681" marker-end="url(#arrow-gray)"/>
+
+    <!-- ======== ROW 3: PRE-PLANNING ======== -->
+    <g class="node phase-init" transform="translate(340, 180)">
+      <rect x="0" y="0" width="220" height="52" rx="8"/>
+      <text class="label" x="110" y="24" text-anchor="middle">/forge:discuss</text>
+      <text class="sublabel" x="110" y="40" text-anchor="middle">Explore phase vision + assumptions</text>
+    </g>
+
+    <!-- Arrow: discuss -> plan -->
+    <line class="edge" x1="450" y1="232" x2="450" y2="280" stroke="#58a6ff" marker-end="url(#arrow)"/>
+
+    <!-- ======== THE CORE LOOP (highlighted box) ======== -->
+    <rect x="60" y="268" width="780" height="310" rx="12" fill="none" stroke="#30363d" stroke-width="1" stroke-dasharray="6,4"/>
+    <text x="80" y="290" font-size="11" fill="#484f58" font-family="monospace">PLAN - APPLY - UNIFY LOOP</text>
+
+    <!-- PLAN -->
+    <g class="node phase-plan" transform="translate(100, 300)">
+      <rect x="0" y="0" width="200" height="70" rx="8"/>
+      <text class="label" x="100" y="24" text-anchor="middle">/forge:plan</text>
+      <text class="sublabel" x="100" y="40" text-anchor="middle">Write PLAN.md for phase</text>
+      <text class="sublabel" x="100" y="54" text-anchor="middle" fill="#58a6ff">RULE_2: approval required</text>
+    </g>
+
+    <!-- Arrow: plan -> apply -->
+    <line class="edge" x1="300" y1="335" x2="350" y2="335" stroke="#58a6ff" marker-end="url(#arrow)"/>
+
+    <!-- Approval gate label -->
+    <text x="310" y="325" font-size="10" fill="#58a6ff" font-family="monospace" transform="rotate(-90, 325, 335)">approved</text>
+
+    <!-- APPLY -->
+    <g class="node phase-apply" transform="translate(350, 300)">
+      <rect x="0" y="0" width="200" height="70" rx="8"/>
+      <text class="label" x="100" y="24" text-anchor="middle">/forge:apply</text>
+      <text class="sublabel" x="100" y="40" text-anchor="middle">Execute tasks (E/Q loop)</text>
+      <text class="sublabel" x="100" y="54" text-anchor="middle" fill="#3fb950">RULE_5: sync blockers</text>
+    </g>
+
+    <!-- Arrow: apply -> verify -->
+    <line class="edge" x1="450" y1="370" x2="450" y2="410" stroke="#3fb950" marker-end="url(#arrow-green)"/>
+
+    <!-- VERIFY -->
+    <g class="node phase-verify" transform="translate(350, 410)">
+      <rect x="0" y="0" width="200" height="52" rx="8"/>
+      <text class="label" x="100" y="24" text-anchor="middle">/forge:verify</text>
+      <text class="sublabel" x="100" y="40" text-anchor="middle">User acceptance testing</text>
+    </g>
+
+    <!-- Arrow: verify -> unify -->
+    <line class="edge" x1="550" y1="436" x2="600" y2="436" stroke="#bc8cff" marker-end="url(#arrow)"/>
+
+    <!-- UNIFY -->
+    <g class="node phase-unify" transform="translate(600, 300)">
+      <rect x="0" y="0" width="200" height="70" rx="8"/>
+      <text class="label" x="100" y="24" text-anchor="middle">/forge:unify</text>
+      <text class="sublabel" x="100" y="40" text-anchor="middle">Reconcile plan vs actual</text>
+      <text class="sublabel" x="100" y="54" text-anchor="middle" fill="#d29922">RULE_11: transition commit</text>
+    </g>
+
+    <!-- Arrow: verify to unify (vertical) -->
+    <path class="edge" d="M 550 436 L 700 436 L 700 370" stroke="#bc8cff" fill="none" marker-end="url(#arrow)"/>
+
+    <!-- Loop-back arrow: unify -> plan (next plan in phase) -->
+    <path class="edge" d="M 700 300 L 700 280 Q 700 270 690 270 L 210 270 Q 200 270 200 280 L 200 300" stroke="#d29922" fill="none" marker-end="url(#arrow-yellow)" stroke-dasharray="6,3"/>
+    <text x="440" y="264" font-size="10" fill="#d29922" text-anchor="middle" font-family="monospace">next plan in phase</text>
+
+    <!-- ======== Session sidebar ======== -->
+    <g class="node phase-session" transform="translate(20, 430)">
+      <rect x="0" y="0" width="140" height="42" rx="6"/>
+      <text class="label" x="70" y="18" text-anchor="middle" font-size="12">/forge:pause</text>
+      <text class="sublabel" x="70" y="32" text-anchor="middle">HANDOFF + WIP commit</text>
+    </g>
+    <g class="node phase-session" transform="translate(20, 480)">
+      <rect x="0" y="0" width="140" height="42" rx="6"/>
+      <text class="label" x="70" y="18" text-anchor="middle" font-size="12">/forge:resume</text>
+      <text class="sublabel" x="70" y="32" text-anchor="middle">Restore from HANDOFF</text>
+    </g>
+    <g class="node phase-session" transform="translate(20, 530)">
+      <rect x="0" y="0" width="140" height="42" rx="6"/>
+      <text class="label" x="70" y="18" text-anchor="middle" font-size="12">/forge:progress</text>
+      <text class="sublabel" x="70" y="32" text-anchor="middle">Smart next-action router</text>
+    </g>
+
+    <!-- ======== ROW after loop: complete-milestone ======== -->
+    <!-- Arrow: loop -> complete -->
+    <line class="edge" x1="450" y1="578" x2="450" y2="610" stroke="#f778ba" marker-end="url(#arrow-pink)"/>
+    <text x="460" y="598" font-size="10" fill="#484f58" font-family="monospace">all phases done</text>
+
+    <g class="node phase-mile" transform="translate(310, 610)">
+      <rect x="0" y="0" width="280" height="52" rx="8"/>
+      <text class="label" x="140" y="24" text-anchor="middle">/forge:complete-milestone</text>
+      <text class="sublabel" x="140" y="40" text-anchor="middle">Archive, evolve PROJECT.md, tag release</text>
+    </g>
+
+    <!-- Loop back to milestone -->
+    <path class="edge" d="M 590 636 Q 640 636 640 600 Q 640 560 800 500 Q 860 470 860 200 Q 860 140 560 126" stroke="#f778ba" fill="none" marker-end="url(#arrow-pink)" stroke-dasharray="6,3"/>
+    <text x="865" y="340" font-size="10" fill="#f778ba" font-family="monospace" transform="rotate(-90, 865, 340)">next milestone</text>
+
+    <!-- Debug sidebar -->
+    <g class="node phase-init" transform="translate(740, 480)">
+      <rect x="0" y="0" width="140" height="42" rx="6"/>
+      <text class="label" x="70" y="18" text-anchor="middle" font-size="12">/forge:debug</text>
+      <text class="sublabel" x="70" y="32" text-anchor="middle">Persistent investigation</text>
+    </g>
+
+    <!-- RULE_7 callout on apply -->
+    <text x="360" y="390" font-size="9" fill="#f85149" font-family="monospace">RULE_7: every task needs &lt;verify&gt;</text>
+
+  </svg>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#0d2137;border-color:#58a6ff;"></div>Plan</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#0d2d1a;border-color:#3fb950;"></div>Apply</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#1a0d2d;border-color:#bc8cff;"></div>Verify</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2d1a0d;border-color:#d29922;"></div>Unify</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#1a0d1a;border-color:#f778ba;"></div>Milestone</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#21262d;border-color:#6e7681;"></div>Session</div>
+  </div>
+
+  <!-- CARL rules enforcement map -->
+  <div class="carl">
+    <h3>CARL Rule Enforcement Points</h3>
+    <ul>
+      <li class="must"><span class="tag">RULE_1</span> Load Before Execute &mdash; command preamble (all commands)</li>
+      <li class="must"><span class="tag">RULE_2</span> No code without PLAN &mdash; apply-phase:validate_plan_exists</li>
+      <li class="must"><span class="tag">RULE_4</span> Respect boundaries &mdash; apply-phase:execute_tasks</li>
+      <li class="must"><span class="tag">RULE_5</span> Sync blockers to STATE.md &mdash; apply-phase:BLOCKED handler</li>
+      <li class="must"><span class="tag">RULE_6</span> Verify state consistency &mdash; transition-phase</li>
+      <li class="should"><span class="tag">RULE_7</span> Tasks need &lt;verify&gt; &mdash; apply-phase:validate_verify_tags</li>
+      <li class="should"><span class="tag">RULE_8</span> Log deviations &mdash; apply-phase:DONE_WITH_CONCERNS</li>
+      <li class="should"><span class="tag">RULE_9</span> BDD acceptance criteria &mdash; plan-phase:coherence_check</li>
+      <li class="may"><span class="tag">RULE_11</span> One commit per phase &mdash; unify-phase:verify_transition_commit</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
