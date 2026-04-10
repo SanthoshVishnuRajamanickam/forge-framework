@@ -72,13 +72,59 @@ You describe what you want, Claude Code builds it, and Forge ensures:
 npx forge-framework
 ```
 
-The installer prompts for location:
-- **Global** (`~/.claude/`) — available in all projects
-- **Local** (`./.claude/`) — current project only
+### Option A: npm (manual install)
 
-Pass `--global` or `--local` to skip the prompt.
+```bash
+npx forge-framework --global    # install to ~/.claude/
+npx forge-framework --local     # install to ./.claude/ (project only)
+```
+
+Pass `--global` or `--local` to skip the interactive prompt.
 
 > Re-running the installer is safe: existing files are backed up to `*.backup-<timestamp>` before new files are written.
+
+To update: `npx forge-framework@latest --global`
+
+### Option B: Claude Code Plugin (auto-updates)
+
+Install Forge as a Claude Code plugin for automatic version management.
+
+**Step 1:** Open your Claude Code settings file:
+```bash
+# macOS / Linux
+nano ~/.claude/settings.json
+
+# Or use Claude Code's built-in editor
+claude config edit
+```
+
+**Step 2:** Add Forge to the `extraKnownMarketplaces` section:
+```json
+{
+  "extraKnownMarketplaces": {
+    "forge-framework": {
+      "source": {
+        "source": "github",
+        "repo": "SanthoshVishnuRajamanickam/forge-framework"
+      }
+    }
+  }
+}
+```
+
+**Step 3:** Enable the plugin in the `enabledPlugins` section:
+```json
+{
+  "enabledPlugins": {
+    "forge-framework@forge-framework": true
+  }
+}
+```
+
+**Step 4:** Restart Claude Code. All `/forge:*` commands are now available.
+
+> Updates are picked up automatically when you start a new session.
+> No need to re-run `npx` — Claude Code handles versioning.
 
 ### New Project
 
