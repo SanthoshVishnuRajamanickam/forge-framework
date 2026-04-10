@@ -1,0 +1,11 @@
+# Dev/build files
+tools/
+.claude-plugin/
+.github/
+tests/
+*.backup-*
+.forge/
+.retrofit-state.json
+
+# Docs that npm doesn't need (GitHub only)
+docs/

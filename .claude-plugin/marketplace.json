@@ -1,0 +1,19 @@
+{
+  "name": "forge-framework",
+  "description": "Forge Framework marketplace",
+  "owner": {
+    "name": "Santhosh Vishnu"
+  },
+  "metadata": {
+    "description": "Autonomous engineering framework built on PAUL patterns",
+    "homepage": "https://github.com/santhoshvishnu/forge-framework"
+  },
+  "plugins": [
+    {
+      "name": "forge-framework",
+      "version": "0.2.0",
+      "source": "./",
+      "description": "Plan/apply/verify/unify loop with pluggable test flows, git history retrofit, and project dashboard. 32 commands."
+    }
+  ]
+}
