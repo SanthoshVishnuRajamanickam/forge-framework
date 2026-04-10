@@ -5,3 +5,4 @@ node_modules/
 tools/__pycache__/
 .playwright-mcp/
 *.html
+docs/
