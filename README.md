@@ -2,144 +2,37 @@
 
 # FORGE
 
-**Autonomous Engineering Framework** — structured plan/apply/verify/unify loop with pluggable test flows, git history retrofit, and real-time project dashboard for Claude Code.
+**Stop managing AI output. Ship verified features.**
 
 [![npm version](https://img.shields.io/npm/v/forge-framework?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/forge-framework)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/SanthoshVishnuRajamanickam/forge-framework?style=for-the-badge&logo=github&color=181717)](https://github.com/SanthoshVishnuRajamanickam/forge-framework)
 
-<br>
-
 ```bash
 npx forge-framework
 ```
 
-**Works on Mac, Windows, and Linux.**
-
-<br>
-
 ![FORGE Demo](assets/demo.svg)
-
-<br>
-
-*"Discover, don't interrogate. Evidence before claims. Tiers are slots, not implementations."*
-
-<br>
-
-[Getting Started](#getting-started) · [Why Forge](#why-forge) · [The Loop](#the-loop) · [Commands](#commands) · [Test Flows](#test-flows) · [Retrofit](#retrofit) · [Dashboard](#dashboard)
 
 </div>
 
 ---
 
-## Getting Started
+## The Problem
 
-```bash
-npx forge-framework
-```
-
-### Option A: npm (manual install)
-
-```bash
-npx forge-framework --global    # install to ~/.claude/
-npx forge-framework --local     # install to ./.claude/ (project only)
-```
-
-Pass `--global` or `--local` to skip the interactive prompt.
-
-> Re-running the installer is safe: existing files are backed up to `*.backup-<timestamp>` before new files are written.
-
-To update: `npx forge-framework@latest --global`
-
-### Option B: Claude Code Plugin (auto-updates)
-
-Install Forge as a Claude Code plugin for automatic version management.
-
-**Step 1:** Open your Claude Code settings file:
-```bash
-# macOS / Linux
-nano ~/.claude/settings.json
-
-# Or use Claude Code's built-in editor
-claude config edit
-```
-
-**Step 2:** Add Forge to the `extraKnownMarketplaces` section:
-```json
-{
-  "extraKnownMarketplaces": {
-    "forge-framework": {
-      "source": {
-        "source": "github",
-        "repo": "SanthoshVishnuRajamanickam/forge-framework"
-      }
-    }
-  }
-}
-```
-
-**Step 3:** Enable the plugin in the `enabledPlugins` section:
-```json
-{
-  "enabledPlugins": {
-    "forge-framework@forge-framework": true
-  }
-}
-```
-
-**Step 4:** Restart Claude Code. All `/forge:*` commands are now available.
-
-> Updates are picked up automatically when you start a new session.
-> No need to re-run `npx` — Claude Code handles versioning.
-
-### New Project
-
-```
-/forge:init              # scaffold .forge/ with conversational setup
-/forge:milestone         # define the first milestone
-/forge:discuss           # explore the first phase
-/forge:plan              # write a PLAN.md
-/forge:apply             # execute the approved plan
-/forge:verify            # user-acceptance test the output
-/forge:unify             # reconcile plan vs actual
-/forge:complete-milestone  # finalize once all phases are done
-```
-
-### Existing Project
-
-```
-/forge:retrofit              # reverse-engineer FORGE state from git history
-/forge:retrofit --mode=full  # + phase reconstruction from commit patterns
-```
-
-Retrofit analyzes package metadata, git tags, changelogs, and commit patterns to auto-populate `.forge/` — then presents confidence-scored findings for approval before writing anything.
-
-### Between Sessions
-
-```
-/forge:pause      # write HANDOFF + WIP commit
-/forge:resume     # restore from HANDOFF
-/forge:progress   # see suggested next action
-/forge:dashboard  # full project state at a glance
-```
+Claude Code generates fast. But without structure, plans orphan, context rots, and you spend more time fixing AI output than shipping. Forge gives your team a repeatable loop: **plan it, build it, verify it, close it.**
 
 ---
 
-## Why Forge
+## Your First Loop
 
-Building with Claude Code is powerful — until context rots, plans orphan, and you spend more time managing AI output than shipping features.
-
-Forge fixes this with **four principles:**
-
-1. **Loop integrity** — Every plan closes with UNIFY. No orphan plans. UNIFY reconciles what was planned vs what happened, updates state, and logs decisions.
-
-2. **Pluggable test architecture** — 10 test tiers, each bound to configurable executors (CLI, skills, MCP servers, manual checklists). The AI can test itself via any MCP server — no scripts needed.
-
-3. **Mid-project adoption** — Forge's retrofit command reverse-engineers your project state from git history. Join any project mid-flight without starting over.
-
-4. **Evidence-driven development** — Every task requires `<verify>` criteria. CARL rules enforce plan validation, blocker sync, and transition commits.
-
-**Who this is for:** Engineers who use AI to ship — web apps, mobile apps, embedded firmware, APIs, CLIs, libraries. Solo developers, teams, complex stacks (Qt + Android + HIL), regulated industries (ISO 26262 / DO-178C).
+```bash
+/forge:init     # scaffold project
+/forge:plan     # write the plan
+/forge:apply    # build it
+/forge:verify   # test it
+/forge:unify    # close the loop
+```
 
 ---
 
@@ -152,131 +45,76 @@ PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY ──╮
 
 | Phase | What happens |
 |-------|-------------|
-| **PLAN** | Write PLAN.md with objective, acceptance criteria, tasks, boundaries. Approval required before APPLY. |
-| **APPLY** | Execute tasks with Execute/Qualify loop. Static + unit tests run per-task. Integration tests at checkpoints. |
-| **VERIFY** | E2E, MCP-driven, visual, performance, security, and manual tests run. TEST-REPORT.md generated. |
-| **UNIFY** | Reconcile plan vs actual. Update STATE.md. Log deviations. Transition commit. Route to next phase. |
-
-CARL rules enforce the loop: no code without a plan (RULE_2), every task needs `<verify>` (RULE_7), blockers sync to STATE.md (RULE_5), one commit per phase at transition (RULE_11).
+| **PLAN** | Write PLAN.md with objective, tasks, and acceptance criteria. Approval required. |
+| **APPLY** | Execute tasks. Tests run per-task. |
+| **VERIFY** | E2E, manual, and MCP-driven tests. TEST-REPORT.md generated. |
+| **UNIFY** | Reconcile plan vs actual. Update state. Log deviations. Close the loop. |
 
 ---
 
-## Commands
+## Core Commands
 
-32 commands organized by workflow stage:
+| Command | What it does |
+|---------|-------------|
+| `/forge:init` | Scaffold `.forge/` and set up project |
+| `/forge:plan` | Write PLAN.md with tasks + acceptance criteria |
+| `/forge:apply` | Execute the approved plan |
+| `/forge:verify` | Run tests, UAT, confirm it works |
+| `/forge:unify` | Reconcile plan vs actual, close the loop |
 
-| Category | Commands |
-|----------|----------|
-| **Core Loop** | `init`, `plan`, `apply`, `verify`, `unify` |
-| **Session** | `pause`, `resume`, `progress`, `handoff`, `dashboard` |
-| **Milestones** | `milestone`, `complete-milestone`, `discuss-milestone`, `add-phase`, `remove-phase` |
-| **Pre-Planning** | `discuss`, `assumptions`, `discover`, `research`, `research-phase` |
-| **Quality** | `verify`, `audit`, `plan-fix`, `consider-issues`, `test`, `debug` |
-| **Specialized** | `flows`, `config`, `map-codebase`, `retrofit`, `register` |
-
-Run `/forge:help` for the full reference.
+32 commands total. Run `/forge:help` or see [CHEATSHEET.md](CHEATSHEET.md) for the full reference.
 
 ---
 
-## Test Flows
+## Install
 
-Forge includes a pluggable test architecture with **10 tiers** and **4 executor types**.
+### Option A: npm
 
-### Tiers
-
-| Tier | When | Gate |
-|------|------|------|
-| static | Per-task (before unit) | Task completion |
-| unit | Per-task | Task completion |
-| integration | At checkpoints | Checkpoint |
-| e2e | VERIFY phase | Phase completion |
-| mcp-driven | VERIFY phase | Phase completion |
-| visual | VERIFY phase | Phase completion |
-| performance | VERIFY / checkpoint | Phase completion |
-| security | VERIFY phase | Phase completion |
-| platform | Milestone | Milestone completion |
-| manual | VERIFY phase | Phase completion |
-
-### Executors
-
-Each tier binds to one or more executors:
-
-| Type | Example | How it works |
-|------|---------|-------------|
-| **CLI** | `npm test`, `pytest`, `ctest` | FORGE runs command, reads exit code + output |
-| **Skill** | `/playwright-cli` | FORGE invokes skill, reads structured result |
-| **MCP** | Any MCP server (browser, desktop, mobile, hardware, custom) | AI uses MCP tools directly — no scripts, AC *are* the test spec |
-| **Manual** | Human checklist | FORGE generates checklist from acceptance criteria |
-
-### Get Started with Testing
-
-```
-/forge:test brainstorm    # guided discovery: what to test and how
-/forge:test configure     # lock in test profile
-/forge:test               # run all enabled tiers
-/forge:test report        # show latest TEST-REPORT.md
+```bash
+npx forge-framework              # interactive
+npx forge-framework --global     # install to ~/.claude/
+npx forge-framework --local      # install to ./.claude/ (project only)
 ```
 
-See [assets/test-flows.html](assets/test-flows.html) for the interactive architecture diagram.
+Update: `npx forge-framework@latest --global`
+
+### Option B: Claude Code Plugin (auto-updates)
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "forge-framework": {
+      "source": { "source": "github", "repo": "SanthoshVishnuRajamanickam/forge-framework" }
+    }
+  },
+  "enabledPlugins": {
+    "forge-framework@forge-framework": true
+  }
+}
+```
+
+Restart Claude Code. All `/forge:*` commands are available. Updates are automatic.
 
 ---
 
-## Retrofit
+## Key Features
 
-Initialize Forge on a project that's been running for months or years:
-
-```
-/forge:retrofit              # standard: 4 agents map codebase + milestones from tags
-/forge:retrofit --mode=full  # + history agent reconstructs phases from commits
-/forge:retrofit --resume     # resume interrupted retrofit
-/forge:retrofit --refine=history  # re-run only the history agent
-```
-
-**How it works:**
-1. Auto-detects project identity (package metadata, git tags, language)
-2. Detects workflow shape (standard, squash-merge, trunk-based, rebase)
-3. Spawns parallel agents: codebase map (sonnet) + git history analysis (haiku)
-4. Parses CHANGELOG as primary source (higher fidelity than git alone)
-5. Pre-processes: bot filter, fork detector, secret scanner
-6. Presents confidence-scored findings for approval
-7. Writes `.forge/` files only after explicit approval
-
-See [assets/retrofit-flow.html](assets/retrofit-flow.html) for the flow diagram.
+- **Loop integrity** — Every plan closes with UNIFY. No orphan plans, no drift.
+- **Pluggable tests** — 10 tiers, 4 executor types (CLI, Skill, MCP, Manual). Configure per-project.
+- **Mid-project adoption** — `forge:retrofit` reverse-engineers state from git history. Join any project mid-flight.
+- **CARL enforcement** — 12 rules (RFC 2119 levels) prevent plan drift, missing tests, and state inconsistency.
 
 ---
 
-## Dashboard
+## Learn More
 
-One command, complete situational awareness:
-
-```
-/forge:dashboard         # terminal output
-/forge:dashboard --html  # interactive HTML at .forge/dashboard.html
-```
-
-Shows: project identity, milestone progress, loop position, test profile status, special flows, git health, blockers, and suggested next action.
-
----
-
-## Architecture
-
-```
-src/
-  commands/     32 slash commands (/forge:*)
-  workflows/    execution playbooks (plan-phase, apply-phase, etc.)
-  references/   shared knowledge (test-flows, git-strategy, retrofit-history)
-  templates/    file templates for .forge/ state
-  rules/        invariant definitions
-  carl/         CARL rule manifest (12 rules, RFC 2119 levels)
-```
-
-**CARL** (Context-Anchored Rule Loader) enforces invariants:
-
-| Level | Rules | Examples |
-|-------|-------|---------|
-| MUST | 1–6 | Load before execute, no code without plan, APPLY→UNIFY |
-| SHOULD | 7–9 | Verify criteria required, log deviations, BDD format |
-| MAY | 10–12 | Context budgets, commit format, decimal phases for interrupts |
+- [CHEATSHEET.md](CHEATSHEET.md) — One-page quick reference
+- [Test Flows](src/references/test-flows.md) — Pluggable test architecture
+- [Retrofit](src/references/retrofit-history.md) — Add Forge to existing projects
+- Run `/forge:dashboard` for real-time project state
+- Run `/forge:help` for all 32 commands
 
 ---
 
