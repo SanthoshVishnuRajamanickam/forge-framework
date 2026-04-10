@@ -5,14 +5,20 @@ description: Show available FORGE commands and usage guide
 
 <objective>
 Display the complete FORGE command reference.
+</objective>
 
+<execution_context>
+Inline — this command outputs the reference content below directly. No workflow file.
+</execution_context>
+
+<output_rules>
 Output ONLY the reference content below. Do NOT add:
 
 - Project-specific analysis
 - Git status or file context
 - Next-step suggestions
 - Any commentary beyond the reference
-</objective>
+</output_rules>
 
 <reference>
 # FORGE Command Reference

@@ -1,6 +1,6 @@
 {
   "name": "forge-framework",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Autonomous engineering framework — PRD intake, self-healing plan/apply/verify/unify loop, and dynamic stack adapters. Built on PAUL's Plan-Apply-Unify patterns.",
   "bin": {
     "forge-framework": "bin/install.js"

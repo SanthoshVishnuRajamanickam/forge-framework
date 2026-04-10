@@ -9,6 +9,11 @@ allowed-tools: [Read, Write, Bash, AskUserQuestion]
 Manage FORGE project configuration and integrations. Create or update .forge/config.md at any point in the project lifecycle.
 </objective>
 
+<execution_context>
+Inline — this command handles its own process without a separate workflow file.
+Reads/writes `.forge/config.md` directly.
+</execution_context>
+
 <when_to_use>
 - Enable SonarQube after project init
 - Disable an integration

@@ -49,6 +49,36 @@ Between sessions, `/forge:pause` writes a HANDOFF file and `/forge:resume`
 picks up where you left off. `/forge:progress` at any time routes you to the
 single next action.
 
+## Retrofitting Existing Projects
+
+Already have a codebase? Skip the manual setup — retrofit reverse-engineers
+FORGE state from your git history:
+
+```text
+/forge:retrofit              # standard mode: codebase map + milestones from tags
+/forge:retrofit --mode=full  # + phase reconstruction from commit patterns
+```
+
+Retrofit analyzes package metadata, git tags, CHANGELOG, and commit patterns
+to auto-populate `.forge/` — then presents confidence-scored findings for your
+approval before writing anything. See `/forge:retrofit --help` for all options.
+
+## Testing
+
+FORGE includes a pluggable test architecture with 10 tiers. Brainstorm your
+test strategy before configuring:
+
+```text
+/forge:test brainstorm       # guided discovery: what to test and how
+/forge:test configure        # lock in test profile
+/forge:test                  # run all enabled tiers
+/forge:test report           # show latest TEST-REPORT.md
+```
+
+Executors are pluggable — bind CLI commands, skills, MCP servers, or manual
+checklists to any tier. See [assets/test-flows.html](assets/test-flows.html)
+for the full architecture diagram.
+
 ## Coexistence with PAUL
 
 Forge does not modify PAUL. If you have `paul-framework` installed, both frameworks coexist. Forge uses `/forge:*` commands and `.forge/` state; PAUL continues to own `/paul:*` and `.paul/`.
