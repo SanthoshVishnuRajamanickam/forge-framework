@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGE Dashboard — forge-framework</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+    background: #0d1117; color: #c9d1d9;
+    padding: 24px; min-height: 100vh;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px; margin: 0 auto; }
+  .grid-full { grid-column: 1 / -1; }
+
+  /* Header */
+  .header {
+    grid-column: 1 / -1; display: flex; justify-content: space-between;
+    align-items: center; padding: 20px 24px; background: #161b22;
+    border: 1px solid #30363d; border-radius: 12px;
+  }
+  .header h1 { font-size: 24px; color: #58a6ff; }
+  .header h1 span { color: #8b949e; font-weight: 400; font-size: 16px; }
+  .header .status-badge {
+    font-size: 12px; padding: 4px 14px; border-radius: 12px;
+    font-weight: 600; text-transform: uppercase;
+    background: rgba(63,185,80,0.15); color: #3fb950;
+  }
+
+  /* Cards */
+  .card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 18px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #484f58; }
+  .card h2 {
+    font-size: 11px; color: #8b949e; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 14px;
+  }
+
+  /* Project info */
+  .project-info dt { font-size: 11px; color: #6e7681; margin-top: 10px; }
+  .project-info dd { font-size: 14px; color: #c9d1d9; }
+  .core-value { font-style: italic; color: #58a6ff; font-size: 13px !important; }
+
+  /* Health metrics */
+  .health-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .metric { text-align: center; padding: 8px 0; }
+  .metric .value { font-size: 32px; font-weight: 700; line-height: 1; }
+  .metric .label { font-size: 11px; color: #6e7681; margin-top: 4px; }
+  .good .value { color: #3fb950; }
+  .warn .value { color: #d29922; }
+  .neutral .value { color: #58a6ff; }
+
+  /* Milestone */
+  .milestone-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .milestone-name { font-size: 18px; font-weight: 600; color: #c9d1d9; }
+  .milestone-version { font-size: 13px; color: #8b949e; }
+  .progress-container {
+    width: 100%; height: 10px; background: #21262d; border-radius: 5px;
+    overflow: hidden; margin: 10px 0;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 5px;
+    background: linear-gradient(90deg, #58a6ff, #3fb950);
+    transition: width 1.5s ease;
+  }
+  .progress-label { font-size: 13px; color: #8b949e; margin-bottom: 16px; }
+
+  .phases { list-style: none; }
+  .phases li {
+    padding: 8px 0; border-bottom: 1px solid #21262d;
+    font-size: 13px; display: flex; align-items: center; gap: 10px;
+  }
+  .phases li:last-child { border-bottom: none; }
+  .phase-icon { width: 20px; text-align: center; font-size: 14px; }
+  .phase-name { flex: 1; }
+  .phase-name.active { color: #58a6ff; font-weight: 600; }
+  .phase-stats { font-size: 11px; color: #6e7681; }
+  .phase-plans { font-size: 11px; color: #484f58; margin-left: 30px; display: block; padding-top: 2px; }
+
+  /* Loop */
+  .loop-container { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 0; }
+  .loop-steps { display: flex; align-items: center; gap: 6px; }
+  .loop-step {
+    padding: 10px 28px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    border: 2px solid #30363d; color: #6e7681; background: #0d1117;
+    transition: all 0.3s;
+  }
+  .loop-step.done { border-color: #3fb950; color: #3fb950; background: rgba(63,185,80,0.06); }
+  .loop-step.active {
+    border-color: #58a6ff; color: #58a6ff; background: rgba(88,166,255,0.06);
+    animation: pulse 2s infinite;
+  }
+  .loop-arrow { color: #30363d; font-size: 20px; }
+  .loop-desc { font-size: 12px; color: #8b949e; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  /* Test tiers */
+  .test-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .test-tier {
+    padding: 10px; border-radius: 8px; border: 1px solid #21262d;
+    font-size: 11px; background: #0d1117;
+  }
+  .test-tier .name { font-weight: 600; font-size: 12px; margin-bottom: 2px; }
+  .test-tier .exec { color: #8b949e; }
+  .test-tier .gate { color: #6e7681; font-size: 10px; margin-top: 2px; }
+  .test-tier.on { border-color: #3fb950; }
+  .test-tier.on .name { color: #3fb950; }
+  .test-tier.off { opacity: 0.4; }
+  .test-tier.off .name { color: #6e7681; }
+  .test-tier .coverage { font-size: 18px; font-weight: 700; color: #3fb950; margin-top: 4px; }
+
+  /* Flows */
+  .flow-list { list-style: none; }
+  .flow-list li {
+    padding: 6px 0; font-size: 12px; display: flex; gap: 8px;
+    border-bottom: 1px solid #21262d;
+  }
+  .flow-list li:last-child { border-bottom: none; }
+  .flow-skill { color: #58a6ff; font-weight: 600; min-width: 130px; }
+  .flow-type { color: #8b949e; flex: 1; }
+  .flow-badge {
+    font-size: 10px; padding: 1px 8px; border-radius: 8px; font-weight: 600;
+  }
+  .flow-required { background: rgba(248,81,73,0.12); color: #f85149; }
+  .flow-optional { background: rgba(110,118,129,0.12); color: #8b949e; }
+
+  /* Activity */
+  .activity { list-style: none; }
+  .activity li {
+    padding: 6px 0; font-size: 12px; display: flex; gap: 12px;
+    border-bottom: 1px solid #21262d;
+  }
+  .activity li:last-child { border-bottom: none; }
+  .activity .time { color: #6e7681; min-width: 55px; text-align: right; }
+  .activity .msg { color: #c9d1d9; }
+  .activity .type {
+    font-size: 10px; padding: 1px 6px; border-radius: 4px;
+    font-weight: 600; min-width: 48px; text-align: center;
+  }
+  .type-feat { background: rgba(63,185,80,0.12); color: #3fb950; }
+  .type-fix { background: rgba(248,81,73,0.12); color: #f85149; }
+  .type-docs { background: rgba(88,166,255,0.12); color: #58a6ff; }
+  .type-test { background: rgba(210,153,34,0.12); color: #d29922; }
+
+  /* Issues card */
+  .issues-card { background: #161b22; }
+  .issues-card.has-blockers { border-color: #f85149; }
+  .issues-card.has-blockers h2 { color: #f85149; }
+  .issue-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; border-bottom: 1px solid #21262d; }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-label { color: #c9d1d9; }
+  .issue-count { font-weight: 700; }
+  .issue-count.zero { color: #3fb950; }
+  .issue-count.some { color: #d29922; }
+  .issue-action { font-size: 11px; color: #58a6ff; margin-top: 8px; }
+
+  /* CTA */
+  .cta {
+    grid-column: 1 / -1; text-align: center; padding: 20px;
+    background: rgba(88,166,255,0.06); border: 1.5px solid #58a6ff;
+    border-radius: 12px;
+  }
+  .cta .label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; }
+  .cta .action { font-size: 20px; color: #58a6ff; font-weight: 700; margin-top: 6px; }
+  .cta .reason { font-size: 12px; color: #6e7681; margin-top: 6px; }
+
+  /* Timestamp footer */
+  .footer {
+    grid-column: 1 / -1; text-align: center; padding: 12px;
+    font-size: 11px; color: #484f58;
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <h1>forge-framework <span>v0.2.0</span></h1>
+      <div style="font-size:12px;color:#6e7681;margin-top:2px;">Autonomous Engineering Framework &mdash; Node.js</div>
+    </div>
+    <span class="status-badge">Production</span>
+  </div>
+
+  <!-- PROJECT -->
+  <div class="card">
+    <h2>Project</h2>
+    <dl class="project-info">
+      <dt>Core Value</dt>
+      <dd class="core-value">"Give Claude Code structured memory across the full engineering lifecycle"</dd>
+      <dt>Stack</dt>
+      <dd>Node.js, Markdown, SVG, HTML</dd>
+      <dt>Branch</dt>
+      <dd>main</dd>
+      <dt>Tag</dt>
+      <dd>v0.2.0</dd>
+    </dl>
+  </div>
+
+  <!-- HEALTH -->
+  <div class="card">
+    <h2>Health</h2>
+    <div class="health-grid">
+      <div class="metric neutral">
+        <div class="value">14</div>
+        <div class="label">Commits (7d)</div>
+      </div>
+      <div class="metric good">
+        <div class="value">32</div>
+        <div class="label">Commands</div>
+      </div>
+      <div class="metric good">
+        <div class="value">0</div>
+        <div class="label">Uncommitted</div>
+      </div>
+      <div class="metric neutral">
+        <div class="value">1</div>
+        <div class="label">Contributors</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MILESTONE -->
+  <div class="card grid-full">
+    <h2>Milestone</h2>
+    <div class="milestone-header">
+      <div class="milestone-name">v0.2.0 &mdash; Framework Hardening + Test Flows + Retrofit</div>
+      <div class="milestone-version">14 commits</div>
+    </div>
+    <div class="progress-container">
+      <div class="progress-fill" style="width: 85%;"></div>
+    </div>
+    <div class="progress-label">85% complete &mdash; 6 of 7 phases done</div>
+    <ul class="phases">
+      <li>
+        <span class="phase-icon">✅</span>
+        <span class="phase-name">Phase 1: Gap Review &amp; Fixes</span>
+        <span class="phase-stats">16 gaps fixed</span>
+      </li>
+      <li>
+        <span class="phase-icon">✅</span>
+        <span class="phase-name">Phase 2: Deep Quality &amp; CARL Enforcement</span>
+        <span class="phase-stats">9 items</span>
+      </li>
+      <li>
+        <span class="phase-icon">✅</span>
+        <span class="phase-name">Phase 3: Test Flow Architecture</span>
+        <span class="phase-stats">10 tiers, 4 executor types</span>
+      </li>
+      <li>
+        <span class="phase-icon">✅</span>
+        <span class="phase-name">Phase 4: Retrofit Subsystem</span>
+        <span class="phase-stats">2 modes, 10 edge cases</span>
+      </li>
+      <li>
+        <span class="phase-icon">✅</span>
+        <span class="phase-name">Phase 5: Dashboard</span>
+        <span class="phase-stats">terminal + HTML</span>
+      </li>
+      <li>
+        <span class="phase-icon">✅</span>
+        <span class="phase-name">Phase 6: Publish &amp; Branding</span>
+        <span class="phase-stats">npm + GitHub + plugin manifests</span>
+      </li>
+      <li>
+        <span class="phase-icon">◐</span>
+        <span class="phase-name active">Phase 7: Community Launch</span>
+        <span class="phase-stats">in progress</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- LOOP -->
+  <div class="card grid-full">
+    <h2>Loop Position</h2>
+    <div class="loop-container">
+      <div class="loop-steps">
+        <div class="loop-step done">PLAN</div>
+        <span class="loop-arrow">&rarr;</span>
+        <div class="loop-step done">APPLY</div>
+        <span class="loop-arrow">&rarr;</span>
+        <div class="loop-step active">VERIFY</div>
+        <span class="loop-arrow">&rarr;</span>
+        <div class="loop-step">UNIFY</div>
+      </div>
+      <div class="loop-desc">Phase 7 — community launch in progress, verifying post reach</div>
+    </div>
+  </div>
+
+  <!-- TEST PROFILE -->
+  <div class="card">
+    <h2>Test Profile</h2>
+    <div class="test-grid">
+      <div class="test-tier on">
+        <div class="name">static</div>
+        <div class="exec">eslint</div>
+        <div class="gate">per-task</div>
+      </div>
+      <div class="test-tier on">
+        <div class="name">unit</div>
+        <div class="exec">node --test</div>
+        <div class="gate">per-task</div>
+        <div class="coverage">—</div>
+      </div>
+      <div class="test-tier on">
+        <div class="name">integration</div>
+        <div class="exec">install smoke</div>
+        <div class="gate">checkpoint</div>
+      </div>
+      <div class="test-tier off">
+        <div class="name">e2e</div>
+        <div class="exec">—</div>
+        <div class="gate">not configured</div>
+      </div>
+      <div class="test-tier off">
+        <div class="name">mcp-driven</div>
+        <div class="exec">—</div>
+        <div class="gate">not configured</div>
+      </div>
+      <div class="test-tier off">
+        <div class="name">visual</div>
+        <div class="exec">—</div>
+        <div class="gate">not configured</div>
+      </div>
+      <div class="test-tier off">
+        <div class="name">performance</div>
+        <div class="exec">—</div>
+        <div class="gate">not configured</div>
+      </div>
+      <div class="test-tier off">
+        <div class="name">security</div>
+        <div class="exec">—</div>
+        <div class="gate">not configured</div>
+      </div>
+      <div class="test-tier off">
+        <div class="name">platform</div>
+        <div class="exec">—</div>
+        <div class="gate">not configured</div>
+      </div>
+      <div class="test-tier on">
+        <div class="name">manual</div>
+        <div class="exec">checklist</div>
+        <div class="gate">verify phase</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECIAL FLOWS -->
+  <div class="card">
+    <h2>Special Flows</h2>
+    <ul class="flow-list">
+      <li>
+        <span class="flow-skill">/forge:test</span>
+        <span class="flow-type">test execution</span>
+        <span class="flow-badge flow-required">required</span>
+      </li>
+      <li>
+        <span class="flow-skill">/forge:debug</span>
+        <span class="flow-type">bug investigation</span>
+        <span class="flow-badge flow-optional">optional</span>
+      </li>
+      <li>
+        <span class="flow-skill">/forge:retrofit</span>
+        <span class="flow-type">existing projects</span>
+        <span class="flow-badge flow-optional">optional</span>
+      </li>
+      <li>
+        <span class="flow-skill">/forge:dashboard</span>
+        <span class="flow-type">project overview</span>
+        <span class="flow-badge flow-optional">optional</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- RECENT ACTIVITY -->
+  <div class="card">
+    <h2>Recent Activity</h2>
+    <ul class="activity">
+      <li>
+        <span class="time">2h ago</span>
+        <span class="type type-feat">feat</span>
+        <span class="msg">generic MCP executor + embedded workflows</span>
+      </li>
+      <li>
+        <span class="time">3h ago</span>
+        <span class="type type-feat">feat</span>
+        <span class="msg">demo SVG, launch post drafts</span>
+      </li>
+      <li>
+        <span class="time">4h ago</span>
+        <span class="type type-docs">docs</span>
+        <span class="msg">Claude Code plugin install instructions</span>
+      </li>
+      <li>
+        <span class="time">5h ago</span>
+        <span class="type type-feat">feat</span>
+        <span class="msg">establish Forge identity, clean PAUL refs</span>
+      </li>
+      <li>
+        <span class="time">6h ago</span>
+        <span class="type type-feat">feat</span>
+        <span class="msg">plugin manifests + CLAUDE.md + .npmignore</span>
+      </li>
+      <li>
+        <span class="time">7h ago</span>
+        <span class="type type-fix">fix</span>
+        <span class="msg">rebrand terminal.svg from PAUL to FORGE</span>
+      </li>
+      <li>
+        <span class="time">8h ago</span>
+        <span class="type type-feat">feat</span>
+        <span class="msg">single-screen dashboard command</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ISSUES -->
+  <div class="card issues-card">
+    <h2>Status</h2>
+    <div class="issue-row">
+      <span class="issue-label">Blockers</span>
+      <span class="issue-count zero">0</span>
+    </div>
+    <div class="issue-row">
+      <span class="issue-label">Deferred issues</span>
+      <span class="issue-count some">3</span>
+    </div>
+    <div class="issue-row">
+      <span class="issue-label">Flaky tests</span>
+      <span class="issue-count zero">0</span>
+    </div>
+    <div class="issue-row">
+      <span class="issue-label">Missing flows</span>
+      <span class="issue-count some">5</span>
+    </div>
+    <div class="issue-action">Deferred: release, hotfix, review-pr, estimate, retrospective</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="label">Suggested Next Action</div>
+    <div class="action">/forge:verify</div>
+    <div class="reason">Phase 7 (Community Launch) is in APPLY — verify post reach and community response</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Generated by /forge:dashboard --html &mdash; 2026-04-10 14:15 EDT &mdash; FORGE Framework v0.2.0
+  </div>
+
+</div>
+</body>
+</html>
