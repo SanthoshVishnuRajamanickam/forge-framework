@@ -18,7 +18,7 @@ npx forge-framework
 
 <br>
 
-![FORGE Install](assets/terminal.svg)
+![FORGE Demo](assets/demo.svg)
 
 <br>
 

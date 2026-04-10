@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 900">
+  <defs>
+    <style>
+      .bg { fill: #1a1b26; }
+      .border { fill: #24283b; }
+      .titlebar { fill: #1f2335; }
+      .btn-r { fill: #f7768e; }
+      .btn-y { fill: #e0af68; }
+      .btn-g { fill: #9ece6a; }
+      .t { font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace; }
+      .prompt { fill: #7aa2f7; }
+      .cmd { fill: #c0caf5; }
+      .cyan { fill: #7dcfff; }
+      .green { fill: #9ece6a; }
+      .yellow { fill: #e0af68; }
+      .red { fill: #f7768e; }
+      .dim { fill: #565f89; }
+      .white { fill: #c0caf5; }
+      .purple { fill: #bb9af7; }
+      .orange { fill: #ff9e64; }
+    </style>
+  </defs>
+
+  <!-- Window -->
+  <rect class="border" width="960" height="900" rx="12"/>
+  <rect class="bg" x="1" y="1" width="958" height="898" rx="11"/>
+
+  <!-- Title bar -->
+  <rect class="titlebar" x="1" y="1" width="958" height="36" rx="11"/>
+  <rect class="bg" x="1" y="26" width="958" height="12"/>
+  <circle class="btn-r" cx="24" cy="19" r="7"/>
+  <circle class="btn-y" cx="48" cy="19" r="7"/>
+  <circle class="btn-g" cx="72" cy="19" r="7"/>
+  <text x="480" y="24" text-anchor="middle" class="t dim" font-size="13">Terminal — forge-framework demo</text>
+
+  <g transform="translate(32, 60)">
+
+    <!-- Section 1: Install -->
+    <text class="t dim" font-size="11" y="0">── INSTALL ──</text>
+
+    <text class="t prompt" font-size="14" y="24">~</text>
+    <text class="t dim" font-size="14" x="16" y="24">$</text>
+    <text class="t cmd" font-size="14" x="36" y="24">npx forge-framework --global</text>
+
+    <text class="t green" font-size="14" y="52" xml:space="preserve">  ✓ Installed commands/forge</text>
+    <text class="t green" font-size="14" y="72" xml:space="preserve">  ✓ Installed forge-framework</text>
+    <text class="t green" font-size="14" y="92" xml:space="preserve">  Done!</text>
+    <text class="t white" font-size="14" x="66" y="92"> Run </text>
+    <text class="t cyan" font-size="14" x="108" y="92">/forge:help</text>
+    <text class="t white" font-size="14" x="216" y="92"> to get started.</text>
+
+    <!-- Section 2: Retrofit -->
+    <text class="t dim" font-size="11" y="130">── RETROFIT EXISTING PROJECT ──</text>
+
+    <text class="t prompt" font-size="14" y="154">~/my-app</text>
+    <text class="t dim" font-size="14" x="88" y="154">$</text>
+    <text class="t cmd" font-size="14" x="108" y="154">/forge:retrofit --mode=full</text>
+
+    <text class="t white" font-size="14" y="182" xml:space="preserve">  Detected: my-app v2.1.0 (TypeScript) — 847 commits, 12 tags</text>
+    <text class="t dim" font-size="14" y="202" xml:space="preserve">  Workflow: standard (branches + tags + PRs)</text>
+    <text class="t dim" font-size="14" y="222" xml:space="preserve">  Spawning 5 agents...</text>
+
+    <text class="t cyan" font-size="14" y="252" xml:space="preserve">  ═══ FORGE RETROFIT REVIEW ═══</text>
+
+    <text class="t white" font-size="14" y="276" xml:space="preserve">  ROADMAP.md:</text>
+    <text class="t green" font-size="14" x="148" y="276">[HIGH confidence — from tags + CHANGELOG]</text>
+
+    <text class="t white" font-size="14" y="300" xml:space="preserve">    v1.0 (2024-03): 4 phases</text>
+    <text class="t green" font-size="14" x="268" y="300">✓ complete</text>
+    <text class="t dim" font-size="14" y="320" xml:space="preserve">      ├─ Authentication      (38 commits, 12 files)</text>
+    <text class="t dim" font-size="14" y="340" xml:space="preserve">      ├─ API Layer           (45 commits, 18 files)</text>
+    <text class="t dim" font-size="14" y="360" xml:space="preserve">      ├─ UI Components       (67 commits, 24 files)</text>
+    <text class="t dim" font-size="14" y="380" xml:space="preserve">      └─ Deployment          (12 commits, 6 files)</text>
+
+    <text class="t white" font-size="14" y="404" xml:space="preserve">    v2.1 (active): 2 phases</text>
+    <text class="t yellow" font-size="14" x="268" y="404">◐ in progress</text>
+    <text class="t cyan" font-size="14" y="424" xml:space="preserve">      ├─ Performance         (18 commits, 7 files)</text>
+    <text class="t cyan" font-size="14" y="444" xml:space="preserve">      └─ Mobile Integration  (6 commits, 3 files)</text>
+
+    <!-- Section 3: Dashboard -->
+    <text class="t dim" font-size="11" y="482">── DASHBOARD ──</text>
+
+    <text class="t prompt" font-size="14" y="506">~/my-app</text>
+    <text class="t dim" font-size="14" x="88" y="506">$</text>
+    <text class="t cmd" font-size="14" x="108" y="506">/forge:dashboard</text>
+
+    <text class="t cyan" font-size="14" y="534" xml:space="preserve">  ═══ FORGE DASHBOARD — my-app v2.1.0 ═══</text>
+
+    <text class="t white" font-size="14" y="558" xml:space="preserve">  MILESTONE: v2.1 — Performance + Mobile</text>
+    <text class="t green" font-size="14" y="578" xml:space="preserve">    ██████████░░░░░░░░░░  48%</text>
+
+    <text class="t white" font-size="14" y="602" xml:space="preserve">  LOOP:  </text>
+    <text class="t green" font-size="14" x="90" y="602">PLAN ✓</text>
+    <text class="t white" font-size="14" x="158" y="602"> ──▶ </text>
+    <text class="t cyan" font-size="14" x="198" y="602">APPLY ◐</text>
+    <text class="t white" font-size="14" x="282" y="602"> ──▶ </text>
+    <text class="t dim" font-size="14" x="322" y="602">UNIFY ○</text>
+
+    <!-- Section 4: Test -->
+    <text class="t dim" font-size="11" y="640">── TEST FLOWS ──</text>
+
+    <text class="t prompt" font-size="14" y="664">~/my-app</text>
+    <text class="t dim" font-size="14" x="88" y="664">$</text>
+    <text class="t cmd" font-size="14" x="108" y="664">/forge:test</text>
+
+    <text class="t green" font-size="14" y="692" xml:space="preserve">  static:       ✓ eslint             PASS  (0.8s)</text>
+    <text class="t green" font-size="14" y="712" xml:space="preserve">  unit:         ✓ vitest  82%        PASS  42/42  (3.2s)</text>
+    <text class="t green" font-size="14" y="732" xml:space="preserve">  integration:  ✓ vitest             PASS  12/12  (8.7s)</text>
+    <text class="t green" font-size="14" y="752" xml:space="preserve">  e2e:          ✓ playwright MCP     PASS  5/5   (24.1s)</text>
+    <text class="t yellow" font-size="14" y="772" xml:space="preserve">  performance:  ⚠ not configured</text>
+    <text class="t green" font-size="14" y="792" xml:space="preserve">  manual:       ✓ checklist          PASS  8/8</text>
+
+    <text class="t white" font-size="14" y="820" xml:space="preserve">  ▶ NEXT: /forge:verify — all tiers passing, ready for UAT</text>
+
+  </g>
+</svg>
