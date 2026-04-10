@@ -6,7 +6,7 @@
 
 [![npm version](https://img.shields.io/npm/v/forge-framework?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/forge-framework)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/santhoshvishnu-sketch/forge-framework?style=for-the-badge&logo=github&color=181717)](https://github.com/santhoshvishnu-sketch/forge-framework)
+[![GitHub stars](https://img.shields.io/github/stars/SanthoshVishnuRajamanickam/forge-framework?style=for-the-badge&logo=github&color=181717)](https://github.com/SanthoshVishnuRajamanickam/forge-framework)
 
 <br>
 

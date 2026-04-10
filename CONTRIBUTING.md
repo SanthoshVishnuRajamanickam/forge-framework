@@ -14,7 +14,7 @@ Thanks for your interest in forge-framework.
 ## Development setup
 
 ```bash
-git clone https://github.com/santhoshvishnu-sketch/forge-framework.git
+git clone https://github.com/SanthoshVishnuRajamanickam/forge-framework.git
 cd forge-framework
 npm install                     # no runtime deps; just the installer
 node bin/install.js --local     # smoke test the installer into ./.claude
