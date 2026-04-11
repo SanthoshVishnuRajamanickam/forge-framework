@@ -23,7 +23,7 @@ See: .forge/PROJECT.md (updated [YYYY-MM-DD])
 Milestone: [Name] ([version])
 Phase: [X] of [Y] ([Phase Name])
 Plan: [A] of [B] in current phase
-Status: [Ready to Plan | Planning | Awaiting Approval | Applying | Unifying | Complete | Blocked]
+Status: [Ready to Plan | Planning | Awaiting Approval | Applying | Verifying | Unifying | Complete | Blocked]
 Last activity: [YYYY-MM-DD HH:MM] — [What happened]
 
 Progress:
@@ -34,11 +34,12 @@ Progress:
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ◉        ○        ○     [Planning]
-  ✓        ◉        ○     [Applying]
-  ✓        ✓        ◉     [Unifying]
-  ✓        ✓        ✓     [Complete - ready for next PLAN]
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  ◉        ○         ○          ○     [Planning]
+  ✓        ◉         ○          ○     [Applying]
+  ✓        ✓         ◉          ○     [Verifying]
+  ✓        ✓         ✓          ◉     [Unifying]
+  ✓        ✓         ✓          ✓     [Complete - ready for next PLAN]
 ```
 
 ## Performance Metrics
@@ -133,9 +134,10 @@ Resume context: [Key information needed to continue]
 ### Loop Position
 **Purpose:** Visual indicator of FORGE loop state.
 **States:**
-- Planning: PLAN active, APPLY/UNIFY pending
-- Applying: PLAN complete, APPLY active, UNIFY pending
-- Unifying: PLAN/APPLY complete, UNIFY active
+- Planning: PLAN active, APPLY/VERIFY/UNIFY pending
+- Applying: PLAN complete, APPLY active, VERIFY/UNIFY pending
+- Verifying: PLAN/APPLY complete, VERIFY active, UNIFY pending
+- Unifying: PLAN/APPLY/VERIFY complete, UNIFY active
 - Complete: Full loop done, ready for next PLAN
 
 **Update:** At each loop phase transition.

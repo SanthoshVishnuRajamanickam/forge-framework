@@ -78,7 +78,8 @@ Based on state (+ user context if provided), determine **ONE** next action:
 | Plan awaiting approval (audit enabled, not yet audited) | `/forge:audit [path]` |
 | Plan awaiting approval (audit complete or not enabled) | "Approve plan to proceed" |
 | Plan approved, not executed | `/forge:apply [path]` |
-| Applied, not unified | `/forge:unify [path]` |
+| Applied, not verified | `/forge:verify` |
+| Verified, not unified | `/forge:unify [path]` |
 | Loop complete, more phases | `/forge:plan` (next phase) |
 | Milestone complete | "Create next milestone or ship" |
 | Blockers present | "Address blocker: [specific]" |
@@ -104,10 +105,10 @@ Milestone: [name] - [X]% complete
 └── Phase 4: [name] ░░░░░░░░░░░░ Pending
 
 Current Loop: Phase 2, Plan 02-03
-┌─────────────────────────────────────┐
-│  PLAN ──▶ APPLY ──▶ UNIFY          │
-│    ✓        ✓        ○             │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────┐
+│  PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY        │
+│    ✓        ✓         ○          ○           │
+└──────────────────────────────────────────────┘
 
 ────────────────────────────────────────
 ▶ NEXT: /forge:unify .forge/phases/02-features/02-03-PLAN.md
