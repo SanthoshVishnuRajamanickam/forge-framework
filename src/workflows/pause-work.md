@@ -10,7 +10,7 @@ Create HANDOFF.md file and update STATE.md when pausing work mid-session. Enable
 </when_to_use>
 
 <loop_context>
-Any position in PLAN/APPLY/UNIFY loop. Captures state regardless of where loop is.
+Any position in PLAN/APPLY/VERIFY/UNIFY loop. Captures state regardless of where loop is.
 </loop_context>
 
 <required_reading>
@@ -28,7 +28,7 @@ Any position in PLAN/APPLY/UNIFY loop. Captures state regardless of where loop i
 <step name="detect_position" priority="first">
 1. Read `.forge/STATE.md` to get:
    - Current phase and plan
-   - Loop position (PLAN/APPLY/UNIFY markers)
+   - Loop position (PLAN/APPLY/VERIFY/UNIFY markers)
    - Last activity
 2. Identify current working directory:
    ```bash
@@ -88,8 +88,8 @@ You have no prior context. This document tells you everything.
 
 **Loop Position:**
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  [✓/○]    [✓/○]    [✓/○]
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  [✓/○]    [✓/○]     [✓/○]    [✓/○]
 ```
 
 ---
@@ -227,7 +227,7 @@ Handoff created: .forge/HANDOFF-[date].md
 Current State:
   Phase: [N] of [M]
   Plan: [status]
-  Loop: [PLAN/APPLY/UNIFY position]
+  Loop: [PLAN/APPLY/VERIFY/UNIFY position]
 
 To resume later:
   /forge:resume

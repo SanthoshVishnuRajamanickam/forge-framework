@@ -40,7 +40,7 @@ Extract from STATE.md (best-effort — use defaults if not found):
 - **phase number**: look for `Phase: N of M` line
 - **phase name**: text after the number on the Phase line (e.g., `Phase: 3 of 7 (Auth Layer)` → "Auth Layer")
 - **phase status**: if COMPLETE → "complete"; if Planning → "planning"; if active → "in_progress"; otherwise → "not_started"
-- **loop position**: check Loop Position section — if all three ✓ or IDLE → "IDLE"; if PLAN ✓ but APPLY ○ → "PLAN"; if APPLY ✓ but UNIFY ○ → "APPLY"; if UNIFY in progress → "UNIFY"
+- **loop position**: check Loop Position section — if all four ✓ or IDLE → "IDLE"; if PLAN ✓ but APPLY ○ → "PLAN"; if APPLY ✓ but VERIFY ○ → "APPLY"; if VERIFY ✓ but UNIFY ○ → "VERIFY"; if UNIFY in progress → "UNIFY"
 
 **Defaults if STATE.md missing or unparseable:**
 - name: directory name

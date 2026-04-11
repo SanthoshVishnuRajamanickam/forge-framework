@@ -68,13 +68,37 @@ No multiple options. Prevents decision fatigue. User can redirect if needed.
 1. Read `.forge/STATE.md`
 2. Extract:
    - Current Position (phase, plan, status)
-   - Loop Position (PLAN/APPLY/UNIFY markers)
+   - Loop Position (PLAN/APPLY/VERIFY/UNIFY markers)
    - Last activity (what was happening)
    - Session Continuity section:
      - Stopped at
      - Next action
      - Resume file
      - Resume context
+</step>
+
+<step name="check_for_updates">
+Check if FORGE has been updated since the user last ran it:
+
+1. Read `~/.claude/forge-framework/package.json` → extract `version` (installed version)
+2. Read `.forge/forge.json` → extract `forge_version` field (last acknowledged version)
+3. If `forge_version` is missing OR installed version is newer than `forge_version`:
+   - Read `~/.claude/forge-framework/references/whats-new.md`
+   - Display the banner for all versions newer than `forge_version` (or just the latest if no `forge_version`):
+
+```
+╔══════════════════════════════════════════════════════╗
+║  FORGE Updated → v{new_version}                      ║
+╠══════════════════════════════════════════════════════╣
+║  What's new:                                         ║
+║  • [top 3-5 bullets from whats-new.md]               ║
+║                                                      ║
+║  Run /forge:help for all commands                    ║
+╚══════════════════════════════════════════════════════╝
+```
+
+4. Update `.forge/forge.json` → set `forge_version` to installed version
+5. If `.forge/forge.json` doesn't exist yet, skip silently (project not initialized)
 </step>
 
 <step name="load_resume_context">
@@ -100,7 +124,8 @@ Based on loop position, determine **exactly ONE** next action:
 |------------|-------------------|
 | PLAN ○ (no plan yet) | `/forge:plan` |
 | PLAN ✓, APPLY ○ (plan awaiting approval) | `/forge:apply [plan-path]` |
-| PLAN ✓, APPLY ✓, UNIFY ○ (executed, not reconciled) | `/forge:unify [plan-path]` |
+| PLAN ✓, APPLY ✓, VERIFY ○ (executed, awaiting UAT) | `/forge:verify` |
+| PLAN ✓, APPLY ✓, VERIFY ✓, UNIFY ○ (verified, not reconciled) | `/forge:unify [plan-path]` |
 | All ✓ (loop complete) | `/forge:plan` (next phase) |
 | Blocked | "Address blocker: [specific issue]" |
 
@@ -121,8 +146,8 @@ Plan: [NN-PP] - [plan description]
 
 Loop Position:
 ┌─────────────────────────────────────┐
-│  PLAN ──▶ APPLY ──▶ UNIFY          │
-│   [✓/○]    [✓/○]    [✓/○]          │
+│  PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY  │
+│   [✓/○]    [✓/○]     [✓/○]    [✓/○]  │
 └─────────────────────────────────────┘
 
 Last Session: [timestamp]

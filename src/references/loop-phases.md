@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Explain the semantics of FORGE's three loop phases: PLAN, APPLY, UNIFY. Every unit of work follows this loop. Skipping phases breaks traceability and increases risk.
+Explain the semantics of FORGE's four loop phases: PLAN, APPLY, VERIFY, UNIFY. Every unit of work follows this loop. Skipping phases breaks traceability and increases risk.
 
 ## The Loop
 
@@ -10,11 +10,11 @@ Explain the semantics of FORGE's three loop phases: PLAN, APPLY, UNIFY. Every un
     ┌─────────────────────────────────────────┐
     │                                         │
     ▼                                         │
-  PLAN ────────► APPLY ────────► UNIFY ───────┘
-    │              │               │
-    │              │               │
- Define work   Execute work   Reconcile
- Get approval  Verify tasks   Update state
+  PLAN ────────► APPLY ────────► VERIFY ────────► UNIFY ───────┘
+    │              │                │                │
+    │              │                │                │
+ Define work   Execute work   User accepts      Reconcile
+ Get approval  Qualify tasks  Confirm UAT       Update state
 ```
 
 ## PLAN Phase
@@ -44,8 +44,8 @@ Explain the semantics of FORGE's three loop phases: PLAN, APPLY, UNIFY. Every un
 
 **Loop Position:**
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ○        ○     [PLAN complete, awaiting APPLY]
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  ✓        ○         ○         ○     [PLAN complete, awaiting APPLY]
 ```
 
 ## APPLY Phase
@@ -115,8 +115,8 @@ This prevents the anti-pattern of patching code when the plan itself was wrong.
 
 **Loop Position:**
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ○     [APPLY complete, ready for UNIFY]
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  ✓        ✓         ○         ○     [APPLY complete, ready for VERIFY]
 ```
 
 ## UNIFY Phase
@@ -149,8 +149,8 @@ PLAN ──▶ APPLY ──▶ UNIFY
 
 **Loop Position:**
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop complete, ready for next PLAN]
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  ✓        ✓         ✓         ✓     [Loop complete, ready for next PLAN]
 ```
 
 ## Loop Invariants
@@ -221,8 +221,8 @@ STATE.md displays loop position visually:
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ○        ○     [Description of current state]
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  ✓        ○         ○         ○     [Description of current state]
 ```
 ```
 

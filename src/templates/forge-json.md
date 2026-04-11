@@ -24,7 +24,7 @@ Template for `.forge/forge.json` - machine-readable satellite manifest for exter
   },
   "loop": {
     "plan": null,
-    "position": "IDLE | PLAN | APPLY | UNIFY"
+    "position": "IDLE | PLAN | APPLY | VERIFY | UNIFY"
   },
   "timestamps": {
     "created_at": "{ISO 8601}",
@@ -32,7 +32,8 @@ Template for `.forge/forge.json` - machine-readable satellite manifest for exter
   },
   "satellite": {
     "groom": true
-  }
+  },
+  "forge_version": "{version — set at init, updated on resume/progress when FORGE updates}"
 }
 ```
 
@@ -51,10 +52,11 @@ Template for `.forge/forge.json` - machine-readable satellite manifest for exter
 | `phase.name` | string | Current phase name ("None" if no phase) |
 | `phase.status` | enum | `not_started`, `planning`, `in_progress`, `complete` |
 | `loop.plan` | string\|null | Current plan ID (e.g., "12-01") or null if idle |
-| `loop.position` | enum | `IDLE`, `PLAN`, `APPLY`, `UNIFY` |
+| `loop.position` | enum | `IDLE`, `PLAN`, `APPLY`, `VERIFY`, `UNIFY` |
 | `timestamps.created_at` | string | ISO 8601 timestamp of forge.json creation |
 | `timestamps.updated_at` | string | ISO 8601 timestamp of last update |
 | `satellite.groom` | boolean | Whether BASE groom should health-check this project (default: true) |
+| `forge_version` | string | Last FORGE version the user was notified about — used to show What's New banners |
 
 ---
 
@@ -99,7 +101,8 @@ Template for `.forge/forge.json` - machine-readable satellite manifest for exter
   },
   "satellite": {
     "groom": true
-  }
+  },
+  "forge_version": "0.2.0"
 }
 ```
 
@@ -129,7 +132,8 @@ Template for `.forge/forge.json` - machine-readable satellite manifest for exter
   },
   "satellite": {
     "groom": true
-  }
+  },
+  "forge_version": "0.2.0"
 }
 ```
 

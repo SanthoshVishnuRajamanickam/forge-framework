@@ -31,10 +31,10 @@ Every unit of work follows this cycle:
 
 ```
 ┌─────────────────────────────────────┐
-│  PLAN ──▶ APPLY ──▶ UNIFY          │
-│                                     │
-│  Define    Execute    Reconcile     │
-│  work      tasks      & close       │
+│  PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY  │
+│                                        │
+│  Define    Execute    UAT/test    Close │
+│  work      tasks      confirm    loop  │
 └─────────────────────────────────────┘
 ```
 
@@ -570,7 +570,7 @@ Completion checks
 
 ## Key Principles
 
-1. **Loop must complete** - PLAN -> APPLY -> UNIFY, no shortcuts
+1. **Loop must complete** - PLAN -> APPLY -> VERIFY -> UNIFY, no shortcuts
 2. **Commands are thin** - Logic lives in workflows
 3. **State is tracked** - STATE.md knows where you are
 4. **Boundaries are real** - Respect DO NOT CHANGE sections

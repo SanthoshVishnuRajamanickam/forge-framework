@@ -162,8 +162,8 @@ Include all standard sections:
 
    **Loop Position:**
    ```
-   PLAN ──▶ APPLY ──▶ UNIFY
-     ✓        ✓        ✓     [Loop complete - ready for next PLAN]
+   PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+     ✓        ✓         ✓         ✓     [Loop complete - ready for next PLAN]
    ```
 
    **Session Continuity:**

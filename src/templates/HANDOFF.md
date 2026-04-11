@@ -23,8 +23,8 @@ You have no prior context. This document tells you everything.
 
 **Loop Position:**
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  {{plan_mark}}        {{apply_mark}}        {{unify_mark}}
+PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+  {{plan_mark}}        {{apply_mark}}        {{verify_mark}}        {{unify_mark}}
 ```
 
 ---

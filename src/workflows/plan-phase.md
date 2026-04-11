@@ -304,8 +304,8 @@ This flag determines whether the post-plan routing suggests audit before APPLY.
 
    Current loop state:
    ```
-   PLAN ──▶ APPLY ──▶ UNIFY
-     ✓        ○        ○     [Plan created, awaiting approval]
+   PLAN ──▶ APPLY ──▶ VERIFY ──▶ UNIFY
+     ✓        ○         ○         ○     [Plan created, awaiting approval]
    ```
 
    ## Session Continuity

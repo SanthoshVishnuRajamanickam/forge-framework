@@ -440,7 +440,8 @@ Create `.forge/forge.json`:
   },
   "satellite": {
     "groom": true
-  }
+  },
+  "forge_version": "[read from ~/.claude/forge-framework/package.json → version]"
 }
 ```
 

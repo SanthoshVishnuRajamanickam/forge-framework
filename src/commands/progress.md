@@ -31,7 +31,7 @@ $ARGUMENTS
 Read `.forge/STATE.md` and `.forge/ROADMAP.md`:
 - Current phase and total phases
 - Current plan (if any)
-- Loop position (PLAN/APPLY/UNIFY markers)
+- Loop position (PLAN/APPLY/VERIFY/UNIFY markers)
 - Roadmap progress
 - Performance metrics (if tracked)
 - Blockers or concerns
@@ -40,6 +40,26 @@ Also check `.forge/config.md` (if exists):
 - Is `enterprise_plan_audit: enabled: true`?
 - If plan is at "created, awaiting approval" stage: check if STATE.md mentions "audited"
 - Store `audit_enabled` and `audit_completed` flags for routing
+</step>
+
+<step name="check_for_updates">
+Check if FORGE has been updated since the user last ran it:
+
+1. Read `~/.claude/forge-framework/package.json` → extract `version`
+2. Read `.forge/forge.json` → extract `forge_version`
+3. If installed version is newer than `forge_version` (or `forge_version` missing):
+   - Read `~/.claude/forge-framework/references/whats-new.md`
+   - Show banner for new version(s), update `forge.json` `forge_version`
+   - Banner format:
+   ```
+   ╔══════════════════════════════════════════════════════╗
+   ║  FORGE Updated → v{new_version}                      ║
+   ╠══════════════════════════════════════════════════════╣
+   ║  What's new: [top 3-5 bullets]                       ║
+   ║  Run /forge:help for all commands                    ║
+   ╚══════════════════════════════════════════════════════╝
+   ```
+4. If `.forge/forge.json` not present, skip silently.
 </step>
 
 <step name="calculate_progress">

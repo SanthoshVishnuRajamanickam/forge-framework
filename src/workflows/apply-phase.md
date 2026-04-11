@@ -369,7 +369,7 @@ After all tasks attempted:
    - Failures: list any
    - Deviations: list any
 2. Update STATE.md:
-   - Loop position: PLAN → APPLY → UNIFY
+   - Loop position: PLAN → APPLY → VERIFY → UNIFY
    - Last activity: timestamp and completion status
 3. Report with quick continuation prompt:
    ```
